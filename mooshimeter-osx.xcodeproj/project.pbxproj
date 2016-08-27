@@ -1,0 +1,498 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D7B6843F1D72105C0096F296 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6843E1D72105C0096F296 /* AppDelegate.swift */; };
+		D7B684411D72105C0096F296 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684401D72105C0096F296 /* ViewController.swift */; };
+		D7B684431D72105C0096F296 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7B684421D72105C0096F296 /* Assets.xcassets */; };
+		D7B684461D72105C0096F296 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7B684441D72105C0096F296 /* Main.storyboard */; };
+		D7B684511D72105C0096F296 /* mooshimeter_osxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684501D72105C0096F296 /* mooshimeter_osxTests.swift */; };
+		D7B6845C1D72105C0096F296 /* mooshimeter_osxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6845B1D72105C0096F296 /* mooshimeter_osxUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D7B6844D1D72105C0096F296 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B684331D72105C0096F296 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D7B6843A1D72105C0096F296;
+			remoteInfo = "mooshimeter-osx";
+		};
+		D7B684581D72105C0096F296 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B684331D72105C0096F296 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D7B6843A1D72105C0096F296;
+			remoteInfo = "mooshimeter-osx";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D7B6843B1D72105C0096F296 /* mooshimeter-osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mooshimeter-osx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7B6843E1D72105C0096F296 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D7B684401D72105C0096F296 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D7B684421D72105C0096F296 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D7B684451D72105C0096F296 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D7B684471D72105C0096F296 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7B6844C1D72105C0096F296 /* mooshimeter-osxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mooshimeter-osxTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7B684501D72105C0096F296 /* mooshimeter_osxTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mooshimeter_osxTests.swift; sourceTree = "<group>"; };
+		D7B684521D72105C0096F296 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7B684571D72105C0096F296 /* mooshimeter-osxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mooshimeter-osxUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7B6845B1D72105C0096F296 /* mooshimeter_osxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mooshimeter_osxUITests.swift; sourceTree = "<group>"; };
+		D7B6845D1D72105C0096F296 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D7B684381D72105C0096F296 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7B684491D72105C0096F296 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7B684541D72105C0096F296 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D7B684321D72105C0096F296 = {
+			isa = PBXGroup;
+			children = (
+				D7B6843D1D72105C0096F296 /* mooshimeter-osx */,
+				D7B6844F1D72105C0096F296 /* mooshimeter-osxTests */,
+				D7B6845A1D72105C0096F296 /* mooshimeter-osxUITests */,
+				D7B6843C1D72105C0096F296 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D7B6843C1D72105C0096F296 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D7B6843B1D72105C0096F296 /* mooshimeter-osx.app */,
+				D7B6844C1D72105C0096F296 /* mooshimeter-osxTests.xctest */,
+				D7B684571D72105C0096F296 /* mooshimeter-osxUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D7B6843D1D72105C0096F296 /* mooshimeter-osx */ = {
+			isa = PBXGroup;
+			children = (
+				D7B6843E1D72105C0096F296 /* AppDelegate.swift */,
+				D7B684401D72105C0096F296 /* ViewController.swift */,
+				D7B684421D72105C0096F296 /* Assets.xcassets */,
+				D7B684441D72105C0096F296 /* Main.storyboard */,
+				D7B684471D72105C0096F296 /* Info.plist */,
+			);
+			path = "mooshimeter-osx";
+			sourceTree = "<group>";
+		};
+		D7B6844F1D72105C0096F296 /* mooshimeter-osxTests */ = {
+			isa = PBXGroup;
+			children = (
+				D7B684501D72105C0096F296 /* mooshimeter_osxTests.swift */,
+				D7B684521D72105C0096F296 /* Info.plist */,
+			);
+			path = "mooshimeter-osxTests";
+			sourceTree = "<group>";
+		};
+		D7B6845A1D72105C0096F296 /* mooshimeter-osxUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D7B6845B1D72105C0096F296 /* mooshimeter_osxUITests.swift */,
+				D7B6845D1D72105C0096F296 /* Info.plist */,
+			);
+			path = "mooshimeter-osxUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D7B6843A1D72105C0096F296 /* mooshimeter-osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7B684601D72105C0096F296 /* Build configuration list for PBXNativeTarget "mooshimeter-osx" */;
+			buildPhases = (
+				D7B684371D72105C0096F296 /* Sources */,
+				D7B684381D72105C0096F296 /* Frameworks */,
+				D7B684391D72105C0096F296 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "mooshimeter-osx";
+			productName = "mooshimeter-osx";
+			productReference = D7B6843B1D72105C0096F296 /* mooshimeter-osx.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D7B6844B1D72105C0096F296 /* mooshimeter-osxTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7B684631D72105C0096F296 /* Build configuration list for PBXNativeTarget "mooshimeter-osxTests" */;
+			buildPhases = (
+				D7B684481D72105C0096F296 /* Sources */,
+				D7B684491D72105C0096F296 /* Frameworks */,
+				D7B6844A1D72105C0096F296 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D7B6844E1D72105C0096F296 /* PBXTargetDependency */,
+			);
+			name = "mooshimeter-osxTests";
+			productName = "mooshimeter-osxTests";
+			productReference = D7B6844C1D72105C0096F296 /* mooshimeter-osxTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D7B684561D72105C0096F296 /* mooshimeter-osxUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7B684661D72105C0096F296 /* Build configuration list for PBXNativeTarget "mooshimeter-osxUITests" */;
+			buildPhases = (
+				D7B684531D72105C0096F296 /* Sources */,
+				D7B684541D72105C0096F296 /* Frameworks */,
+				D7B684551D72105C0096F296 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D7B684591D72105C0096F296 /* PBXTargetDependency */,
+			);
+			name = "mooshimeter-osxUITests";
+			productName = "mooshimeter-osxUITests";
+			productReference = D7B684571D72105C0096F296 /* mooshimeter-osxUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D7B684331D72105C0096F296 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = alfishe;
+				TargetAttributes = {
+					D7B6843A1D72105C0096F296 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					D7B6844B1D72105C0096F296 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = D7B6843A1D72105C0096F296;
+					};
+					D7B684561D72105C0096F296 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = D7B6843A1D72105C0096F296;
+					};
+				};
+			};
+			buildConfigurationList = D7B684361D72105C0096F296 /* Build configuration list for PBXProject "mooshimeter-osx" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D7B684321D72105C0096F296;
+			productRefGroup = D7B6843C1D72105C0096F296 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D7B6843A1D72105C0096F296 /* mooshimeter-osx */,
+				D7B6844B1D72105C0096F296 /* mooshimeter-osxTests */,
+				D7B684561D72105C0096F296 /* mooshimeter-osxUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D7B684391D72105C0096F296 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7B684431D72105C0096F296 /* Assets.xcassets in Resources */,
+				D7B684461D72105C0096F296 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7B6844A1D72105C0096F296 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7B684551D72105C0096F296 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D7B684371D72105C0096F296 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7B684411D72105C0096F296 /* ViewController.swift in Sources */,
+				D7B6843F1D72105C0096F296 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7B684481D72105C0096F296 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7B684511D72105C0096F296 /* mooshimeter_osxTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7B684531D72105C0096F296 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7B6845C1D72105C0096F296 /* mooshimeter_osxUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D7B6844E1D72105C0096F296 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D7B6843A1D72105C0096F296 /* mooshimeter-osx */;
+			targetProxy = D7B6844D1D72105C0096F296 /* PBXContainerItemProxy */;
+		};
+		D7B684591D72105C0096F296 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D7B6843A1D72105C0096F296 /* mooshimeter-osx */;
+			targetProxy = D7B684581D72105C0096F296 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D7B684441D72105C0096F296 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D7B684451D72105C0096F296 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D7B6845E1D72105C0096F296 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D7B6845F1D72105C0096F296 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D7B684611D72105C0096F296 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "mooshimeter-osx/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osx";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D7B684621D72105C0096F296 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "mooshimeter-osx/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osx";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		D7B684641D72105C0096F296 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "mooshimeter-osxTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osxTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mooshimeter-osx.app/Contents/MacOS/mooshimeter-osx";
+			};
+			name = Debug;
+		};
+		D7B684651D72105C0096F296 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "mooshimeter-osxTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osxTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mooshimeter-osx.app/Contents/MacOS/mooshimeter-osx";
+			};
+			name = Release;
+		};
+		D7B684671D72105C0096F296 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "mooshimeter-osxUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osxUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "mooshimeter-osx";
+			};
+			name = Debug;
+		};
+		D7B684681D72105C0096F296 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "mooshimeter-osxUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osxUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "mooshimeter-osx";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D7B684361D72105C0096F296 /* Build configuration list for PBXProject "mooshimeter-osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7B6845E1D72105C0096F296 /* Debug */,
+				D7B6845F1D72105C0096F296 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D7B684601D72105C0096F296 /* Build configuration list for PBXNativeTarget "mooshimeter-osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7B684611D72105C0096F296 /* Debug */,
+				D7B684621D72105C0096F296 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D7B684631D72105C0096F296 /* Build configuration list for PBXNativeTarget "mooshimeter-osxTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7B684641D72105C0096F296 /* Debug */,
+				D7B684651D72105C0096F296 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		D7B684661D72105C0096F296 /* Build configuration list for PBXNativeTarget "mooshimeter-osxUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7B684671D72105C0096F296 /* Debug */,
+				D7B684681D72105C0096F296 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D7B684331D72105C0096F296 /* Project object */;
+}
