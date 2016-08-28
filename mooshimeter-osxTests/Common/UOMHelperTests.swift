@@ -20,44 +20,24 @@ class UOMHelperTests : XCTestCase
 
   func testGetPrefixMultiplier()
   {
-    var prefix: MetricPrefix = .Pico
-    var multiplier = UOMHelper.getPrefixMultiplier(prefix)
-    var isEqual = Double.isEqualWithPrecision(multiplier, arg2: Double(1e-12), precision: UOMHelper.getPrefixPrecision(prefix))
-    XCTAssertTrue(isEqual)
-
-    prefix = .Nano
-    multiplier = UOMHelper.getPrefixMultiplier(prefix)
-    isEqual = Double.isEqualWithPrecision(multiplier, arg2: Double(1e-9), precision: UOMHelper.getPrefixPrecision(prefix))
-    XCTAssertTrue(isEqual)
-
-    prefix = .Micro
-    multiplier = UOMHelper.getPrefixMultiplier(prefix)
-    isEqual = Double.isEqualWithPrecision(multiplier, arg2: Double(1e-6), precision: UOMHelper.getPrefixPrecision(prefix))
-    XCTAssertTrue(isEqual)
-
-    prefix = .Milli
-    multiplier = UOMHelper.getPrefixMultiplier(prefix)
-    isEqual = Double.isEqualWithPrecision(multiplier, arg2: Double(1e-3), precision: UOMHelper.getPrefixPrecision(prefix))
-    XCTAssertTrue(isEqual)
-
-    prefix = .NoPrefix
-    multiplier = UOMHelper.getPrefixMultiplier(prefix)
-    isEqual = Double.isEqualWithPrecision(multiplier, arg2: Double(1), precision: UOMHelper.getPrefixPrecision(prefix))
-    XCTAssertTrue(isEqual)
-
-    prefix = .Kilo
-    multiplier = UOMHelper.getPrefixMultiplier(prefix)
-    isEqual = Double.isEqualWithPrecision(multiplier, arg2: Double(1e3), precision: UOMHelper.getPrefixPrecision(prefix))
-    XCTAssertTrue(isEqual)
-
-    prefix = .Mega
-    multiplier = UOMHelper.getPrefixMultiplier(prefix)
-    isEqual = Double.isEqualWithPrecision(multiplier, arg2: Double(1e6), precision: UOMHelper.getPrefixPrecision(prefix))
-    XCTAssertTrue(isEqual)
-
-    prefix = .Giga
-    multiplier = UOMHelper.getPrefixMultiplier(prefix)
-    isEqual = Double.isEqualWithPrecision(multiplier, arg2: Double(1e9), precision: UOMHelper.getPrefixPrecision(prefix))
-    XCTAssertTrue(isEqual)
+    var test: [MetricPrefix: Double] =
+    [
+      .Pico: 1e-12,
+      .Nano: 1e-9,
+      .Micro: 1e-6,
+      .Milli: 1e-3,
+      .NoPrefix: 1.0,
+      .Kilo: 1e3,
+      .Mega: 1e6,
+      .Giga: 1e9
+    ]
+    
+    for prefix in test.keys
+    {
+      let refValue = test[prefix]
+      let multiplier = UOMHelper.getPrefixMultiplier(prefix)
+      let isEqual = Double.isEqualWithPrecision(multiplier, arg2: refValue!, precision: UOMHelper.getPrefixPrecision(prefix))
+      XCTAssertTrue(isEqual)
+    }
   }
 }
