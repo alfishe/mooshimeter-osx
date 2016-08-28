@@ -9,16 +9,17 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
-
-
-
-  func applicationDidFinishLaunching(aNotification: NSNotification) {
-    // Insert code here to initialize your application
+class AppDelegate: NSObject, NSApplicationDelegate
+{
+  let bleManager = BLEManager()
+  
+  func applicationDidFinishLaunching(aNotification: NSNotification)
+  {
+    bleManager.start()
   }
 
-  func applicationWillTerminate(aNotification: NSNotification) {
-    // Insert code here to tear down your application
+  func applicationWillTerminate(aNotification: NSNotification)
+  {
   }
 
 
