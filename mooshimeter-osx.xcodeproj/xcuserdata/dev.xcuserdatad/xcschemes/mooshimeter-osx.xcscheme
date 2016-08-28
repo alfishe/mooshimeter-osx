@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D7B6843A1D72105C0096F296"
-               BuildableName = "mooshimeter-osx.app"
+               BuildableName = ".app"
                BlueprintName = "mooshimeter-osx"
                ReferencedContainer = "container:mooshimeter-osx.xcodeproj">
             </BuildableReference>
@@ -76,7 +76,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D7B6843A1D72105C0096F296"
-            BuildableName = "mooshimeter-osx.app"
+            BuildableName = ".app"
             BlueprintName = "mooshimeter-osx"
             ReferencedContainer = "container:mooshimeter-osx.xcodeproj">
          </BuildableReference>

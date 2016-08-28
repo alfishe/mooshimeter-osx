@@ -14,6 +14,9 @@ struct Constants
   static let OAD_SERVICE_UUID : String = "1BC5FFC0-0200-62AB-E411-F254E005DBD4"
   
   static let METER_SERVICE: UInt16       = 0xFFA0
+  static let METER_SERVICE_IN: UInt16    = 0xFFA1
+  static let METER_SERVICE_OUT: UInt16   = 0xFFA2
+  
   static let METER_INFO: UInt16          = 0xFFA1
   static let METER_NAME: UInt16          = 0xFFA2
   static let METER_SETTINGS: UInt16      = 0xFFA3
@@ -26,9 +29,6 @@ struct Constants
   static let METER_LOG_DATA: UInt16      = 0xFFAA
   static let METER_TEMP: UInt16          = 0xFFAB
   static let METER_BAT: UInt16           = 0xFFAC
-
-  static let METER_SERIN: UInt16         = 0xFFA1
-  static let METER_SEROUT: UInt16        = 0xFFA2
   
   static let OAD_SERVICE: UInt16         = 0xFFC0
   static let OAD_IMAGE_NOTIFY: UInt16    = 0xFFC1

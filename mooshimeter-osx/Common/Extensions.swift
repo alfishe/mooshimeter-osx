@@ -65,3 +65,101 @@ extension UInt16
         return UInt16.loByte(self)
     }
 }
+
+extension Float
+{
+  static func isEqualWithPrecision(arg1: Float, arg2: Float, precision: Int) -> Bool
+  {
+    var result: Bool = false
+
+    if Float.compareWithPrecision(arg1, arg2: arg2, precision: precision) == 0
+    {
+      result = true
+    }
+
+    return result
+  }
+
+  func isEqualWithPrecision(arg2: Float, precision: Int) -> Bool
+  {
+    let result = Float.isEqualWithPrecision(self, arg2: arg2, precision: precision)
+
+    return result
+  }
+
+  static func compareWithPrecision(arg1: Float, arg2: Float, precision: Int) -> Int
+  {
+      var result: Int = 0
+
+      if fabs(arg1 - arg2) < pow (1, Float(-1 * precision))
+      {
+        // Floats are equal with required precision
+      }
+      else if arg1 > arg2
+      {
+        result = 1
+      }
+      else
+      {
+        result = -1
+      }
+
+    return result
+  }
+
+  func compareWithPrecision(arg2: Float, precision: Int) -> Int
+  {
+    let result = Float.compareWithPrecision(self, arg2: arg2, precision: precision)
+
+    return result
+  }
+}
+
+extension Double
+{
+  static func isEqualWithPrecision(arg1: Double, arg2: Double, precision: Int) -> Bool
+  {
+    var result: Bool = false
+
+    if Double.compareWithPrecision(arg1, arg2: arg2, precision: precision) == 0
+    {
+      result = true
+    }
+
+    return result
+  }
+
+  func isEqualWithPrecision(arg2: Double, precision: Int) -> Bool
+  {
+    let result = Double.isEqualWithPrecision(self, arg2: arg2, precision: precision)
+
+    return result
+  }
+
+  static func compareWithPrecision(arg1: Double, arg2: Double, precision: Int) -> Int
+  {
+    var result: Int = 0
+
+    if fabs(arg1 - arg2) < pow (1, Double(-1 * precision))
+    {
+      // Doubles are equal with required precision
+    }
+    else if arg1 > arg2
+    {
+      result = 1
+    }
+    else
+    {
+      result = -1
+    }
+
+    return result
+  }
+
+  func compareWithPrecision(arg2: Double, precision: Int) -> Int
+  {
+    let result = Double.compareWithPrecision(self, arg2: arg2, precision: precision)
+
+    return result
+  }
+}
