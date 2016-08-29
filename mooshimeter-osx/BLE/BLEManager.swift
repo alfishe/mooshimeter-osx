@@ -15,6 +15,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
   var centralManager: CBCentralManager!
   var peripherals = [String: CBPeripheral]()
+  var peripheralDescriptors = [String: BLEDeviceInformation]()
 
   private var isStarted = false
 
@@ -57,6 +58,18 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     centralManager.cancelPeripheralConnection(peripheral)
   }
 
+  func getPeripheralDescriptor(uuid: String) -> BLEDeviceInformation?
+  {
+    var result: BLEDeviceInformation? = nil
+
+    if self.peripheralDescriptors[uuid] != nil
+    {
+      result = self.peripheralDescriptors[uuid]
+    }
+
+    return result
+  }
+
   //MARK: -
   //MARK: - Private methods
 
@@ -95,35 +108,63 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     print("-> Peripheral '\(name)' \(uuid) discovered")
 
     var isConnectable: Bool = false
-    var manufacturerData: NSData
+    var isSupported: Bool = false
+    var dataServiceUUID: String!
+    var manufacturerData: UInt32 = 0xFFFFFFFF
 
     if let value = advertisementData["kCBAdvDataIsConnectable"]
     {
       isConnectable = value as! Bool
     }
 
+    // Extract UUID for data service (to distinct normal and OAD modes mostly)
+    if let value = advertisementData["kCBAdvDataServiceUUIDs"]
+    {
+      if value is NSArray
+      {
+        var array = value as! NSArray
+
+        if array.count > 0  && array[0] is CBUUID
+        {
+          dataServiceUUID = (array[0] as! CBUUID).UUIDString
+        }
+      }
+    }
+
+    // Extract manufacturer data (Firmware build timestamp for now)
     if let value = advertisementData["kCBAdvDataManufacturerData"]
     {
       if value is NSData
       {
-        manufacturerData = value as! NSData
+        let data = value as! NSData
+        data.getBytes(&manufacturerData, length: sizeof(UInt32))
+
+        // Verify if the device supported in current application
+        isSupported = Device.isDeviceSupported(manufacturerData)
       }
     }
 
-    if isConnectable
+    if isConnectable && isSupported
     {
       print("Peripheral is connectable (kCBAdvDataIsConnectable: 1)")
 
       // Check whether peripheral already known
       if self.peripherals[uuid] != nil
       {
-        // Free reference for ther peripheral known with same UUID
+        // Free reference for the peripheral known with same UUID
         self.peripherals.removeValueForKey(uuid)
       }
 
       // Register peripheral in collection to keep reference (otherwise will be freed after leaving current method)
       peripheral.delegate = self
       peripherals[uuid] = peripheral
+
+      // Put associated advertisement data
+      var descriptor = BLEDeviceInformation()
+      descriptor.isSupported = isSupported
+      descriptor.dataServiceUUID = dataServiceUUID
+      descriptor.manufacturerData = manufacturerData
+      self.peripheralDescriptors[uuid] = descriptor
 
       self.centralManager.connectPeripheral(peripheral, options: nil)
 
@@ -164,6 +205,11 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     if self.peripherals[uuid] != nil
     {
       self.peripherals.removeValueForKey(uuid)
+    }
+
+    if self.peripheralDescriptors[uuid] != nil
+    {
+      self.peripheralDescriptors.removeValueForKey(uuid)
     }
 
     // Low level notification about CoreBluetooth peripheral disconnection
@@ -239,8 +285,17 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
         var manufacturerName = String(data: characteristic.value!, encoding: NSUTF8StringEncoding)
       case Constants.GATT_DI_MODEL_NUMBER_UUID:
         var modelNumber = String(data: characteristic.value!, encoding: NSUTF8StringEncoding)
+      case Constants.METER_SERVICE_IN_UUID:
+        var value = characteristic.value
+      case Constants.METER_SERVICE_OUT_UUID:
+        var falue = characteristic.value
       default:
-        print("Unknown characteristic ID: \(characteristic.UUID.UUIDString) Value: \(characteristic.value!)")
+        var value: NSData!
+        if characteristic.value != nil
+        {
+          value = characteristic.value!
+        }
+        print("Unknown characteristic ID: \(characteristic.UUID.UUIDString) Value: \(value)")
     }
   }
 

@@ -13,9 +13,15 @@ class Device: NSObject
 
   //MARK: -
   //MARK: Class methods
-  class func isBLEDeviceSupported() -> Bool
+  class func isDeviceSupported(version: UInt32) -> Bool
   {
-    let result = false
+    var result = false
+
+    // Only versions after ... supported
+    if version >= 1454355414
+    {
+      result = true
+    }
 
     return result
   }

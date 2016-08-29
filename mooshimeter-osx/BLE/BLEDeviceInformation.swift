@@ -9,4 +9,8 @@ class BLEDeviceInformation: NSObject
 {
     var manufacturerName: String?
     var modelNumber: String?
+
+    var isSupported: Bool = false
+    var manufacturerData: UInt32!
+    var dataServiceUUID: String?
 }
