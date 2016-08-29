@@ -14,18 +14,40 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   static let sharedInstance = BLEManager()
 
   var centralManager: CBCentralManager!
-  var peripheral: CBPeripheral?
-  var service: CBService?
-  var characteristic: CBCharacteristic?
-  var deviceInformation = BLEDeviceInformation()
-  
+  var peripherals = [String: CBPeripheral]()
+
+  private var isStarted = false
+
+  override init()
+  {
+    super.init()
+
+    self.centralManager = CBCentralManager(delegate: self, queue: DispatchLevel.Utility.dispatchQueue)
+  }
+
   func start()
   {
-    self.centralManager = CBCentralManager(delegate: self, queue: nil)
+    if !isStarted
+    {
+      isStarted = true
+
+      if self.centralManager.state == .PoweredOn
+      {
+        self.scanForPeripherals()
+      }
+    }
+  }
+
+  func stop()
+  {
+    isStarted = false
+    self.centralManager.stopScan()
   }
   
   func scanForPeripherals()
   {
+    print("scanForPeripherals")
+
     let serviceUUIDs:[CBUUID] = [ CBUUID(string: Constants.METER_SERVICE_UUID) ]
     self.centralManager.scanForPeripheralsWithServices(serviceUUIDs, options: nil)
   }
@@ -48,7 +70,10 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     {
       case .PoweredOn:
         print("Central State PoweredOn")
-        self.scanForPeripherals()
+        if isStarted
+        {
+          self.scanForPeripherals()
+        }
       case .PoweredOff:
         print("Central State PoweredOFF")
       case .Resetting:
@@ -61,16 +86,54 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
         print("Central State Unsupported")
     }
   }
-  
-  func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber)
+
+  func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String:AnyObject], RSSI: NSNumber)
   {
-    print("-> Peripheral '\(peripheral.name!)' \(peripheral.identifier.UUIDString) discovered")
+    let name = peripheral.name!
+    let uuid = peripheral.identifier.UUIDString
 
-    self.centralManager.stopScan()
+    print("-> Peripheral '\(name)' \(uuid) discovered")
 
-    self.peripheral = peripheral
-    self.peripheral?.delegate = self
-    self.centralManager.connectPeripheral(self.peripheral!, options: nil)
+    var isConnectable: Bool = false
+    var manufacturerData: NSData
+
+    if let value = advertisementData["kCBAdvDataIsConnectable"]
+    {
+      isConnectable = value as! Bool
+    }
+
+    if let value = advertisementData["kCBAdvDataManufacturerData"]
+    {
+      if value is NSData
+      {
+        manufacturerData = value as! NSData
+      }
+    }
+
+    if isConnectable
+    {
+      print("Peripheral is connectable (kCBAdvDataIsConnectable: 1)")
+
+      // Check whether peripheral already known
+      if self.peripherals[uuid] != nil
+      {
+        // Free reference for ther peripheral known with same UUID
+        self.peripherals.removeValueForKey(uuid)
+      }
+
+      // Register peripheral in collection to keep reference (otherwise will be freed after leaving current method)
+      peripheral.delegate = self
+      peripherals[uuid] = peripheral
+
+      self.centralManager.connectPeripheral(peripheral, options: nil)
+
+      // TODO: adapt for multiple devices (i.e. stop scan on timeout, not on first device connected)
+      self.centralManager.stopScan()
+    }
+    else
+    {
+      print("Peripheral is not connectable")
+    }
   }
   
   func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral)
@@ -87,7 +150,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     // High level notification about new device connected
     NSNotificationCenter.defaultCenter().postNotificationName(Constants.NOTIFICATION_DEVICE_CONNECTED, object: device)
 
-    self.peripheral?.discoverServices(nil)
+    peripheral.discoverServices(nil)
   }
 
   func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?)
@@ -96,6 +159,12 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     let uuid = peripheral.identifier.UUIDString
 
     print("-> Peripheral '\(name)' \(uuid) disconnected")
+
+    // Free reference to the peripheral
+    if self.peripherals[uuid] != nil
+    {
+      self.peripherals.removeValueForKey(uuid)
+    }
 
     // Low level notification about CoreBluetooth peripheral disconnection
     NSNotificationCenter.defaultCenter().postNotificationName(Constants.NOTIFICATION_PERIPHERAL_DISCONNECTED, object: peripheral.copy())
@@ -112,7 +181,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   
   func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?)
   {
-    print("Ca a fail... C'est pas bien.")
+    print("Connection to \(peripheral.identifier.UUIDString) failed")
   }
 
   //MARK: -
@@ -167,9 +236,9 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     switch characteristicUUID
     {
       case Constants.GATT_DI_MANUFACTURER_NAME_UUID:
-        self.deviceInformation.manufacturerName = String(data: characteristic.value!, encoding: NSUTF8StringEncoding)
+        var manufacturerName = String(data: characteristic.value!, encoding: NSUTF8StringEncoding)
       case Constants.GATT_DI_MODEL_NUMBER_UUID:
-        self.deviceInformation.modelNumber = String(data: characteristic.value!, encoding: NSUTF8StringEncoding)
+        var modelNumber = String(data: characteristic.value!, encoding: NSUTF8StringEncoding)
       default:
         print("Unknown characteristic ID: \(characteristic.UUID.UUIDString) Value: \(characteristic.value!)")
     }
