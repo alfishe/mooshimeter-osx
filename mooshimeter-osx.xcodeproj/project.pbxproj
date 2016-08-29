@@ -19,6 +19,8 @@
 		18415A90E3C69944DB3539F2 /* DeviceManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184154BB0062952AADAD23EE /* DeviceManagerTests.swift */; };
 		18415B3041238E813FA10BFB /* MeterReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415C00509A3EFAC52A9C39 /* MeterReading.swift */; };
 		18415B7D2BC34657152F9499 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415C878C0E2852DD6486D5 /* Device.swift */; };
+		18415BAF73733CBD25D9674E /* DeviceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415588608CA78E46BFA694 /* DeviceProtocol.swift */; };
+		18415C272C09D5FC0E13ACBF /* ThreadHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184153A80C70D13DA19B6CF7 /* ThreadHelper.swift */; };
 		18415C347FBA20D79C9D8504 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184150258C12D04E34C1230E /* Extensions.swift */; };
 		D7B6843F1D72105C0096F296 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6843E1D72105C0096F296 /* AppDelegate.swift */; };
 		D7B684411D72105C0096F296 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684401D72105C0096F296 /* ViewController.swift */; };
@@ -31,6 +33,7 @@
 		D7B684711D7263810096F296 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B684701D7263810096F296 /* libz.tbd */; };
 		D7B684741D7269F40096F296 /* TemperatureHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684731D7269F40096F296 /* TemperatureHelper.swift */; };
 		D7B684751D72A0910096F296 /* UOMHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415A9C28B1CD4E2742CB04 /* UOMHelperTests.swift */; };
+		D7B684781D73A6FD0096F296 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684771D73A6FD0096F296 /* Async.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,9 +56,11 @@
 /* Begin PBXFileReference section */
 		184150258C12D04E34C1230E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Common/Extensions.swift; sourceTree = "<group>"; };
 		18415283E886C7AFE7993ED0 /* BLECharacteristic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLECharacteristic.swift; path = BLE/BLECharacteristic.swift; sourceTree = "<group>"; };
+		184153A80C70D13DA19B6CF7 /* ThreadHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ThreadHelper.swift; path = Common/ThreadHelper.swift; sourceTree = "<group>"; };
 		184153FE97E9B80263791AA4 /* Enumerations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Enumerations.swift; path = Common/Enumerations.swift; sourceTree = "<group>"; };
 		184154BB0062952AADAD23EE /* DeviceManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceManagerTests.swift; path = Device/DeviceManagerTests.swift; sourceTree = "<group>"; };
 		184154E3BF1F96E0AF50E1EC /* UOMHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UOMHelper.swift; path = Common/UOMHelper.swift; sourceTree = "<group>"; };
+		18415588608CA78E46BFA694 /* DeviceProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceProtocol.swift; sourceTree = "<group>"; };
 		1841563FACC0086580FF4C2B /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		1841592F53318E551740F95D /* deflate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = deflate.swift; path = 3rdParty/Deflate/deflate.swift; sourceTree = "<group>"; };
 		184159A377214E7ABA7DCE71 /* FloatHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FloatHelper.swift; path = Common/FloatHelper.swift; sourceTree = "<group>"; };
@@ -81,6 +86,7 @@
 		D7B6846D1D721AC70096F296 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Common/Constants.swift; sourceTree = "<group>"; };
 		D7B684701D7263810096F296 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D7B684731D7269F40096F296 /* TemperatureHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemperatureHelper.swift; path = Common/TemperatureHelper.swift; sourceTree = "<group>"; };
+		D7B684771D73A6FD0096F296 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Async.swift; path = 3rdParty/Async/Async.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +120,7 @@
 			children = (
 				1841563FACC0086580FF4C2B /* DeviceManager.swift */,
 				18415C878C0E2852DD6486D5 /* Device.swift */,
+				18415588608CA78E46BFA694 /* DeviceProtocol.swift */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -129,6 +136,7 @@
 		184156B74954B5CBF091DF4E /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				D7B684761D73A6ED0096F296 /* Async */,
 				184158F84D6CD5D26CA68EBC /* Deflate */,
 				18415C2440D51BBC26383224 /* CRC32 */,
 			);
@@ -245,6 +253,7 @@
 				18415E971ED3D56D67C58AF9 /* DisplayFormatHelper.swift */,
 				184154E3BF1F96E0AF50E1EC /* UOMHelper.swift */,
 				184159A377214E7ABA7DCE71 /* FloatHelper.swift */,
+				184153A80C70D13DA19B6CF7 /* ThreadHelper.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -264,6 +273,14 @@
 			);
 			name = Frameworks;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		D7B684761D73A6ED0096F296 /* Async */ = {
+			isa = PBXGroup;
+			children = (
+				D7B684771D73A6FD0096F296 /* Async.swift */,
+			);
+			name = Async;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -404,6 +421,7 @@
 				1841598E6F48B0025FF2EA5D /* BLEDeviceInformation.swift in Sources */,
 				18415505F6D205704D1F5FDF /* DeviceManager.swift in Sources */,
 				18415B7D2BC34657152F9499 /* Device.swift in Sources */,
+				D7B684781D73A6FD0096F296 /* Async.swift in Sources */,
 				D7B684741D7269F40096F296 /* TemperatureHelper.swift in Sources */,
 				184150444E0895218166D5F1 /* deflate.swift in Sources */,
 				1841584B0524455A315CA657 /* Enumerations.swift in Sources */,
@@ -413,6 +431,8 @@
 				184157478653F7A07C53A448 /* DisplayFormatHelper.swift in Sources */,
 				184151328AE83E9E3640FF80 /* UOMHelper.swift in Sources */,
 				18415555F0E172E7CC4561B4 /* FloatHelper.swift in Sources */,
+				18415BAF73733CBD25D9674E /* DeviceProtocol.swift in Sources */,
+				18415C272C09D5FC0E13ACBF /* ThreadHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

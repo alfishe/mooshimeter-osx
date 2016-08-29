@@ -4,22 +4,39 @@
 //
 
 import Foundation
+import CoreBluetooth
 
 class Device: NSObject
 {
-  var UUID: String = ""
+  let peripheral: CBPeripheral
+  let UUID: String
+
+  //MARK: -
+  //MARK: Class methods
+  class func isBLEDeviceSupported() -> Bool
+  {
+    let result = false
+
+    return result
+  }
 
   //MARK: -
   //MARK: Initialization and status methods
 
-  func initialize()
+  init(peripheral: CBPeripheral)
   {
-
+    self.peripheral = peripheral
+    self.UUID = peripheral.identifier.UUIDString
   }
 
   func isConnected() -> Bool
   {
-    let result = false
+    var result = false
+
+    if peripheral.state == .Connected
+    {
+      result = true
+    }
 
     return result
   }

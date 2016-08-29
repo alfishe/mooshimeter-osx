@@ -28,7 +28,12 @@ class MeterReading
 
   func isInRange() -> Bool
   {
-    let result = false
+    var result = false
+
+    if self.value < self.maxValue
+    {
+      result = false
+    }
 
     return result
   }
@@ -54,4 +59,8 @@ class MeterReading
 
     return result
   }
+
+  //MARK: -
+  //MARK: Helper methods
+
 }

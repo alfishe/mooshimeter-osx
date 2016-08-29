@@ -32,15 +32,15 @@ class DeviceManagerTests: XCTestCase
     device2.UUID = testUUID2
     
     
-    var result = deviceManager.getMeterForUUID(testUUID1)
+    var result = deviceManager.getDeviceForUUID(testUUID1)
     XCTAssertNil(result)
     
     deviceManager.addMeter(device1)
-    result = deviceManager.getMeterForUUID(testUUID1)
+    result = deviceManager.getDeviceForUUID(testUUID1)
     XCTAssertNotNil(result)
     
     deviceManager.addMeter(device2)
-    result = deviceManager.getMeterForUUID(testUUID2)
+    result = deviceManager.getDeviceForUUID(testUUID2)
     XCTAssertNotNil(result)
     
     let count = deviceManager.count()
@@ -57,15 +57,15 @@ class DeviceManagerTests: XCTestCase
     device2.UUID = testUUID2
     
     
-    var result = deviceManager.getMeterForUUID(testUUID1)
+    var result = deviceManager.getDeviceForUUID(testUUID1)
     XCTAssertNil(result)
     
     deviceManager.addMeter(device1)
-    result = deviceManager.getMeterForUUID(testUUID1)
+    result = deviceManager.getDeviceForUUID(testUUID1)
     XCTAssertNotNil(result)
     
     deviceManager.addMeter(device2)
-    result = deviceManager.getMeterForUUID(testUUID2)
+    result = deviceManager.getDeviceForUUID(testUUID2)
     XCTAssertNotNil(result)
     
     var count = deviceManager.count()
@@ -73,14 +73,14 @@ class DeviceManagerTests: XCTestCase
 
     
     deviceManager.removeMeter(device1)
-    result = deviceManager.getMeterForUUID(testUUID1)
+    result = deviceManager.getDeviceForUUID(testUUID1)
     XCTAssertNil(result)
     
     count = deviceManager.count()
     XCTAssertEqual(count, 1)
     
     deviceManager.removeMeter(device2)
-    result = deviceManager.getMeterForUUID(testUUID2)
+    result = deviceManager.getDeviceForUUID(testUUID2)
     XCTAssertNil(result)
     
     count = deviceManager.count()

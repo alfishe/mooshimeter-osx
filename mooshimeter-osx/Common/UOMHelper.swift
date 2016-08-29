@@ -9,12 +9,15 @@ class UOMHelper : NSObject
 {
   static var prefixMultipliers = [MetricPrefix: Double]()
   static var prefixPrecision = [MetricPrefix: Int]()
+  static var prefixShortName = [MetricPrefix: String]()
+
   private static var initialized = false
 
   override class func initialize()
   {
     super.initialize()
 
+    // Multipliers for every metric prefix
     prefixMultipliers[.Pico] = 1e-12
     prefixMultipliers[.Nano] = 1e-9
     prefixMultipliers[.Micro] = 1e-6
@@ -36,6 +39,16 @@ class UOMHelper : NSObject
     prefixPrecision[.Mega] = 6
     prefixPrecision[.Giga] = 6
 
+    // Prefixes to be used on value display
+    // Can be read from localization file
+    prefixShortName[.Pico] = "p"
+    prefixShortName[.Nano] = "n"
+    prefixShortName[.Micro] = "\u{00B5}"
+    prefixShortName[.Milli] = "m"
+    prefixShortName[.NoPrefix] = ""
+    prefixShortName[.Kilo] = "k"
+    prefixShortName[.Mega] = "M"
+    prefixShortName[.Giga] = "G"
 
     initialized = true
   }

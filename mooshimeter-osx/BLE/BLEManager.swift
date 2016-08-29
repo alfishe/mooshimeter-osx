@@ -11,11 +11,13 @@ import CoreBluetooth
 
 class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 {
+  static let sharedInstance = BLEManager()
+
   var centralManager: CBCentralManager!
   var peripheral: CBPeripheral?
   var service: CBService?
   var characteristic: CBCharacteristic?
-  var deviceInfromation = BLEDeviceInformation()
+  var deviceInformation = BLEDeviceInformation()
   
   func start()
   {
@@ -26,6 +28,11 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   {
     let serviceUUIDs:[CBUUID] = [ CBUUID(string: Constants.METER_SERVICE_UUID) ]
     self.centralManager.scanForPeripheralsWithServices(serviceUUIDs, options: nil)
+  }
+
+  func disconnectPeripheral(peripheral: CBPeripheral)
+  {
+    centralManager.cancelPeripheralConnection(peripheral)
   }
 
   //MARK: -
@@ -57,7 +64,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   
   func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber)
   {
-    print("Peripheral discovered")
+    print("-> Peripheral '\(peripheral.name!)' \(peripheral.identifier.UUIDString) discovered")
 
     self.centralManager.stopScan()
 
@@ -68,8 +75,39 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   
   func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral)
   {
-    print("Connected to '\(peripheral.name!)'")
+    print("-> Connected to '\(peripheral.name!)'")
+
+    // Low level notification about CoreBluetooth peripheral connected
+    NSNotificationCenter.defaultCenter().postNotificationName(Constants.NOTIFICATION_PERIPHERAL_CONNECTED, object: peripheral.copy())
+
+    // Register peripheral in DeviceManager
+    let device = Device(peripheral: peripheral)
+    DeviceManager.sharedInstance.addMeter(device)
+
+    // High level notification about new device connected
+    NSNotificationCenter.defaultCenter().postNotificationName(Constants.NOTIFICATION_DEVICE_CONNECTED, object: device)
+
     self.peripheral?.discoverServices(nil)
+  }
+
+  func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?)
+  {
+    let name = peripheral.name!
+    let uuid = peripheral.identifier.UUIDString
+
+    print("-> Peripheral '\(name)' \(uuid) disconnected")
+
+    // Low level notification about CoreBluetooth peripheral disconnection
+    NSNotificationCenter.defaultCenter().postNotificationName(Constants.NOTIFICATION_PERIPHERAL_DISCONNECTED, object: peripheral.copy())
+
+    // Try to get information about corresponding device
+    let device = DeviceManager.sharedInstance.getDeviceForUUID(uuid)
+
+    if device != nil
+    {
+      // High level notification about device disconnection
+      NSNotificationCenter.defaultCenter().postNotificationName(Constants.NOTIFICATION_DEVICE_DISCONNECTED, object: device)
+    }
   }
   
   func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?)
@@ -87,12 +125,13 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       print("Registered service: \(service.UUID.UUIDString)")
       if service.UUID == CBUUID.expandToUUID(Constants.GATT_DEVICE_INFORMATION)
       {
-        print("Device information service found")
-        peripheral.discoverCharacteristics(nil, forService: service)
+        print("Device information service found. Won't discover cause Mooshimeter doesn't fill out it properly")
+        //peripheral.discoverCharacteristics(nil, forService: service)
       }
       else if service.UUID == CBUUID.expandToMooshimUUID(Constants.METER_SERVICE)
       {
         print("Mooshimeter service found")
+        peripheral.discoverCharacteristics(nil, forService: service)
       }
     }
   }
@@ -104,7 +143,17 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       for characteristic in service.characteristics!
       {
         let characteristicUUID: String = characteristic.UUID.UUIDString
-        print("Discovered characteristic: \(characteristicUUID)")
+        print("DI: Discovered characteristic: \(characteristicUUID)")
+
+        peripheral.readValueForCharacteristic(characteristic)
+      }
+    }
+    else if service.UUID == CBUUID.expandToMooshimUUID(Constants.METER_SERVICE)
+    {
+      for characteristic in service.characteristics!
+      {
+        let characteristicUUID: String = characteristic.UUID.UUIDString
+        print("MM: Discovered characteristic: \(characteristicUUID)")
 
         peripheral.readValueForCharacteristic(characteristic)
       }
@@ -118,9 +167,9 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     switch characteristicUUID
     {
       case Constants.GATT_DI_MANUFACTURER_NAME_UUID:
-        self.deviceInfromation.manufacturerName = String(data: characteristic.value!, encoding: NSUTF8StringEncoding)
+        self.deviceInformation.manufacturerName = String(data: characteristic.value!, encoding: NSUTF8StringEncoding)
       case Constants.GATT_DI_MODEL_NUMBER_UUID:
-        self.deviceInfromation.modelNumber = String(data: characteristic.value!, encoding: NSUTF8StringEncoding)
+        self.deviceInformation.modelNumber = String(data: characteristic.value!, encoding: NSUTF8StringEncoding)
       default:
         print("Unknown characteristic ID: \(characteristic.UUID.UUIDString) Value: \(characteristic.value!)")
     }
