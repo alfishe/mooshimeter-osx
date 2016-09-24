@@ -22,6 +22,8 @@
 		18415BAF73733CBD25D9674E /* DeviceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415588608CA78E46BFA694 /* DeviceProtocol.swift */; };
 		18415C272C09D5FC0E13ACBF /* ThreadHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184153A80C70D13DA19B6CF7 /* ThreadHelper.swift */; };
 		18415C347FBA20D79C9D8504 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184150258C12D04E34C1230E /* Extensions.swift */; };
+		D7A8E8571D93565A00606FAE /* DeviceCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A8E8561D93565A00606FAE /* DeviceCommand.swift */; };
+		D7A8E8591D936DB000606FAE /* ConfigTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A8E8581D936DB000606FAE /* ConfigTree.swift */; };
 		D7B6843F1D72105C0096F296 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6843E1D72105C0096F296 /* AppDelegate.swift */; };
 		D7B684411D72105C0096F296 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684401D72105C0096F296 /* ViewController.swift */; };
 		D7B684431D72105C0096F296 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7B684421D72105C0096F296 /* Assets.xcassets */; };
@@ -70,6 +72,8 @@
 		18415C00509A3EFAC52A9C39 /* MeterReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeterReading.swift; sourceTree = "<group>"; };
 		18415C878C0E2852DD6486D5 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		18415E971ED3D56D67C58AF9 /* DisplayFormatHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DisplayFormatHelper.swift; path = Common/DisplayFormatHelper.swift; sourceTree = "<group>"; };
+		D7A8E8561D93565A00606FAE /* DeviceCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCommand.swift; sourceTree = "<group>"; };
+		D7A8E8581D936DB000606FAE /* ConfigTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTree.swift; sourceTree = "<group>"; };
 		D7B6843B1D72105C0096F296 /* mooshimeter-osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mooshimeter-osx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B6843E1D72105C0096F296 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D7B684401D72105C0096F296 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -121,6 +125,8 @@
 				1841563FACC0086580FF4C2B /* DeviceManager.swift */,
 				18415C878C0E2852DD6486D5 /* Device.swift */,
 				18415588608CA78E46BFA694 /* DeviceProtocol.swift */,
+				D7A8E8561D93565A00606FAE /* DeviceCommand.swift */,
+				D7A8E8581D936DB000606FAE /* ConfigTree.swift */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -346,18 +352,21 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = alfishe;
 				TargetAttributes = {
 					D7B6843A1D72105C0096F296 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					D7B6844B1D72105C0096F296 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = D7B6843A1D72105C0096F296;
 					};
 					D7B684561D72105C0096F296 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = D7B6843A1D72105C0096F296;
 					};
 				};
@@ -424,7 +433,9 @@
 				D7B684781D73A6FD0096F296 /* Async.swift in Sources */,
 				D7B684741D7269F40096F296 /* TemperatureHelper.swift in Sources */,
 				184150444E0895218166D5F1 /* deflate.swift in Sources */,
+				D7A8E8591D936DB000606FAE /* ConfigTree.swift in Sources */,
 				1841584B0524455A315CA657 /* Enumerations.swift in Sources */,
+				D7A8E8571D93565A00606FAE /* DeviceCommand.swift in Sources */,
 				184152FDB6605FFCD2FCA6B7 /* crc32.swift in Sources */,
 				184158448F15BAC709964658 /* BLECharacteristic.swift in Sources */,
 				18415B3041238E813FA10BFB /* MeterReading.swift in Sources */,
@@ -495,8 +506,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -540,8 +553,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -560,6 +575,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -572,6 +588,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osx";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -584,6 +601,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osx";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};
@@ -596,6 +614,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osxTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mooshimeter-osx.app/Contents/MacOS/mooshimeter-osx";
 			};
 			name = Debug;
@@ -609,6 +628,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osxTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mooshimeter-osx.app/Contents/MacOS/mooshimeter-osx";
 			};
 			name = Release;
@@ -621,6 +641,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osxUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = "mooshimeter-osx";
 			};
 			name = Debug;
@@ -633,6 +654,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osxUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = "mooshimeter-osx";
 			};
 			name = Release;

@@ -61,6 +61,9 @@ struct Constants
   static let GATT_DI_SYSTEM_ID_UUID: String = "0x2A23"
   static let GATT_DI_IEEE_11073_20601_UUID: String = "2A2A"
   static let GATT_DI_PNP_ID_UUID: String = "2A50"
+  
+  // Transmission parameters
+  static let DEVICE_PACKET_SIZE: Int = 20
 
   // Notification name IDs
   static let NOTIFICATION_DEVICE_CONNECTED = "DEVICE_CONNECTED"

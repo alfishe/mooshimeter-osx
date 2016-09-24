@@ -4,6 +4,7 @@
 //
 
 import XCTest
+import CoreBluetooth
 @testable import mooshimeter_osx
 
 class DeviceManagerTests: XCTestCase
@@ -24,6 +25,7 @@ class DeviceManagerTests: XCTestCase
 
   func testAddMeter()
   {
+    let peripheral = CBPeripheral()
     let testUUID1 = "1234-5678-9012"
     let testUUID2 = "2222-2222-2222"
     let device1 = Device()

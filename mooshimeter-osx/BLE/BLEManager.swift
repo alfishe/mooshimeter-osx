@@ -55,6 +55,8 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
   func disconnectPeripheral(peripheral: CBPeripheral)
   {
+    print("disconnectPeripheral")
+    
     centralManager.cancelPeripheralConnection(peripheral)
   }
 
@@ -122,7 +124,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     {
       if value is NSArray
       {
-        var array = value as! NSArray
+        let array = value as! NSArray
 
         if array.count > 0  && array[0] is CBUUID
         {
@@ -160,7 +162,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       peripherals[uuid] = peripheral
 
       // Put associated advertisement data
-      var descriptor = BLEDeviceInformation()
+      let descriptor = BLEDeviceInformation()
       descriptor.isSupported = isSupported
       descriptor.dataServiceUUID = dataServiceUUID
       descriptor.manufacturerData = manufacturerData
@@ -288,7 +290,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       case Constants.METER_SERVICE_IN_UUID:
         var value = characteristic.value
       case Constants.METER_SERVICE_OUT_UUID:
-        var falue = characteristic.value
+        var value = characteristic.value
       default:
         var value: NSData!
         if characteristic.value != nil
@@ -313,7 +315,8 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
 
 
-  func peripheral(peripheral: CBPeripheral, didWriteValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+  func peripheral(peripheral: CBPeripheral, didWriteValueForCharacteristic characteristic: CBCharacteristic, error: NSError?)
+  {
   }
 
   func peripheral(peripheral: CBPeripheral, didUpdateNotificationStateForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
