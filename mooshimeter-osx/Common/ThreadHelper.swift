@@ -5,36 +5,36 @@
 
 import Foundation
 
-func delay(bySeconds seconds: Double, dispatchLevel: DispatchLevel = .Main, closure: () -> Void)
+func delay(bySeconds seconds: Double, dispatchLevel: DispatchLevel = .main, closure: @escaping () -> Void)
 {
-  let dispatchTime = dispatch_time(DISPATCH_TIME_NOW, Int64(seconds * Double(NSEC_PER_SEC)))
-  dispatch_after(dispatchTime, dispatchLevel.dispatchQueue, closure)
+  let dispatchTime = DispatchTime.now() + Double(Int64(seconds * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+  dispatchLevel.dispatchQueue.asyncAfter(deadline: dispatchTime, execute: closure)
 }
 
 enum DispatchLevel
 {
-  case Main
-  case UserInteractive
-  case UserInitiated
-  case Utility
-  case Background
+  case main
+  case userInteractive
+  case userInitiated
+  case utility
+  case background
 
-  var dispatchQueue: OS_dispatch_queue
+  var dispatchQueue: DispatchQueue
   {
-    var result: OS_dispatch_queue
+    var result: DispatchQueue
 
     switch self
     {
-      case .Main:
-        result = dispatch_get_main_queue()
-      case .UserInteractive:
-        result = dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0)
-      case .UserInitiated:
-        result = dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0)
-      case .Utility:
-        result = dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)
-      case .Background:
-        result = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)
+      case .main:
+        result = DispatchQueue.main
+      case .userInteractive:
+        result = DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive)
+      case .userInitiated:
+        result = DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated)
+      case .utility:
+        result = DispatchQueue.global(qos: DispatchQoS.QoSClass.utility)
+      case .background:
+        result = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
     }
 
     return result

@@ -22,14 +22,14 @@ class UOMHelperTests : XCTestCase
   {
     var test: [MetricPrefix: Double] =
     [
-      .Pico: 1e-12,
-      .Nano: 1e-9,
-      .Micro: 1e-6,
-      .Milli: 1e-3,
-      .NoPrefix: 1.0,
-      .Kilo: 1e3,
-      .Mega: 1e6,
-      .Giga: 1e9
+      .pico: 1e-12,
+      .nano: 1e-9,
+      .micro: 1e-6,
+      .milli: 1e-3,
+      .noPrefix: 1.0,
+      .kilo: 1e3,
+      .mega: 1e6,
+      .giga: 1e9
     ]
     
     for prefix in test.keys

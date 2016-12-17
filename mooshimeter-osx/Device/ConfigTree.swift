@@ -10,25 +10,25 @@ import Foundation
 
 enum ConfigNodeType: Int
 {
-  case PLAIN    = 0   // May be an informational node, or a choice in a chooser
-  case LINK     = 1   // A link to somewhere else in the tree
-  case CHOOSER  = 2   // The children of a CHOOSER can only be selected by one CHOOSER, and a CHOOSER can only select one child
-  case VAL_U8   = 3   // These nodes have readable and writable values of the type specified
-  case VAL_U16  = 4   // These nodes have readable and writable values of the type specified
-  case VAL_U32  = 5   // These nodes have readable and writable values of the type specified
-  case VAL_S8   = 6   // These nodes have readable and writable values of the type specified
-  case VAL_S16  = 7   // These nodes have readable and writable values of the type specified
-  case VAL_S32  = 8   // These nodes have readable and writable values of the type specified
-  case VAL_STR  = 9   // These nodes have readable and writable values of the type specified
-  case VAL_BIN  = 10  // These nodes have readable and writable values of the type specified
-  case VAL_FLT  = 11  // These nodes have readable and writable values of the type specified
-  case NOTSET   = -1  // May be an informational node, or a choice in a chooser
+  case plain    = 0   // May be an informational node, or a choice in a chooser
+  case link     = 1   // A link to somewhere else in the tree
+  case chooser  = 2   // The children of a CHOOSER can only be selected by one CHOOSER, and a CHOOSER can only select one child
+  case val_U8   = 3   // These nodes have readable and writable values of the type specified
+  case val_U16  = 4   // These nodes have readable and writable values of the type specified
+  case val_U32  = 5   // These nodes have readable and writable values of the type specified
+  case val_S8   = 6   // These nodes have readable and writable values of the type specified
+  case val_S16  = 7   // These nodes have readable and writable values of the type specified
+  case val_S32  = 8   // These nodes have readable and writable values of the type specified
+  case val_STR  = 9   // These nodes have readable and writable values of the type specified
+  case val_BIN  = 10  // These nodes have readable and writable values of the type specified
+  case val_FLT  = 11  // These nodes have readable and writable values of the type specified
+  case notset   = -1  // May be an informational node, or a choice in a chooser
 };
 
 class ConfigNode: NSObject
 {
   var code: Int8 = -1
-  var type: ConfigNodeType = .NOTSET
+  var type: ConfigNodeType = .notset
   var name: String = ""
   var value: NSObject = NSObject()
   
@@ -61,7 +61,7 @@ class ConfigNode: NSObject
     
     if !children.isEmpty
     {
-      result += " {" + children.map { $0.description }.joinWithSeparator(", ") + "} "
+      result += " {" + children.map { $0.description }.joined(separator: ", ") + "} "
     }
     
     return result
@@ -69,17 +69,17 @@ class ConfigNode: NSObject
   
   func getIndex() -> Int
   {
-    let result = self.parent?.children.indexOf(self)
+    let result = self.parent?.children.index(of: self)
     
     return result!
   }
   
-  func addChild(child: ConfigNode)
+  func addChild(_ child: ConfigNode)
   {
     children.append(child)
   }
   
-  func getChild(name: String) -> ConfigNode?
+  func getChild(_ name: String) -> ConfigNode?
   {
     let result = children.filter{ $0.name == name }.first
     
@@ -88,28 +88,28 @@ class ConfigNode: NSObject
   
   //MARK: External interfacing
   
-  func parseValueString(value: String) -> NSObject?
+  func parseValueString(_ value: String) -> NSObject?
   {
     var result: NSObject? = nil
     
     switch type
     {
-      case .PLAIN:
+      case .plain:
         result = nil
-      case .CHOOSER:
-        result = Int(value)
-      case .LINK:
+      case .chooser:
+        result = Int(value) as NSObject?
+      case .link:
         result = nil
-      case .VAL_S8, .VAL_S16, .VAL_S32:
-        result = Int(value)
-      case .VAL_U8, .VAL_U16, .VAL_U32:
-        result = UInt(value)
-      case .VAL_STR:
-        result = value
-      case .VAL_BIN:
+      case .val_S8, .val_S16, .val_S32:
+        result = Int(value) as NSObject?
+      case .val_U8, .val_U16, .val_U32:
+        result = UInt(value) as NSObject?
+      case .val_STR:
+        result = value as NSObject?
+      case .val_BIN:
         print("parseValueString: VAL_BIN type not implemented yet")
-      case .VAL_FLT:
-        result = Float(value)
+      case .val_FLT:
+        result = Float(value) as NSObject?
       default:
         result = nil
     }
@@ -117,39 +117,39 @@ class ConfigNode: NSObject
     return result
   }
   
-  func packToSerial(value: NSObject) -> NSMutableData
+  func packToSerial(_ value: NSObject) -> NSMutableData
   {
     let result: NSMutableData = NSMutableData()
     
     var opcode: UInt8 = UInt8(self.code) | 0x80
-    result.appendBytes(&opcode, length: 1)
+    result.append(&opcode, length: 1)
     
     switch type
     {
-      case .PLAIN:
+      case .plain:
         break
-      case .CHOOSER:
-        var byte = (value as! NSNumber).unsignedCharValue
-        result.appendBytes(&byte, length: 1)
-      case .VAL_U8, .VAL_S8:
-        var byte = (value as! NSNumber).unsignedCharValue
-        result.appendBytes(&byte, length: 1)
-      case .VAL_U16, .VAL_S16:
-        var short = (value as! NSNumber).unsignedShortValue
-        result.appendBytes(&short, length: 2)
-      case .VAL_U32, .VAL_S32:
-        var long = (value as! NSNumber).unsignedIntegerValue
-        result.appendBytes(&long, length: 4)
-      case .VAL_STR:
+      case .chooser:
+        var byte = (value as! NSNumber).uint8Value
+        result.append(&byte, length: 1)
+      case .val_U8, .val_S8:
+        var byte = (value as! NSNumber).uint8Value
+        result.append(&byte, length: 1)
+      case .val_U16, .val_S16:
+        var short = (value as! NSNumber).uint16Value
+        result.append(&short, length: 2)
+      case .val_U32, .val_S32:
+        var long = (value as! NSNumber).uintValue
+        result.append(&long, length: 4)
+      case .val_STR:
         let strValue = String(value as! NSString)
         var len: Int = strValue.characters.count
-        result.appendBytes(&len, length: 2)
-        result.appendBytes(strValue, length: len)
-      case .VAL_BIN:
+        result.append(&len, length: 2)
+        result.append(strValue, length: len)
+      case .val_BIN:
         print("packToSerial: VAL_BIN type not implemented yet")
-      case .VAL_FLT:
+      case .val_FLT:
         var floatValue: Float = (value as! NSNumber).floatValue
-        result.appendBytes(&floatValue, length: 4)
+        result.append(&floatValue, length: 4)
       default:
         print("packToSerial: Unknown node type")
     }
@@ -168,24 +168,24 @@ class ConfigTree: NSObject
   
   //MARK: Methods
   
-  func attach(device: Device)
+  func attach(_ device: Device)
   {
     self.device = device
   }
   
-  func sendBytes(payload: NSData)
+  func sendBytes(_ payload: Data)
   {
-    if payload.length > (Constants.DEVICE_PACKET_SIZE - 1)
+    if payload.count > (Constants.DEVICE_PACKET_SIZE - 1)
     {
-      print("Tree:sendBytes payload is too long \(payload.length)")
+      print("Tree:sendBytes payload is too long \(payload.count)")
       return
     }
     
     let wrappedPayload: NSMutableData = NSMutableData(capacity: Constants.DEVICE_PACKET_SIZE)!
     
     // Prepend with packet number
-    wrappedPayload.appendBytes(&sendPacketNum, length: 1)
-    wrappedPayload.appendData(payload)
+    wrappedPayload.append(&sendPacketNum, length: 1)
+    wrappedPayload.append(payload)
     
     let sentPacketNum: UInt8 = sendPacketNum
     

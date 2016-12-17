@@ -7,7 +7,7 @@ import Foundation
 
 class DisplayFormatHelper
 {
-  class func printReading(reading: MeterReading)
+  class func printReading(_ reading: MeterReading)
   {
 
   }

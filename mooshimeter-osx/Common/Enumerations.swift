@@ -5,32 +5,32 @@
 
 enum ChannelType
 {
-  case Channel1
-  case Channel2
-  case Math
+  case channel1
+  case channel2
+  case math
 }
 
 enum MetricPrefix
 {
-  case Pico
-  case Nano
-  case Micro
-  case Milli
-  case NoPrefix
-  case Kilo
-  case Mega
-  case Giga
+  case pico
+  case nano
+  case micro
+  case milli
+  case noPrefix
+  case kilo
+  case mega
+  case giga
 }
 
 enum UnitsOfMeasure
 {
-  case Undefined
-  case DegreesC
-  case DegreesK
-  case DegreeesF
-  case Volts
-  case Ampers
-  case Ohms
-  case Watts
-  case Decibels
+  case undefined
+  case degreesC
+  case degreesK
+  case degreeesF
+  case volts
+  case ampers
+  case ohms
+  case watts
+  case decibels
 }

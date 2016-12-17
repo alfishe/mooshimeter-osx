@@ -7,6 +7,6 @@ import Foundation
 
 protocol DeviceProtocol
 {
-  func setName(name: String)
+  func setName(_ name: String)
   func getName() -> String
 }

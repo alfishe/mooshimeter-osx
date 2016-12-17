@@ -19,13 +19,13 @@ class DeviceManager: NSObject
     super.init()
 
     // Subscribe for notifications about device disconnection from BLEManager
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.deviceDisconnected), name: Constants.NOTIFICATION_DEVICE_DISCONNECTED, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(self.deviceDisconnected), name: NSNotification.Name(rawValue: Constants.NOTIFICATION_DEVICE_DISCONNECTED), object: nil)
   }
 
   deinit
   {
     // Unsubscribe from all notifications
-    NSNotificationCenter.defaultCenter().removeObserver(self)
+    NotificationCenter.default.removeObserver(self)
   }
 
   func count() -> Int
@@ -35,14 +35,14 @@ class DeviceManager: NSObject
     return result
   }
   
-  func getDeviceForUUID(uuid: String) -> Device?
+  func getDeviceForUUID(_ uuid: String) -> Device?
   {
     let result: Device? = self.devices[uuid]
 
     return result
   }
 
-  func addMeter(device: Device)
+  func addMeter(_ device: Device)
   {
     if self.devicesReverse[device] == nil
     {
@@ -52,7 +52,7 @@ class DeviceManager: NSObject
     }
   }
 
-  func removeMeter(device: Device)
+  func removeMeter(_ device: Device)
   {
     let deviceUUID: String? = self.devicesReverse[device]
 
@@ -67,8 +67,8 @@ class DeviceManager: NSObject
       else
       {
         // Safe to remove immediately
-        devices.removeValueForKey(deviceUUID!)
-        devicesReverse.removeValueForKey(device)
+        devices.removeValue(forKey: deviceUUID!)
+        devicesReverse.removeValue(forKey: device)
       }
     }
   }
@@ -84,7 +84,7 @@ class DeviceManager: NSObject
   //MARK: -
   //MARK: Helper methods
   @objc
-  private func deviceDisconnected(notification: NSNotification)
+  fileprivate func deviceDisconnected(_ notification: Notification)
   {
     let device: Device? = notification.object as! Device?
 
@@ -100,7 +100,7 @@ class DeviceManager: NSObject
       print("-> All devices disconnected")
 
       // All devices disconnected, notify about it
-      NSNotificationCenter.defaultCenter().postNotificationName(Constants.NOTIFICATION_ALL_DEVICES_DISCONNECTED, object: nil)
+      NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_ALL_DEVICES_DISCONNECTED), object: nil)
     }
   }
 }

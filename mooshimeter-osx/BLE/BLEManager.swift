@@ -17,13 +17,13 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   var peripherals = [String: CBPeripheral]()
   var peripheralDescriptors = [String: BLEDeviceInformation]()
 
-  private var isStarted = false
+  fileprivate var isStarted = false
 
   override init()
   {
     super.init()
 
-    self.centralManager = CBCentralManager(delegate: self, queue: DispatchLevel.Utility.dispatchQueue)
+    self.centralManager = CBCentralManager(delegate: self, queue: DispatchLevel.utility.dispatchQueue)
   }
 
   func start()
@@ -32,7 +32,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     {
       isStarted = true
 
-      if self.centralManager.state == .PoweredOn
+      if self.centralManager.state == .poweredOn
       {
         self.scanForPeripherals()
       }
@@ -50,17 +50,17 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     print("scanForPeripherals")
 
     let serviceUUIDs:[CBUUID] = [ CBUUID(string: Constants.METER_SERVICE_UUID) ]
-    self.centralManager.scanForPeripheralsWithServices(serviceUUIDs, options: nil)
+    self.centralManager.scanForPeripherals(withServices: serviceUUIDs, options: nil)
   }
 
-  func disconnectPeripheral(peripheral: CBPeripheral)
+  func disconnectPeripheral(_ peripheral: CBPeripheral)
   {
     print("disconnectPeripheral")
     
     centralManager.cancelPeripheralConnection(peripheral)
   }
 
-  func getPeripheralDescriptor(uuid: String) -> BLEDeviceInformation?
+  func getPeripheralDescriptor(_ uuid: String) -> BLEDeviceInformation?
   {
     var result: BLEDeviceInformation? = nil
 
@@ -79,33 +79,33 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   //MARK: -
   //MARK: CBCentralManagerDelegate
   
-  func centralManagerDidUpdateState(central: CBCentralManager)
+  func centralManagerDidUpdateState(_ central: CBCentralManager)
   {
     switch central.state
     {
-      case .PoweredOn:
+      case .poweredOn:
         print("Central State PoweredOn")
         if isStarted
         {
           self.scanForPeripherals()
         }
-      case .PoweredOff:
+      case .poweredOff:
         print("Central State PoweredOFF")
-      case .Resetting:
+      case .resetting:
         print("Central State Resetting")
-      case .Unauthorized:
+      case .unauthorized:
         print("Central State Unauthorized")
-      case .Unknown:
+      case .unknown:
         print("Central State Unknown")
-      case .Unsupported:
+      case .unsupported:
         print("Central State Unsupported")
     }
   }
 
-  func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String:AnyObject], RSSI: NSNumber)
+  func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String:Any], rssi RSSI: NSNumber)
   {
     let name = peripheral.name!
-    let uuid = peripheral.identifier.UUIDString
+    let uuid = peripheral.identifier.uuidString
 
     print("-> Peripheral '\(name)' \(uuid) discovered")
 
@@ -128,7 +128,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
         if array.count > 0  && array[0] is CBUUID
         {
-          dataServiceUUID = (array[0] as! CBUUID).UUIDString
+          dataServiceUUID = (array[0] as! CBUUID).uuidString
         }
       }
     }
@@ -136,10 +136,10 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     // Extract manufacturer data (Firmware build timestamp for now)
     if let value = advertisementData["kCBAdvDataManufacturerData"]
     {
-      if value is NSData
+      if value is Data
       {
-        let data = value as! NSData
-        data.getBytes(&manufacturerData, length: sizeof(UInt32))
+        let data = value as! Data
+        (data as NSData).getBytes(&manufacturerData, length: MemoryLayout<UInt32>.size)
 
         // Verify if the device supported in current application
         isSupported = Device.isDeviceSupported(manufacturerData)
@@ -154,7 +154,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       if self.peripherals[uuid] != nil
       {
         // Free reference for the peripheral known with same UUID
-        self.peripherals.removeValueForKey(uuid)
+        self.peripherals.removeValue(forKey: uuid)
       }
 
       // Register peripheral in collection to keep reference (otherwise will be freed after leaving current method)
@@ -168,7 +168,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       descriptor.manufacturerData = manufacturerData
       self.peripheralDescriptors[uuid] = descriptor
 
-      self.centralManager.connectPeripheral(peripheral, options: nil)
+      self.centralManager.connect(peripheral, options: nil)
 
       // TODO: adapt for multiple devices (i.e. stop scan on timeout, not on first device connected)
       self.centralManager.stopScan()
@@ -179,43 +179,43 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     }
   }
   
-  func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral)
+  func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral)
   {
     print("-> Connected to '\(peripheral.name!)'")
 
     // Low level notification about CoreBluetooth peripheral connected
-    NSNotificationCenter.defaultCenter().postNotificationName(Constants.NOTIFICATION_PERIPHERAL_CONNECTED, object: peripheral.copy())
+    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_PERIPHERAL_CONNECTED), object: peripheral.copy())
 
     // Register peripheral in DeviceManager
     let device = Device(peripheral: peripheral)
     DeviceManager.sharedInstance.addMeter(device)
 
     // High level notification about new device connected
-    NSNotificationCenter.defaultCenter().postNotificationName(Constants.NOTIFICATION_DEVICE_CONNECTED, object: device)
+    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_DEVICE_CONNECTED), object: device)
 
     peripheral.discoverServices(nil)
   }
 
-  func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?)
+  func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?)
   {
     let name = peripheral.name!
-    let uuid = peripheral.identifier.UUIDString
+    let uuid = peripheral.identifier.uuidString
 
     print("-> Peripheral '\(name)' \(uuid) disconnected")
 
     // Free reference to the peripheral
     if self.peripherals[uuid] != nil
     {
-      self.peripherals.removeValueForKey(uuid)
+      self.peripherals.removeValue(forKey: uuid)
     }
 
     if self.peripheralDescriptors[uuid] != nil
     {
-      self.peripheralDescriptors.removeValueForKey(uuid)
+      self.peripheralDescriptors.removeValue(forKey: uuid)
     }
 
     // Low level notification about CoreBluetooth peripheral disconnection
-    NSNotificationCenter.defaultCenter().postNotificationName(Constants.NOTIFICATION_PERIPHERAL_DISCONNECTED, object: peripheral.copy())
+    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_PERIPHERAL_DISCONNECTED), object: peripheral.copy())
 
     // Try to get information about corresponding device
     let device = DeviceManager.sharedInstance.getDeviceForUUID(uuid)
@@ -223,111 +223,111 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     if device != nil
     {
       // High level notification about device disconnection
-      NSNotificationCenter.defaultCenter().postNotificationName(Constants.NOTIFICATION_DEVICE_DISCONNECTED, object: device)
+      NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_DEVICE_DISCONNECTED), object: device)
     }
   }
   
-  func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?)
+  func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?)
   {
-    print("Connection to \(peripheral.identifier.UUIDString) failed")
+    print("Connection to \(peripheral.identifier.uuidString) failed")
   }
 
   //MARK: -
   //MARK: CBPeripheralDelegate
 
-  func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?)
+  func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?)
   {
     for service in peripheral.services!
     {
-      print("Registered service: \(service.UUID.UUIDString)")
-      if service.UUID == CBUUID.expandToUUID(Constants.GATT_DEVICE_INFORMATION)
+      print("Registered service: \(service.uuid.uuidString)")
+      if service.uuid == CBUUID.expandToUUID(Constants.GATT_DEVICE_INFORMATION)
       {
         print("Device information service found. Won't discover cause Mooshimeter doesn't fill out it properly")
         //peripheral.discoverCharacteristics(nil, forService: service)
       }
-      else if service.UUID == CBUUID.expandToMooshimUUID(Constants.METER_SERVICE)
+      else if service.uuid == CBUUID.expandToMooshimUUID(Constants.METER_SERVICE)
       {
         print("Mooshimeter service found")
-        peripheral.discoverCharacteristics(nil, forService: service)
+        peripheral.discoverCharacteristics(nil, for: service)
       }
     }
   }
 
-  func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?)
+  func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?)
   {
-    if service.UUID == CBUUID.expandToUUID(Constants.GATT_DEVICE_INFORMATION)
+    if service.uuid == CBUUID.expandToUUID(Constants.GATT_DEVICE_INFORMATION)
     {
       for characteristic in service.characteristics!
       {
-        let characteristicUUID: String = characteristic.UUID.UUIDString
+        let characteristicUUID: String = characteristic.uuid.uuidString
         print("DI: Discovered characteristic: \(characteristicUUID)")
 
-        peripheral.readValueForCharacteristic(characteristic)
+        peripheral.readValue(for: characteristic)
       }
     }
-    else if service.UUID == CBUUID.expandToMooshimUUID(Constants.METER_SERVICE)
+    else if service.uuid == CBUUID.expandToMooshimUUID(Constants.METER_SERVICE)
     {
       for characteristic in service.characteristics!
       {
-        let characteristicUUID: String = characteristic.UUID.UUIDString
+        let characteristicUUID: String = characteristic.uuid.uuidString
         print("MM: Discovered characteristic: \(characteristicUUID)")
 
-        peripheral.readValueForCharacteristic(characteristic)
+        peripheral.readValue(for: characteristic)
       }
     }
   }
 
-  func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?)
+  func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?)
   {
-    let characteristicUUID: String = characteristic.UUID.UUIDString
+    let characteristicUUID: String = characteristic.uuid.uuidString
 
     switch characteristicUUID
     {
       case Constants.GATT_DI_MANUFACTURER_NAME_UUID:
-        var manufacturerName = String(data: characteristic.value!, encoding: NSUTF8StringEncoding)
+        var manufacturerName = String(data: characteristic.value!, encoding: String.Encoding.utf8)
       case Constants.GATT_DI_MODEL_NUMBER_UUID:
-        var modelNumber = String(data: characteristic.value!, encoding: NSUTF8StringEncoding)
+        var modelNumber = String(data: characteristic.value!, encoding: String.Encoding.utf8)
       case Constants.METER_SERVICE_IN_UUID:
         var value = characteristic.value
       case Constants.METER_SERVICE_OUT_UUID:
         var value = characteristic.value
       default:
-        var value: NSData!
+        var value: Data!
         if characteristic.value != nil
         {
           value = characteristic.value!
         }
-        print("Unknown characteristic ID: \(characteristic.UUID.UUIDString) Value: \(value)")
+        print("Unknown characteristic ID: \(characteristic.uuid.uuidString) Value: \(value)")
     }
   }
 
-  func peripheralDidUpdateName(peripheral: CBPeripheral) {
+  func peripheralDidUpdateName(_ peripheral: CBPeripheral) {
   }
 
-  func peripheral(peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]) {
+  func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]) {
   }
 
-  func peripheralDidUpdateRSSI(peripheral: CBPeripheral, error: NSError?) {
+  func peripheralDidUpdateRSSI(_ peripheral: CBPeripheral, error: Error?) {
   }
 
-  func peripheral(peripheral: CBPeripheral, didDiscoverIncludedServicesForService service: CBService, error: NSError?) {
+  func peripheral(_ peripheral: CBPeripheral, didDiscoverIncludedServicesFor service: CBService, error: Error?) {
   }
 
 
 
-  func peripheral(peripheral: CBPeripheral, didWriteValueForCharacteristic characteristic: CBCharacteristic, error: NSError?)
+  func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?)
   {
   }
 
-  func peripheral(peripheral: CBPeripheral, didUpdateNotificationStateForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+  func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
   }
 
-  func peripheral(peripheral: CBPeripheral, didDiscoverDescriptorsForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+  func peripheral(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?) {
   }
 
-  func peripheral(peripheral: CBPeripheral, didUpdateValueForDescriptor descriptor: CBDescriptor, error: NSError?) {
+  func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
   }
 
-  func peripheral(peripheral: CBPeripheral, didWriteValueForDescriptor descriptor: CBDescriptor, error: NSError?) {
+  func peripheral(_ peripheral: CBPeripheral, didWriteValueFor descriptor: CBDescriptor, error: Error?) {
   }
 }

@@ -13,7 +13,7 @@ class Device: NSObject
 
   //MARK: -
   //MARK: Class methods
-  class func isDeviceSupported(version: UInt32) -> Bool
+  class func isDeviceSupported(_ version: UInt32) -> Bool
   {
     var result = false
 
@@ -32,14 +32,14 @@ class Device: NSObject
   init(peripheral: CBPeripheral)
   {
     self.peripheral = peripheral
-    self.UUID = peripheral.identifier.UUIDString
+    self.UUID = peripheral.identifier.uuidString
   }
 
   func isConnected() -> Bool
   {
     var result = false
 
-    if peripheral.state == .Connected
+    if peripheral.state == .connected
     {
       result = true
     }
@@ -63,7 +63,7 @@ class Device: NSObject
     return result
   }
 
-  func setTime(time: Double)
+  func setTime(_ time: Double)
   {
 
   }

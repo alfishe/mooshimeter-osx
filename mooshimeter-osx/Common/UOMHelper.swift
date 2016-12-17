@@ -11,44 +11,44 @@ class UOMHelper : NSObject
   static var prefixPrecision = [MetricPrefix: Int]()
   static var prefixShortName = [MetricPrefix: String]()
 
-  private static var initialized = false
+  fileprivate static var initialized = false
 
   override class func initialize()
   {
     super.initialize()
 
     // Multipliers for every metric prefix
-    prefixMultipliers[.Pico] = 1e-12
-    prefixMultipliers[.Nano] = 1e-9
-    prefixMultipliers[.Micro] = 1e-6
-    prefixMultipliers[.Milli] = 1e-3
-    prefixMultipliers[.NoPrefix] = 1.0
-    prefixMultipliers[.Kilo] = 1000.0
-    prefixMultipliers[.Mega] = 1000000.0
-    prefixMultipliers[.Giga] = 1000000000.0
+    prefixMultipliers[.pico] = 1e-12
+    prefixMultipliers[.nano] = 1e-9
+    prefixMultipliers[.micro] = 1e-6
+    prefixMultipliers[.milli] = 1e-3
+    prefixMultipliers[.noPrefix] = 1.0
+    prefixMultipliers[.kilo] = 1000.0
+    prefixMultipliers[.mega] = 1000000.0
+    prefixMultipliers[.giga] = 1000000000.0
 
     // Holds Float/Double comparison precision in a form pow(x, -1 * n)
     // x: prefixed value
     // n: precision value
-    prefixPrecision[.Pico] = 13
-    prefixPrecision[.Nano] = 10
-    prefixPrecision[.Micro] = 7
-    prefixPrecision[.Milli] = 6
-    prefixPrecision[.NoPrefix] = 6
-    prefixPrecision[.Kilo] = 6
-    prefixPrecision[.Mega] = 6
-    prefixPrecision[.Giga] = 6
+    prefixPrecision[.pico] = 13
+    prefixPrecision[.nano] = 10
+    prefixPrecision[.micro] = 7
+    prefixPrecision[.milli] = 6
+    prefixPrecision[.noPrefix] = 6
+    prefixPrecision[.kilo] = 6
+    prefixPrecision[.mega] = 6
+    prefixPrecision[.giga] = 6
 
     // Prefixes to be used on value display
     // Can be read from localization file
-    prefixShortName[.Pico] = "p"
-    prefixShortName[.Nano] = "n"
-    prefixShortName[.Micro] = "\u{00B5}"
-    prefixShortName[.Milli] = "m"
-    prefixShortName[.NoPrefix] = ""
-    prefixShortName[.Kilo] = "k"
-    prefixShortName[.Mega] = "M"
-    prefixShortName[.Giga] = "G"
+    prefixShortName[.pico] = "p"
+    prefixShortName[.nano] = "n"
+    prefixShortName[.micro] = "\u{00B5}"
+    prefixShortName[.milli] = "m"
+    prefixShortName[.noPrefix] = ""
+    prefixShortName[.kilo] = "k"
+    prefixShortName[.mega] = "M"
+    prefixShortName[.giga] = "G"
 
     initialized = true
   }
@@ -56,7 +56,7 @@ class UOMHelper : NSObject
   //Mark: -
   //Mark: Methods
 
-  class func getPrefixMultiplier(prefix: MetricPrefix) -> Double
+  class func getPrefixMultiplier(_ prefix: MetricPrefix) -> Double
   {
     var result: Double = 1.0
 
@@ -69,7 +69,7 @@ class UOMHelper : NSObject
     return result
   }
 
-  class func getPrefixPrecision(prefix: MetricPrefix) -> Int
+  class func getPrefixPrecision(_ prefix: MetricPrefix) -> Int
   {
     var result: Int = 6
 

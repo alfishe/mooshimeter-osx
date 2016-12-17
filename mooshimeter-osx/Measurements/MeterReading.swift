@@ -7,10 +7,10 @@ import Foundation
 
 class MeterReading
 {
-  private var value: Float
-  private var digits: UInt16
-  private var maxValue: Float
-  private var uom: UnitsOfMeasure
+  fileprivate var value: Float
+  fileprivate var digits: UInt16
+  fileprivate var maxValue: Float
+  fileprivate var uom: UnitsOfMeasure
 
 
   init(value: Float, digits: UInt16, maxValue: Float, uom: UnitsOfMeasure)
@@ -38,16 +38,16 @@ class MeterReading
     return result
   }
 
-  func multiplyReadings(reading1: MeterReading, reading2: MeterReading) -> MeterReading
+  func multiplyReadings(_ reading1: MeterReading, reading2: MeterReading) -> MeterReading
   {
     let resultValue = reading1.value * reading2.value
     let resultDigits = (reading1.digits + reading2.digits) / 2
     let resultMaxValue = reading1.maxValue * reading2.maxValue
 
-    var resultUOM: UnitsOfMeasure = .Undefined
-    if (reading1.uom == .Ampers && reading2.uom == .Volts) || (reading1.uom == .Volts && reading2.uom == .Ampers)
+    var resultUOM: UnitsOfMeasure = .undefined
+    if (reading1.uom == .ampers && reading2.uom == .volts) || (reading1.uom == .volts && reading2.uom == .ampers)
     {
-      resultUOM = .Watts
+      resultUOM = .watts
     }
 
     let result = MeterReading(

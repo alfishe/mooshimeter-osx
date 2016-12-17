@@ -137,35 +137,35 @@ class TemperatureHelper
   //MARK: -
   //MARK: Temperature conversion methods
 
-  class func absK2C(kelvinValue: Float) -> Float
+  class func absK2C(_ kelvinValue: Float) -> Float
   {
     let result = kelvinValue - 273.15
     
     return result;
   }
   
-  class func absK2F(kelvinValue: Float) -> Float
+  class func absK2F(_ kelvinValue: Float) -> Float
   {
     let result = (kelvinValue - 273.15) * 1.80000 + 32.00
     
     return result;
   }
   
-  class func absC2F(celsiusValue: Float) -> Float
+  class func absC2F(_ celsiusValue: Float) -> Float
   {
     let result = celsiusValue * 1.80000 + 32.00
     
     return result;
   }
   
-  class func relK2F(kelvinValue: Float) -> Float
+  class func relK2F(_ kelvinValue: Float) -> Float
   {
     let result = kelvinValue * 1.80000
     
     return result
   }
   
-  class func convertVoltsToDegreesC(volts: Float) -> Float
+  class func convertVoltsToDegreesC(_ volts: Float) -> Float
   {
     let result = applyPolyCoefficients(volts, coefficients: typeK)
     
@@ -175,7 +175,7 @@ class TemperatureHelper
   //Mark: -
   //Mark: Helper methods
 
-  private class func applyPolyCoefficients(value: Float, coefficients: TemperatureCoefficients) -> Float
+  fileprivate class func applyPolyCoefficients(_ value: Float, coefficients: TemperatureCoefficients) -> Float
   {
     let uValue: Double = Double(value) * Double(1e6)
     var result: Float = 0.0

@@ -11,7 +11,7 @@ import CoreBluetooth
 
 extension CBUUID
 {
-    class func expandToMooshimUUID(sourceUUID: UInt16) -> CBUUID
+    class func expandToMooshimUUID(_ sourceUUID: UInt16) -> CBUUID
     {
         let expandedUUIDBytes: [UInt8] =
         [
@@ -22,12 +22,12 @@ extension CBUUID
         ]
 
         let data = NSMutableData(bytes: expandedUUIDBytes, length: expandedUUIDBytes.count)
-        let result = CBUUID(data: data)
+        let result = CBUUID(data: data as Data)
 
         return result
     }
 
-    class func expandToUUID(sourceUUID: UInt16) -> CBUUID
+    class func expandToUUID(_ sourceUUID: UInt16) -> CBUUID
     {
         let result: CBUUID = CBUUID(string: String(format:"%2X", sourceUUID))
 
@@ -38,7 +38,7 @@ extension CBUUID
 extension UInt16
 {
     @inline(__always)
-    static func loByte(word: UInt16) -> UInt8
+    static func loByte(_ word: UInt16) -> UInt8
     {
         let result = (UInt8)(word & 0xFF)
 
@@ -46,7 +46,7 @@ extension UInt16
     }
 
     @inline(__always)
-    static func hiByte(word: UInt16) -> UInt8
+    static func hiByte(_ word: UInt16) -> UInt8
     {
         let result = (UInt8)(word >> 8)
 
@@ -68,7 +68,7 @@ extension UInt16
 
 extension Float
 {
-  static func isEqualWithPrecision(arg1: Float, arg2: Float, precision: Int) -> Bool
+  static func isEqualWithPrecision(_ arg1: Float, arg2: Float, precision: Int) -> Bool
   {
     var result: Bool = false
 
@@ -80,14 +80,14 @@ extension Float
     return result
   }
 
-  func isEqualWithPrecision(arg2: Float, precision: Int) -> Bool
+  func isEqualWithPrecision(_ arg2: Float, precision: Int) -> Bool
   {
     let result = Float.isEqualWithPrecision(self, arg2: arg2, precision: precision)
 
     return result
   }
 
-  static func compareWithPrecision(arg1: Float, arg2: Float, precision: Int) -> Int
+  static func compareWithPrecision(_ arg1: Float, arg2: Float, precision: Int) -> Int
   {
       var result: Int = 0
 
@@ -107,7 +107,7 @@ extension Float
     return result
   }
 
-  func compareWithPrecision(arg2: Float, precision: Int) -> Int
+  func compareWithPrecision(_ arg2: Float, precision: Int) -> Int
   {
     let result = Float.compareWithPrecision(self, arg2: arg2, precision: precision)
 
@@ -117,7 +117,7 @@ extension Float
 
 extension Double
 {
-  static func isEqualWithPrecision(arg1: Double, arg2: Double, precision: Int) -> Bool
+  static func isEqualWithPrecision(_ arg1: Double, arg2: Double, precision: Int) -> Bool
   {
     var result: Bool = false
 
@@ -129,14 +129,14 @@ extension Double
     return result
   }
 
-  func isEqualWithPrecision(arg2: Double, precision: Int) -> Bool
+  func isEqualWithPrecision(_ arg2: Double, precision: Int) -> Bool
   {
     let result = Double.isEqualWithPrecision(self, arg2: arg2, precision: precision)
 
     return result
   }
 
-  static func compareWithPrecision(arg1: Double, arg2: Double, precision: Int) -> Int
+  static func compareWithPrecision(_ arg1: Double, arg2: Double, precision: Int) -> Int
   {
     var result: Int = 0
 
@@ -156,7 +156,7 @@ extension Double
     return result
   }
 
-  func compareWithPrecision(arg2: Double, precision: Int) -> Int
+  func compareWithPrecision(_ arg2: Double, precision: Int) -> Int
   {
     let result = Double.compareWithPrecision(self, arg2: arg2, precision: precision)
 
