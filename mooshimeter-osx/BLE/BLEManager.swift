@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetooth
+import CoreBluetooth.CBPeripheral
 
 class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 {
@@ -74,6 +75,63 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
   //MARK: -
   //MARK: - Private methods
+  
+  func convertCBCharacteristicProperties(_ properties: CBCharacteristicProperties) -> String
+  {
+    var result = "";
+
+    if (properties.contains(.broadcast))
+    {
+      result += "Broadcast; "
+    }
+    
+    if (properties.contains(.read))
+    {
+      result += "Read; "
+    }
+
+    if (properties.contains(.writeWithoutResponse))
+    {
+      result += "WriteWithoutResponse; ";
+    }
+    
+    if (properties.contains(.write))
+    {
+      result += "Write; "
+    }
+    
+    if (properties.contains(.notify))
+    {
+      result += "Notify; "
+    }
+    
+    if (properties.contains(.indicate))
+    {
+      result += "Indicate; "
+    }
+    
+    if (properties.contains(.authenticatedSignedWrites))
+    {
+      result += "SignedWrites; "
+    }
+    
+    if (properties.contains(.extendedProperties))
+    {
+      result += "ExtendedProperties; "
+    }
+    
+    if (properties.contains(.notifyEncryptionRequired))
+    {
+      result += "EncryptionRequired; "
+    }
+    
+    if (properties.contains(.indicateEncryptionRequired))
+    {
+      result += "IndicateEncryptionRequired"
+    }
+    
+    return result
+  }
 
 
   //MARK: -
@@ -90,7 +148,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
           self.scanForPeripherals()
         }
       case .poweredOff:
-        print("Central State PoweredOFF")
+        print("Central State PoweredOff")
       case .resetting:
         print("Central State Resetting")
       case .unauthorized:
@@ -270,7 +328,8 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       for characteristic in service.characteristics!
       {
         let characteristicUUID: String = characteristic.uuid.uuidString
-        print("MM: Discovered characteristic: \(characteristicUUID)")
+        let properties = convertCBCharacteristicProperties(characteristic.properties);
+        print("MM: Discovered characteristic: \(characteristicUUID) with properties: \(properties) ")
 
         peripheral.readValue(for: characteristic)
       }
@@ -301,16 +360,20 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     }
   }
 
-  func peripheralDidUpdateName(_ peripheral: CBPeripheral) {
+  func peripheralDidUpdateName(_ peripheral: CBPeripheral)
+  {
   }
 
-  func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService]) {
+  func peripheral(_ peripheral: CBPeripheral, didModifyServices invalidatedServices: [CBService])
+  {
   }
 
-  func peripheralDidUpdateRSSI(_ peripheral: CBPeripheral, error: Error?) {
+  func peripheralDidUpdateRSSI(_ peripheral: CBPeripheral, error: Error?)
+  {
   }
 
-  func peripheral(_ peripheral: CBPeripheral, didDiscoverIncludedServicesFor service: CBService, error: Error?) {
+  func peripheral(_ peripheral: CBPeripheral, didDiscoverIncludedServicesFor service: CBService, error: Error?)
+  {
   }
 
 
@@ -319,15 +382,19 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   {
   }
 
-  func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
+  func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?)
+  {
   }
 
-  func peripheral(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?) {
+  func peripheral(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?)
+  {
   }
 
-  func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?) {
+  func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?)
+  {
   }
 
-  func peripheral(_ peripheral: CBPeripheral, didWriteValueFor descriptor: CBDescriptor, error: Error?) {
+  func peripheral(_ peripheral: CBPeripheral, didWriteValueFor descriptor: CBDescriptor, error: Error?)
+  {
   }
 }
