@@ -10,6 +10,11 @@ class Device: NSObject
 {
   let peripheral: CBPeripheral
   let UUID: String
+  
+  var readCharacteristic: CBCharacteristic?
+  var writeCharacteristic: CBCharacteristic?
+  
+  var deviceReady = false
 
   //MARK: -
   //MARK: Class methods
@@ -45,6 +50,20 @@ class Device: NSObject
     }
 
     return result
+  }
+  
+  func setCharacteristics(read: CBCharacteristic, write: CBCharacteristic)
+  {
+    self.readCharacteristic = read
+    self.writeCharacteristic = write
+    
+    if self.isConnected()
+    {
+      self.deviceReady = true
+      
+      // Notify that device is fully initialized and ready
+      NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_DEVICE_READY), object: self)
+    }
   }
 
   func isStreaming() -> Bool

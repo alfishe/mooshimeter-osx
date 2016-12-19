@@ -313,6 +313,8 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
   func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?)
   {
+    let device = DeviceManager.sharedInstance.getDeviceForUUID(peripheral.identifier.uuidString)
+    
     if service.uuid == CBUUID.expandToUUID(Constants.GATT_DEVICE_INFORMATION)
     {
       for characteristic in service.characteristics!
@@ -325,6 +327,9 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     }
     else if service.uuid == CBUUID.expandToMooshimUUID(Constants.METER_SERVICE)
     {
+      var readCharacteristic: CBCharacteristic?
+      var writeCharacteristic: CBCharacteristic?
+      
       for characteristic in service.characteristics!
       {
         let characteristicUUID: String = characteristic.uuid.uuidString
@@ -332,6 +337,24 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
         print("MM: Discovered characteristic: \(characteristicUUID) with properties: \(properties) ")
 
         peripheral.readValue(for: characteristic)
+        
+        switch characteristic.uuid
+        {
+          case CBUUID(string: Constants.METER_SERVICE_IN_UUID):
+            readCharacteristic = characteristic
+            break
+          case CBUUID(string: Constants.METER_SERVICE_OUT_UUID):
+            writeCharacteristic = characteristic
+            break
+          default:
+            break
+        }
+      }
+      
+      // Supply discovered characteristic to the device instance and trigger Device ready event
+      if (device != nil) && (readCharacteristic != nil) && (writeCharacteristic != nil)
+      {
+        device?.setCharacteristics(read: readCharacteristic!, write: writeCharacteristic!)
       }
     }
   }

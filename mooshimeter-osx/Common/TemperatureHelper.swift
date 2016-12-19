@@ -177,28 +177,27 @@ class TemperatureHelper
 
   fileprivate class func applyPolyCoefficients(_ value: Float, coefficients: TemperatureCoefficients) -> Float
   {
-    let uValue: Double = Double(value) * Double(1e6)
     var result: Float = 0.0
-    var sum: Double = 0.0
-    var power: Double = 0.0
 
-    if coefficients.coefficients.count == 0
+    if coefficients.coefficients.count > 0
     {
-      return result
+      let uValue: Double = Double(value) * Double(1e6)
+      var sum: Double = 0.0
+      var power: Double = 0.0
+      
+      for coefficient in coefficients.coefficients
+      {
+        sum += coefficient * pow(uValue, power)
+        power += 1
+      }
+      
+      if sum > coefficients.high || sum < coefficients.low
+      {
+        print("Warning - using a temperature polynomial outside of it's recommended temp range")
+      }
+      
+      result = Float(sum)
     }
-
-    for coefficient in coefficients.coefficients
-    {
-      sum += coefficient * pow(uValue, power)
-      power += 1
-    }
-
-    if sum > coefficients.high || sum < coefficients.low
-    {
-      print("Warning - using a temperature polynomial outside of it's recommended temp range")
-    }
-
-    result = Float(sum)
 
     return result
   }
