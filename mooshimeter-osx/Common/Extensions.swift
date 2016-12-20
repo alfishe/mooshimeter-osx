@@ -140,7 +140,7 @@ extension Double
   {
     var result: Int = 0
 
-    if fabs(arg1 - arg2) < pow (1, Double(-1 * precision))
+    if fabs(arg1 - arg2) < pow(1, Double(-1 * precision))
     {
       // Doubles are equal with required precision
     }
