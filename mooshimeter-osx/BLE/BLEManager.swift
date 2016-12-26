@@ -54,13 +54,6 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     self.centralManager.scanForPeripherals(withServices: serviceUUIDs, options: nil)
   }
 
-  func disconnectPeripheral(_ peripheral: CBPeripheral)
-  {
-    print("disconnectPeripheral")
-    
-    centralManager.cancelPeripheralConnection(peripheral)
-  }
-
   func getPeripheralDescriptor(_ uuid: String) -> BLEDeviceInformation?
   {
     var result: BLEDeviceInformation? = nil
@@ -71,6 +64,32 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     }
 
     return result
+  }
+  
+  //MARK: -
+  //MARK: Peripheral public methods
+  func connectPeriperal(peripheral: CBPeripheral, completion:(() -> Void)? = nil)
+  {
+    print("connectPeriperal")
+    
+    self.centralManager.connect(peripheral, options: nil)
+    
+    if completion != nil
+    {
+      completion!()
+    }
+  }
+  
+  func disconnectPeripheral(peripheral: CBPeripheral, completion:(() -> Void)? = nil)
+  {
+    print("disconnectPeripheral")
+    
+    centralManager.cancelPeripheralConnection(peripheral)
+    
+    if completion != nil
+    {
+      completion!()
+    }
   }
 
   //MARK: -
@@ -226,7 +245,8 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       descriptor.manufacturerData = manufacturerData
       self.peripheralDescriptors[uuid] = descriptor
 
-      self.centralManager.connect(peripheral, options: nil)
+      // Debug (Connect immediately)
+      self.connectPeriperal(peripheral: peripheral)
 
       // TODO: adapt for multiple devices (i.e. stop scan on timeout, not on first device connected)
       self.centralManager.stopScan()
@@ -335,16 +355,14 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
         let characteristicUUID: String = characteristic.uuid.uuidString
         let properties = convertCBCharacteristicProperties(characteristic.properties);
         print("MM: Discovered characteristic: \(characteristicUUID) with properties: \(properties) ")
-
-        peripheral.readValue(for: characteristic)
         
         switch characteristic.uuid
         {
           case CBUUID(string: Constants.METER_SERVICE_IN_UUID):
-            readCharacteristic = characteristic
+            writeCharacteristic = characteristic
             break
           case CBUUID(string: Constants.METER_SERVICE_OUT_UUID):
-            writeCharacteristic = characteristic
+             readCharacteristic = characteristic
             break
           default:
             break
@@ -354,14 +372,26 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       // Supply discovered characteristic to the device instance and trigger Device ready event
       if (device != nil) && (readCharacteristic != nil) && (writeCharacteristic != nil)
       {
-        device?.setCharacteristics(read: readCharacteristic!, write: writeCharacteristic!)
+        device!.setCharacteristics(read: readCharacteristic!, write: writeCharacteristic!)
+        
+        peripheral.setNotifyValue(true, for: readCharacteristic!)
+        peripheral.readValue(for: readCharacteristic!)
+        
+        // Debug call
+        Async.main
+        {
+          Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.performDeviceWrite(_:)), userInfo: device!, repeats: true)
+        }
       }
     }
   }
 
   func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?)
   {
+    let peripheralUUID: String = peripheral.identifier.uuidString
     let characteristicUUID: String = characteristic.uuid.uuidString
+
+    let device: Device? = DeviceManager.sharedInstance.getDeviceForUUID(peripheralUUID)
 
     switch characteristicUUID
     {
@@ -373,14 +403,17 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
         var value = characteristic.value
       case Constants.METER_SERVICE_OUT_UUID:
         var value = characteristic.value
+        device?.handleReadData(value)
+        //print("Characteristic: \(characteristicUUID) value: \(value?.hexEncodedString())")
       default:
         var value: Data!
         if characteristic.value != nil
         {
           value = characteristic.value!
         }
-        print("Unknown characteristic ID: \(characteristic.uuid.uuidString) Value: \(value)")
+        print("Unknown characteristic ID: \(characteristic.uuid.uuidString) Value: \(value!)")
     }
+    
   }
 
   func peripheralDidUpdateName(_ peripheral: CBPeripheral)
@@ -393,6 +426,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
   func peripheralDidUpdateRSSI(_ peripheral: CBPeripheral, error: Error?)
   {
+    print("RSSI update: \(peripheral.readRSSI())")
   }
 
   func peripheral(_ peripheral: CBPeripheral, didDiscoverIncludedServicesFor service: CBService, error: Error?)
@@ -403,10 +437,17 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
   func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?)
   {
+    //print("didWriteValueFor characteristic:\(characteristic.uuid.uuidString) with error:\(error)")
   }
 
   func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?)
   {
+    if let errorText = error?.localizedDescription
+    {
+      print("didUpdateNotificationStateFor error: \(errorText)")
+    }
+    
+    print("didUpdateNotificationStateFor \(characteristic.uuid.uuidString) isNotifying: \(characteristic.isNotifying)")
   }
 
   func peripheral(_ peripheral: CBPeripheral, didDiscoverDescriptorsFor characteristic: CBCharacteristic, error: Error?)
@@ -415,9 +456,28 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
   func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor descriptor: CBDescriptor, error: Error?)
   {
+    if let errorText = error?.localizedDescription
+    {
+      print("didUpdateValueFor error: \(errorText)")
+    }
+    
+    print("didUpdateVelueFor value: \(descriptor.value)")
   }
 
   func peripheral(_ peripheral: CBPeripheral, didWriteValueFor descriptor: CBDescriptor, error: Error?)
   {
+  }
+  
+  //MARK: -
+  //MARK: Test methods
+  @objc
+  func performDeviceWrite(_ timer: Timer!)
+  {
+    let device = timer.userInfo as? Device
+    
+    if device != nil
+    {
+      device!.writeValueAsync(bytes: [1])
+    }
   }
 }

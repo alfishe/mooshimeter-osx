@@ -36,6 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
     {
       result = NSApplicationTerminateReply.terminateLater
 
+      // Disconnect all active peripheral devices asynchronously and notify application to finalize termination
       Async.background
       {
         // Disconnect all devices
@@ -47,8 +48,8 @@ class AppDelegate: NSObject, NSApplicationDelegate
         // But to be sure that application is not blocked for termination forever - start watchdog closure with termination in 10 seconds
         delay(bySeconds: 10)
         {
-          // delayed code, by default run in main thread
-          print("Delay timeout")
+          // Delayed code, by default run in main thread
+          print("Devices disconnection timeout. Enforcing process termination")
           NSApplication.shared().reply(toApplicationShouldTerminate: true)
         }
       }

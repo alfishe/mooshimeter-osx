@@ -35,6 +35,31 @@ extension CBUUID
     }
 }
 
+extension Data
+{
+  func hexEncodedString() -> String
+  {
+    let result = map
+      {
+        String(format: "%02hhx", $0)
+      }.joined()
+    
+    return result
+  }
+  
+  func contains(_ data: Data?) -> Bool
+  {
+    var result: Bool = false
+    
+    if self.count > 0 && data != nil && data!.count > 0 && self.count >= data!.count
+    {
+      result = (self.range(of: data!) != nil)
+    }
+    
+    return result
+  }
+}
+
 extension UInt16
 {
     @inline(__always)
