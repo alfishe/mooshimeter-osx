@@ -23,7 +23,7 @@ enum ConfigNodeType: Int
   case val_BIN  = 10  // These nodes have readable and writable values of the type specified
   case val_FLT  = 11  // These nodes have readable and writable values of the type specified
   case notset   = -1  // May be an informational node, or a choice in a chooser
-};
+}
 
 class ConfigNode: NSObject
 {

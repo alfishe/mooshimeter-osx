@@ -1,0 +1,4 @@
+/* Display name and description for this extension. */
+"CFBundleDisplayName" = "Mooshimeter";
+"com.apple.notificationcenter.widget.description" = "Mooshimeter DMM extension";
+

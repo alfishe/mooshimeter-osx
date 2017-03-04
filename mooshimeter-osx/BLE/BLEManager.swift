@@ -380,7 +380,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
         // Debug call
         Async.main
         {
-          Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.performDeviceWrite(_:)), userInfo: device!, repeats: true)
+          Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.performDeviceWrite(_:)), userInfo: device!, repeats: false)
         }
       }
     }
@@ -396,13 +396,13 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     switch characteristicUUID
     {
       case Constants.GATT_DI_MANUFACTURER_NAME_UUID:
-        var manufacturerName = String(data: characteristic.value!, encoding: String.Encoding.utf8)
+        _ = String(data: characteristic.value!, encoding: String.Encoding.utf8)
       case Constants.GATT_DI_MODEL_NUMBER_UUID:
-        var modelNumber = String(data: characteristic.value!, encoding: String.Encoding.utf8)
+        _ = String(data: characteristic.value!, encoding: String.Encoding.utf8)
       case Constants.METER_SERVICE_IN_UUID:
-        var value = characteristic.value
+        _ = characteristic.value
       case Constants.METER_SERVICE_OUT_UUID:
-        var value = characteristic.value
+        let value = characteristic.value
         device?.handleReadData(value)
         //print("Characteristic: \(characteristicUUID) value: \(value?.hexEncodedString())")
       default:
@@ -477,7 +477,8 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     
     if device != nil
     {
-      device!.writeValueAsync(bytes: [1])
+      device!.getAdminTree()
+      //device!.getDiagnostic()
     }
   }
 }

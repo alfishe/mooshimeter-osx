@@ -58,6 +58,41 @@ extension Data
     
     return result
   }
+  
+  func getCrc32() -> UInt32
+  {
+    let result = crc32(0xFFFFFFFF, data: self)
+    
+    return result
+  }
+}
+
+extension UInt32
+{
+  func byteArray() -> [UInt8]
+  {
+    var result: [UInt8] = [UInt8](repeating: UInt8(), count: 4)
+    
+    if false
+    {
+      // BigEndian
+      result[0] = (UInt8)(self >> 24 & 0xFF)
+      result[1] = (UInt8)(self >> 16 & 0xFF)
+      result[2] = (UInt8)(self >> 8 & 0xFF)
+      result[3] = (UInt8)(self & 0xFF)
+    }
+    else
+    {
+      // LittleEndian
+      result[0] = (UInt8)(self & 0xFF)
+      result[1] = (UInt8)(self >> 8 & 0xFF)
+      result[2] = (UInt8)(self >> 16 & 0xFF)
+      result[3] = (UInt8)(self >> 24 & 0xFF)
+    }
+    
+    
+    return result
+  }
 }
 
 extension UInt16

@@ -22,6 +22,13 @@
 		18415BAF73733CBD25D9674E /* DeviceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415588608CA78E46BFA694 /* DeviceProtocol.swift */; };
 		18415C272C09D5FC0E13ACBF /* ThreadHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184153A80C70D13DA19B6CF7 /* ThreadHelper.swift */; };
 		18415C347FBA20D79C9D8504 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184150258C12D04E34C1230E /* Extensions.swift */; };
+		D771A2731E691B3F00DF0CC7 /* SwiftDataCompression.swift in Sources */ = {isa = PBXBuildFile; fileRef = D771A2721E691B3F00DF0CC7 /* SwiftDataCompression.swift */; };
+		D7988F9D1E062FDA002F7D38 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7988F9C1E062FDA002F7D38 /* NotificationCenter.framework */; };
+		D7988FA21E062FDA002F7D38 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7988FA11E062FDA002F7D38 /* TodayViewController.swift */; };
+		D7988FA51E062FDA002F7D38 /* TodayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7988FA31E062FDA002F7D38 /* TodayViewController.xib */; };
+		D7988FA91E062FDA002F7D38 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D7988FA71E062FDA002F7D38 /* InfoPlist.strings */; };
+		D7988FAC1E062FDA002F7D38 /* today-extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D7988F9A1E062FDA002F7D38 /* today-extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D7988FB21E06443D002F7D38 /* fluke.png in Resources */ = {isa = PBXBuildFile; fileRef = D7988FB11E06443D002F7D38 /* fluke.png */; };
 		D7A8E8571D93565A00606FAE /* DeviceCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A8E8561D93565A00606FAE /* DeviceCommand.swift */; };
 		D7A8E8591D936DB000606FAE /* ConfigTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A8E8581D936DB000606FAE /* ConfigTree.swift */; };
 		D7B6843F1D72105C0096F296 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6843E1D72105C0096F296 /* AppDelegate.swift */; };
@@ -39,6 +46,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		D7988FAA1E062FDA002F7D38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D7B684331D72105C0096F296 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D7988F991E062FDA002F7D38;
+			remoteInfo = "today-extension";
+		};
 		D7B6844D1D72105C0096F296 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D7B684331D72105C0096F296 /* Project object */;
@@ -54,6 +68,20 @@
 			remoteInfo = "mooshimeter-osx";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D7988FB01E062FDA002F7D38 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				D7988FAC1E062FDA002F7D38 /* today-extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		184150258C12D04E34C1230E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Common/Extensions.swift; sourceTree = "<group>"; };
@@ -72,6 +100,15 @@
 		18415C00509A3EFAC52A9C39 /* MeterReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeterReading.swift; sourceTree = "<group>"; };
 		18415C878C0E2852DD6486D5 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		18415E971ED3D56D67C58AF9 /* DisplayFormatHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DisplayFormatHelper.swift; path = Common/DisplayFormatHelper.swift; sourceTree = "<group>"; };
+		D771A2721E691B3F00DF0CC7 /* SwiftDataCompression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftDataCompression.swift; path = 3rdParty/SwiftDataCompression/SwiftDataCompression.swift; sourceTree = "<group>"; };
+		D7988F9A1E062FDA002F7D38 /* today-extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "today-extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7988F9C1E062FDA002F7D38 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		D7988FA01E062FDA002F7D38 /* today_extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = today_extension.entitlements; sourceTree = "<group>"; };
+		D7988FA11E062FDA002F7D38 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		D7988FA41E062FDA002F7D38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/TodayViewController.xib; sourceTree = "<group>"; };
+		D7988FA61E062FDA002F7D38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7988FA81E062FDA002F7D38 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D7988FB11E06443D002F7D38 /* fluke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fluke.png; sourceTree = "<group>"; };
 		D7A8E8561D93565A00606FAE /* DeviceCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCommand.swift; sourceTree = "<group>"; };
 		D7A8E8581D936DB000606FAE /* ConfigTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTree.swift; sourceTree = "<group>"; };
 		D7B6843B1D72105C0096F296 /* mooshimeter-osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mooshimeter-osx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +131,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		D7988F971E062FDA002F7D38 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7988F9D1E062FDA002F7D38 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D7B684381D72105C0096F296 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -142,6 +187,7 @@
 		184156B74954B5CBF091DF4E /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				D771A2711E691B2D00DF0CC7 /* SwiftDataCompression */,
 				D7B684761D73A6ED0096F296 /* Async */,
 				184158F84D6CD5D26CA68EBC /* Deflate */,
 				18415C2440D51BBC26383224 /* CRC32 */,
@@ -180,12 +226,51 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		D771A2711E691B2D00DF0CC7 /* SwiftDataCompression */ = {
+			isa = PBXGroup;
+			children = (
+				D771A2721E691B3F00DF0CC7 /* SwiftDataCompression.swift */,
+			);
+			name = SwiftDataCompression;
+			sourceTree = "<group>";
+		};
+		D7988F9B1E062FDA002F7D38 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D7988F9C1E062FDA002F7D38 /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D7988F9E1E062FDA002F7D38 /* today-extension */ = {
+			isa = PBXGroup;
+			children = (
+				D7988FB11E06443D002F7D38 /* fluke.png */,
+				D7988FA11E062FDA002F7D38 /* TodayViewController.swift */,
+				D7988FA31E062FDA002F7D38 /* TodayViewController.xib */,
+				D7988FA61E062FDA002F7D38 /* Info.plist */,
+				D7988FA71E062FDA002F7D38 /* InfoPlist.strings */,
+				D7988F9F1E062FDA002F7D38 /* Supporting Files */,
+			);
+			path = "today-extension";
+			sourceTree = "<group>";
+		};
+		D7988F9F1E062FDA002F7D38 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D7988FA01E062FDA002F7D38 /* today_extension.entitlements */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		D7B684321D72105C0096F296 = {
 			isa = PBXGroup;
 			children = (
 				D7B6843D1D72105C0096F296 /* mooshimeter-osx */,
 				D7B6844F1D72105C0096F296 /* mooshimeter-osxTests */,
 				D7B6845A1D72105C0096F296 /* mooshimeter-osxUITests */,
+				D7988F9E1E062FDA002F7D38 /* today-extension */,
+				D7988F9B1E062FDA002F7D38 /* Frameworks */,
 				D7B6843C1D72105C0096F296 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -196,6 +281,7 @@
 				D7B6843B1D72105C0096F296 /* mooshimeter-osx.app */,
 				D7B6844C1D72105C0096F296 /* mooshimeter-osxTests.xctest */,
 				D7B684571D72105C0096F296 /* mooshimeter-osxUITests.xctest */,
+				D7988F9A1E062FDA002F7D38 /* today-extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -292,6 +378,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		D7988F991E062FDA002F7D38 /* today-extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D7988FAD1E062FDA002F7D38 /* Build configuration list for PBXNativeTarget "today-extension" */;
+			buildPhases = (
+				D7988F961E062FDA002F7D38 /* Sources */,
+				D7988F971E062FDA002F7D38 /* Frameworks */,
+				D7988F981E062FDA002F7D38 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "today-extension";
+			productName = "today-extension";
+			productReference = D7988F9A1E062FDA002F7D38 /* today-extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		D7B6843A1D72105C0096F296 /* mooshimeter-osx */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D7B684601D72105C0096F296 /* Build configuration list for PBXNativeTarget "mooshimeter-osx" */;
@@ -299,10 +402,12 @@
 				D7B684371D72105C0096F296 /* Sources */,
 				D7B684381D72105C0096F296 /* Frameworks */,
 				D7B684391D72105C0096F296 /* Resources */,
+				D7988FB01E062FDA002F7D38 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D7988FAB1E062FDA002F7D38 /* PBXTargetDependency */,
 			);
 			name = "mooshimeter-osx";
 			productName = "mooshimeter-osx";
@@ -351,13 +456,20 @@
 		D7B684331D72105C0096F296 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
+				LastSwiftUpdateCheck = 0820;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = alfishe;
 				TargetAttributes = {
+					D7988F991E062FDA002F7D38 = {
+						CreatedOnToolsVersion = 8.2;
+						DevelopmentTeam = 728R6XS6K7;
+						ProvisioningStyle = Automatic;
+					};
 					D7B6843A1D72105C0096F296 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 728R6XS6K7;
 						LastSwiftMigration = 0820;
+						ProvisioningStyle = Automatic;
 					};
 					D7B6844B1D72105C0096F296 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -387,11 +499,22 @@
 				D7B6843A1D72105C0096F296 /* mooshimeter-osx */,
 				D7B6844B1D72105C0096F296 /* mooshimeter-osxTests */,
 				D7B684561D72105C0096F296 /* mooshimeter-osxUITests */,
+				D7988F991E062FDA002F7D38 /* today-extension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D7988F981E062FDA002F7D38 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7988FB21E06443D002F7D38 /* fluke.png in Resources */,
+				D7988FA51E062FDA002F7D38 /* TodayViewController.xib in Resources */,
+				D7988FA91E062FDA002F7D38 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D7B684391D72105C0096F296 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -418,6 +541,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		D7988F961E062FDA002F7D38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D7988FA21E062FDA002F7D38 /* TodayViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D7B684371D72105C0096F296 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -443,6 +574,7 @@
 				184151328AE83E9E3640FF80 /* UOMHelper.swift in Sources */,
 				18415555F0E172E7CC4561B4 /* FloatHelper.swift in Sources */,
 				18415BAF73733CBD25D9674E /* DeviceProtocol.swift in Sources */,
+				D771A2731E691B3F00DF0CC7 /* SwiftDataCompression.swift in Sources */,
 				18415C272C09D5FC0E13ACBF /* ThreadHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -468,6 +600,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		D7988FAB1E062FDA002F7D38 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D7988F991E062FDA002F7D38 /* today-extension */;
+			targetProxy = D7988FAA1E062FDA002F7D38 /* PBXContainerItemProxy */;
+		};
 		D7B6844E1D72105C0096F296 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = D7B6843A1D72105C0096F296 /* mooshimeter-osx */;
@@ -481,6 +618,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		D7988FA31E062FDA002F7D38 /* TodayViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D7988FA41E062FDA002F7D38 /* Base */,
+			);
+			name = TodayViewController.xib;
+			sourceTree = "<group>";
+		};
+		D7988FA71E062FDA002F7D38 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D7988FA81E062FDA002F7D38 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		D7B684441D72105C0096F296 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -492,6 +645,41 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		D7988FAE1E062FDA002F7D38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = "today-extension/today_extension.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 728R6XS6K7;
+				INFOPLIST_FILE = "today-extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osx.today-extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		D7988FAF1E062FDA002F7D38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_ENTITLEMENTS = "today-extension/today_extension.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 728R6XS6K7;
+				INFOPLIST_FILE = "today-extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osx.today-extension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		D7B6845E1D72105C0096F296 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -582,8 +770,12 @@
 		D7B684611D72105C0096F296 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 728R6XS6K7;
+				HEADER_SEARCH_PATHS = "${SRCROOT}/mooshimeter-osx/3rdParty/GzipSwift/zlib/**";
 				INFOPLIST_FILE = "mooshimeter-osx/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osx";
@@ -595,8 +787,12 @@
 		D7B684621D72105C0096F296 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 728R6XS6K7;
+				HEADER_SEARCH_PATHS = "${SRCROOT}/mooshimeter-osx/3rdParty/GzipSwift/zlib/**";
 				INFOPLIST_FILE = "mooshimeter-osx/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osx";
@@ -662,6 +858,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		D7988FAD1E062FDA002F7D38 /* Build configuration list for PBXNativeTarget "today-extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D7988FAE1E062FDA002F7D38 /* Debug */,
+				D7988FAF1E062FDA002F7D38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D7B684361D72105C0096F296 /* Build configuration list for PBXProject "mooshimeter-osx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
