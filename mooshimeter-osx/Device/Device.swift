@@ -252,8 +252,6 @@ class Device: NSObject
     
     if self.currentFrame.count > 0
     {
-      let packetNum: UInt8 = self.currentFrame[0]
-      
       if self.expectFirstPacket
       {
         self.command = self.currentFrame[1]
@@ -261,36 +259,40 @@ class Device: NSObject
         
         switch resultType
         {
+          // Only binary data needs to be collected across multiple packets
+          // Other types fit into a single packet and can be decoded immediately
           case .val_BIN:
             self.expectingBytes = Int(self.currentFrame[3]) << 8 | Int(self.currentFrame[2])
           
             self.receiveBuffer.append(contentsOf: self.currentFrame.suffix(from: 4))
             break
+          case .val_STR:
+            fallthrough
+          case .val_U8:
+            fallthrough
           case .val_U16:
-            let valuePart = self.currentFrame.suffix(from: 2)
-            let valueData = Data(bytes: valuePart)
-            let value: UInt16 = UInt16(littleEndian: valueData.withUnsafeBytes { $0.pointee })
-            
-            print(String(format: "val_U16=0x%x", value))
-            
-            decodingFinished = true
-            break
+            fallthrough
           case .val_U32:
-            let valuePart = self.currentFrame.suffix(from: 2)
-            let valueData = Data(bytes: valuePart)
-            let value: UInt32 = UInt32(littleEndian: valueData.withUnsafeBytes { $0.pointee })
+            fallthrough
+          case .val_S8:
+            fallthrough
+          case .val_S16:
+            fallthrough
+          case .val_S32:
+            fallthrough
+          case .val_FLT:
+            let value = DeviceCommand.getPacketValue(data: Data(self.currentFrame))
             
-            print(String(format: "val_U32=0x%x", value))
+            self.dumpCommandPacket(data: Data(self.currentFrame))
+            print("Decoded: \(String(describing: value!.type)) = \(DeviceCommand.printValue(valueTuple: value))")
             
             decodingFinished = true
-            break
           default:
             print("decodeData - unhandled data format")
             print(String(describing: resultType))
             self.dumpCommandPacket(data: Data(self.currentFrame))
             
             decodingFinished = true
-            break
         }
 
         self.expectFirstPacket = false
@@ -317,15 +319,25 @@ class Device: NSObject
         {
           print("Full binary data received. Length: \(String(expectingBytes))")
           
-          let compressedBuffer: [UInt8] = Array(self.receiveBuffer)
-          let compressedData: Data = Data(compressedBuffer)
+          let commandType = DeviceCommandType(rawValue: self.command)!
           
-          //let crc = compressedData.getCrc32()
-          let crc: UInt32 = 0x14795c4a
-          self.sendCRC32(crc: crc)
-          //self.getDiagnostic()
-          
-          self.decompressTreeData(data: compressedBuffer)
+          switch commandType
+          {
+            case .Tree:
+              let compressedBuffer: [UInt8] = Array(self.receiveBuffer)
+              let compressedData: Data = Data(compressedBuffer)
+              
+              let crc: UInt32 = compressedData.getCrc32()
+              self.sendCRC32(crc: crc)
+              
+              self.decompressTreeData(data: compressedBuffer)
+            
+              self.getTime()
+            case .Diagnostic:
+              print(self.receiveBuffer)
+            default:
+              break
+          }
           
           self.resetReceiveBufferState()
         }
@@ -343,17 +355,6 @@ class Device: NSObject
     
     let decompressedData = compressedData.unzip()
     //let decompressedData = try! compressedData.blockUnzip(skipCheckSumValidation: false)
-
-    //self.dumpData(data: decompressedData)
-    
-    do
-    {
-      try decompressedData?.write(to: URL(fileURLWithPath: "/Users/dev/admTree.log"), options: .atomic)
-    }
-    catch
-    {
-      print(error)
-    }
   }
   
   //MARK: -
@@ -377,6 +378,7 @@ class Device: NSObject
     let commandType = DeviceCommandType(rawValue: commandTypeByte)!
     let commandTypeText = commandType.description
     let resultType = DeviceCommand.getResultTypeByCommand(command: commandTypeByte)
+    let value = DeviceCommand.printPacketValue(data: data)
     
     print("")
     
@@ -385,7 +387,7 @@ class Device: NSObject
     print(text)
     
     text = "Type: \(String(describing: resultType))"
-    text += " Value: <TBD>"
+    text += " Value: \(value)"
     print(text)
     
     let range: Range<Int> = 2..<data.count
@@ -453,6 +455,8 @@ class Device: NSObject
     self.writeValueAsync(bytes: dataBytes)
   }
   
+  
+  // TODO: Doesn't work
   func getDiagnostic() -> Void
   {
     print("Getting Diagnostic...")
@@ -465,14 +469,46 @@ class Device: NSObject
     
     self.writeValueAsync(bytes: dataBytes)
   }
+  
+  func getPCBVersion() -> Void
+  {
+    print("Getting PCB_VERSION...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.PCBVersion))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+  
+  func getName() -> Void
+  {
+    print("Getting Name...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Name))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
 
   //MARK: -
   //MARK: Time methods
-  func getTime() -> Double
+  func getTime()
   {
-    let result: Double = 0.0
-
-    return result
+    print("Getting Time_UTC...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.TimeUTC))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
   }
 
   func setTime(_ time: Double)

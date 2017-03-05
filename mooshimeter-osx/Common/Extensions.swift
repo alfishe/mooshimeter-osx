@@ -37,6 +37,19 @@ extension CBUUID
 
 extension Data
 {
+  // To/from generic conversions
+  init<T>(from value: T)
+  {
+    var value = value
+    self.init(buffer: UnsafeBufferPointer(start: &value, count: 1))
+  }
+  
+  func to<T>(type: T.Type) -> T
+  {
+    return self.withUnsafeBytes { $0.pointee }
+  }
+  // End of From/to generic conversions
+  
   func hexEncodedString() -> String
   {
     let result = map
@@ -61,7 +74,8 @@ extension Data
   
   func getCrc32() -> UInt32
   {
-    let result = crc32(0xFFFFFFFF, data: self)
+    var result: UInt32 = crc32(0, buffer: nil, length: 0)
+    result = crc32(result, data: self)
     
     return result
   }
@@ -90,6 +104,15 @@ extension UInt32
       result[3] = (UInt8)(self >> 24 & 0xFF)
     }
     
+    // Pure Swift version
+    /*
+    var asByteArray: [UInt8]
+    {
+      let result = [0, 8, 16, 24].map { UInt8(self >> $0 & 0x000000FF) }
+     
+      return result
+    }
+     */
     
     return result
   }
@@ -97,33 +120,44 @@ extension UInt32
 
 extension UInt16
 {
-    @inline(__always)
-    static func loByte(_ word: UInt16) -> UInt8
-    {
-        let result = (UInt8)(word & 0xFF)
-
-        return result
-    }
-
-    @inline(__always)
-    static func hiByte(_ word: UInt16) -> UInt8
-    {
-        let result = (UInt8)(word >> 8)
-
-        return result
-    }
-
-    @inline(__always)
-    func hiByte() -> UInt8
-    {
-        return UInt16.hiByte(self)
-    }
-
-    @inline(__always)
-    func loByte() -> UInt8
-    {
-        return UInt16.loByte(self)
-    }
+  func byteArray() -> [UInt8]
+  {
+    var result: [UInt8] = [UInt8](repeating: UInt8(), count: 2)
+    
+    // LittleEndian
+    result[0] = (UInt8)(self & 0xFF)
+    result[1] = (UInt8)(self >> 8 & 0xFF)
+    
+    return result
+  }
+  
+  @inline(__always)
+  static func loByte(_ word: UInt16) -> UInt8
+  {
+    let result = (UInt8)(word & 0xFF)
+    
+    return result
+  }
+  
+  @inline(__always)
+  static func hiByte(_ word: UInt16) -> UInt8
+  {
+    let result = (UInt8)(word >> 8)
+    
+    return result
+  }
+  
+  @inline(__always)
+  func hiByte() -> UInt8
+  {
+    return UInt16.hiByte(self)
+  }
+  
+  @inline(__always)
+  func loByte() -> UInt8
+  {
+    return UInt16.loByte(self)
+  }
 }
 
 extension Float

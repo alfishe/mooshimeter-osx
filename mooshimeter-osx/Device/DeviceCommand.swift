@@ -280,6 +280,135 @@ class DeviceCommand: NSObject
     
     return result
   }
+  
+  /**
+   - parameters:
+   - data: Packet data bytes
+   */
+  class func getPacketValue(data: Data?) -> (type: ResultType, value: AnyObject?)?
+  {
+    var result: (type: ResultType, value: AnyObject?)? = nil
+    
+    if data != nil && data!.count > 2
+    {
+      // Strip first byte from the packet (packet number)
+      let payloadData = data!.subdata(in: 1..<data!.count)
+      
+      // Command type is located in the first byte of packet payload
+      let commandTypeByte: UInt8 = payloadData.first!
+      let commandType = DeviceCommandType(rawValue: commandTypeByte)
+      
+      if commandType != nil
+      {
+        var value: AnyObject? = nil
+        
+        // Resolve result value type based on command type
+        let valueType = DeviceCommand.getResultTypeByCommand(command: commandType!.rawValue)
+        let valueData = payloadData.subdata(in: 1..<payloadData.count)
+        
+        // Parse the value
+        switch valueType
+        {
+          case .val_STR:
+            // First two bytes are string length
+            let length: UInt16 = valueData.to(type: UInt16.self)
+            if length > 0
+            {
+              let stringData = valueData.subdata(in: 2..<2 + Int(length))
+              value = String(data: stringData, encoding: String.Encoding.utf8) as AnyObject?
+            }
+          case .val_U8:
+            if valueData.count >= 1
+            {
+              value = valueData.to(type: UInt8.self) as AnyObject?
+            }
+          case .val_U16:
+            if valueData.count >= 2
+            {
+              value = valueData.to(type: UInt16.self) as AnyObject?
+            }
+          case .val_U32:
+            if valueData.count >= 4
+            {
+              value = valueData.to(type: UInt32.self) as AnyObject?
+            }
+          case .val_S8:
+            if valueData.count >= 1
+            {
+              value = valueData.to(type: Int8.self) as AnyObject?
+            }
+          case .val_S16:
+            if valueData.count >= 2
+            {
+              value = valueData.to(type: Int16.self) as AnyObject?
+            }
+          case .val_S32:
+            if valueData.count >= 4
+            {
+              value = valueData.to(type: Int32.self) as AnyObject?
+            }
+          case .val_FLT:
+            if valueData.count >= 4
+            {
+              value = valueData.to(type: Float.self) as AnyObject?
+            }
+            break
+          default:
+            print("getPacketValue - unknown type: \(String(describing: valueType))")
+            break
+        }
+        
+        result = (valueType, value)
+      }
+    }
+    
+    return result
+  }
+  
+  class func printValue(valueTuple: (type: ResultType, value: AnyObject?)?) -> String
+  {
+    var result: String = ""
+    
+    if valueTuple != nil
+    {
+      let type = valueTuple!.type
+      let value = valueTuple!.value
+      
+      switch type
+      {
+        case .val_STR:
+          let val: String = value as! String
+          result = String(val)
+        case .val_U8:
+          let val: UInt8 = value as! UInt8
+          result = String(format: "0x%02x", val)
+        case .val_U16:
+          let val: UInt16 = value as! UInt16
+          result = String(format: "0x%04x", val)
+        case .val_U32:
+          let val: UInt32 = value as! UInt32
+          result = String(format: "0x%08x", val)
+        case .val_FLT:
+          let val: Float = value as! Float
+          result = String(format: "%0.6f", val)
+        default:
+          break
+      }
+    }
+    
+    return result
+  }
+  
+  class func printPacketValue(data: Data?) -> String
+  {
+    var result: String = ""
+    
+    let valueTuple = getPacketValue(data: data)
+    
+    result = printValue(valueTuple: valueTuple)
+    
+    return result
+  }
 }
 
 
