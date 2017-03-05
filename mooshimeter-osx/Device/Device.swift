@@ -268,6 +268,8 @@ class Device: NSObject
             break
           case .val_STR:
             fallthrough
+          case .chooser:
+            fallthrough
           case .val_U8:
             fallthrough
           case .val_U16:
@@ -332,7 +334,7 @@ class Device: NSObject
               
               self.decompressTreeData(data: compressedBuffer)
             
-              self.getTime()
+              self.getSamplingRate()
             case .Diagnostic:
               print(self.receiveBuffer)
             default:
@@ -518,4 +520,16 @@ class Device: NSObject
 
   //MARK: -
   //MARK: Sample rate methods
+  func getSamplingRate()
+  {
+    print("Getting Sampling Rate...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.SamplingRate))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
 }

@@ -8,184 +8,18 @@
 
 import Foundation
 
-enum DeviceCommandType: UInt8
-{
-  case CRC32 = 0
-  case Tree = 1
-  case Diagnostic = 2
-  case PCBVersion = 3
-  case Name = 4
-  case TimeUTC = 5
-  case TimeUTCms = 6
-  case Battery = 7
-  case Reboot = 8
-  case SamplingRate = 9
-  case SamplingDepth = 10
-  case SamplingTrigger = 11
-  case LoggingOn = 12
-  case LoggingInterval = 13
-  case LoggingStatus = 14
-  case LoggingPollDir = 15
-  case LoggingInfoIndex = 16
-  case LoggingInfoEndTime = 17
-  case LoggingInfoBytesNum = 18
-  case LoggingStreamIndex = 19
-  case LoggingStreamOffset = 20
-  case LoggingStreamData = 21
-  case Channel1Mapping = 22
-  case Channel1Range = 23
-  case Channel1Analysis = 24
-  case Channel1Value = 25
-  case Channel1Offset = 26
-  case Channel1Buf = 27
-  case Channel1BufBPS = 28
-  case Channel1BufLSBNative = 29
-  case Channel2Mapping = 30
-  case Channel2Range = 31
-  case Channel2Analysis = 32
-  case Channel2Value = 33
-  case Channel2Offset = 34
-  case Channel2Buf = 35
-  case Channel2BufBPS = 36
-  case Channel2BufLSBNative = 37
-  case Shared = 38
-  case RealPwr = 39
-  
-  
-  var description : String
-  {
-    get
-    {
-      var result = ""
-      
-      switch self.rawValue
-      {
-        case 0:
-          result = "ADMIN:CRC32"
-        case 1:
-          result = "ADMIN:TREE"
-        case 2:
-          result = "ADMIN:DIAGNOSTICS"
-        case 3:
-          result = "PCB_VERSION"
-        case 4:
-          result = "NAME"
-        case 5:
-          result = "TIME_UTC"
-        case 6:
-          result = "TIME_UTC_MS"
-        case 7:
-          result = "BAT_V"
-        case 8:
-          result = "REBOOT"
-        case 9:
-          result = "SAMPLING:RATE"
-        case 10:
-          result = "SAMPLING:DEPTH"
-        case 11:
-          result = "SAMPLING:TRIGGER"
-        case 12:
-          result = "LOG:ON"
-        case 13:
-          result = "LOG:INTERVAL"
-        case 14:
-          result = "LOG:STATUS"
-        case 15:
-          result = "LOG:POLLDIR"
-        case 16:
-          result = "LOG:INFO:INDEX"
-        case 17:
-          result = "LOG:INFO:END_TIME"
-        case 18:
-          result = "LOG:INFO:N_BYTES"
-        case 19:
-          result = "LOG:STREAM:INDEX"
-        case 20:
-          result = "LOG:STREAM:OFFSET"
-        case 21:
-          result = "LOG:STREAM:DATA"
-        case 22:
-          result = "CH1:MAPPING"
-        case 23:
-          result = "CH1:RANGE_I"
-        case 24:
-          result = "CH1:ANALYSIS"
-        case 25:
-          result = "CH1:VALUE"
-        case 26:
-          result = "CH1:OFFSET"
-        case 27:
-          result = "CH1:BUF"
-        case 28:
-          result = "CH1:BUF_BPS"
-        case 29:
-          result = "CH1:BUF_LSB2NATIVE"
-        case 30:
-          result = "CH2:MAPPING"
-        case 31:
-          result = "CH2:RANGE_I"
-        case 32:
-          result = "CH2:ANALYSIS"
-        case 33:
-          result = "CH2:VALUE"
-        case 34:
-          result = "CH2:OFFSET"
-        case 35:
-          result = "CH2:BUF"
-        case 36:
-          result = "CH2:BUF_BPS"
-        case 37:
-          result = "CH2:BUF_LSB2NATIVE"
-        case 38:
-          result = "SHARED"
-        case 39:
-          result = "REAL_PWR"
-        default:
-          break
-      }
-      
-      return result
-    }
-  }
-
-  var code : UInt8
-  {
-    get
-    {
-      return self.rawValue
-    }
-  }
-}
-
-enum ResultType: Int
-{
-  case plain    = 0   // May be an informational node, or a choice in a chooser
-  case link     = 1   // A link to somewhere else in the tree
-  case chooser  = 2   // The children of a CHOOSER can only be selected by one CHOOSER, and a CHOOSER can only select one child
-  case val_U8   = 3   // These nodes have readable and writable values of the type specified
-  case val_U16  = 4   // These nodes have readable and writable values of the type specified
-  case val_U32  = 5   // These nodes have readable and writable values of the type specified
-  case val_S8   = 6   // These nodes have readable and writable values of the type specified
-  case val_S16  = 7   // These nodes have readable and writable values of the type specified
-  case val_S32  = 8   // These nodes have readable and writable values of the type specified
-  case val_STR  = 9   // These nodes have readable and writable values of the type specified
-  case val_BIN  = 10  // These nodes have readable and writable values of the type specified
-  case val_FLT  = 11  // These nodes have readable and writable values of the type specified
-  case notset   = -1  // May be an informational node, or a choice in a chooser
-}
-
 class DeviceCommand: NSObject
 {
   class func getReadCommandCode(type: DeviceCommandType) -> UInt8
   {
-    let result: UInt8 = type.code & 0x7F
+    let result: UInt8 = type.rawValue & 0x7F
   
     return result
   }
   
   class func getWriteCommandCode(type: DeviceCommandType) -> UInt8
   {
-    let result: UInt8 = type.code | 0x80
+    let result: UInt8 = type.rawValue | 0x80
   
     return result
   }
@@ -310,12 +144,20 @@ class DeviceCommand: NSObject
         switch valueType
         {
           case .val_STR:
-            // First two bytes are string length
-            let length: UInt16 = valueData.to(type: UInt16.self)
-            if length > 0
+            if valueData.count >= 2
             {
-              let stringData = valueData.subdata(in: 2..<2 + Int(length))
-              value = String(data: stringData, encoding: String.Encoding.utf8) as AnyObject?
+              // First two bytes are string length
+              let length: UInt16 = valueData.to(type: UInt16.self)
+              if length > 0
+              {
+                let stringData = valueData.subdata(in: 2..<2 + Int(length))
+                value = String(data: stringData, encoding: String.Encoding.utf8) as AnyObject?
+              }
+            }
+          case .chooser:
+            if valueData.count >= 1
+            {
+              value = valueData.to(type: UInt8.self) as AnyObject?
             }
           case .val_U8:
             if valueData.count >= 1
@@ -379,6 +221,9 @@ class DeviceCommand: NSObject
         case .val_STR:
           let val: String = value as! String
           result = String(val)
+        case .chooser:
+          let val: UInt8 = value as! UInt8
+          result = String(format: "0x%02x", val)
         case .val_U8:
           let val: UInt8 = value as! UInt8
           result = String(format: "0x%02x", val)
@@ -406,6 +251,38 @@ class DeviceCommand: NSObject
     let valueTuple = getPacketValue(data: data)
     
     result = printValue(valueTuple: valueTuple)
+    
+    return result
+  }
+  
+  class func printChooserValue(commandType: DeviceCommandType, value: UInt8) -> String
+  {
+    var result: String = ""
+    
+    switch commandType
+    {
+      case .Reboot:
+        result = (RebootType(rawValue: value)?.description)!
+      case .SamplingRate:
+        result = (SamplingRateType(rawValue: value)?.description)!
+      case .SamplingDepth:
+        result = (SamplingDepthType(rawValue: value)?.description)!
+      case .SamplingTrigger:
+        result = (SamplingTriggerType(rawValue: value)?.description)!
+      case .Channel1Mapping:
+        result = (Channel1MappingType(rawValue: value)?.description)!
+      case .Channel1Analysis:
+        result = (Channel1AnalysisType(rawValue: value)?.description)!
+      case .Channel2Mapping:
+        result = (Channel2MappingType(rawValue: value)?.description)!
+      case .Channel2Analysis:
+        result = (Channel2AnalysisType(rawValue: value)?.description)!
+      case .Shared:
+        result = (SharedModeType(rawValue: value)?.description)!
+      default:
+        result = "Chooser not implemented for CommandType: \(String(describing: commandType))"
+        break
+    }
     
     return result
   }
