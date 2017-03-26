@@ -25,6 +25,7 @@ enum MetricPrefix
 enum UnitsOfMeasure
 {
   case undefined
+  case none
   case degreesC
   case degreesK
   case degreeesF
@@ -33,4 +34,5 @@ enum UnitsOfMeasure
   case ohms
   case watts
   case decibels
+  case hertz
 }

@@ -16,7 +16,6 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
   var centralManager: CBCentralManager!
   var peripherals = [String: CBPeripheral]()
-  var peripheralDescriptors = [String: BLEDeviceInformation]()
 
   fileprivate var isStarted = false
 
@@ -52,18 +51,6 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
     let serviceUUIDs:[CBUUID] = [ CBUUID(string: Constants.METER_SERVICE_UUID) ]
     self.centralManager.scanForPeripherals(withServices: serviceUUIDs, options: nil)
-  }
-
-  func getPeripheralDescriptor(_ uuid: String) -> BLEDeviceInformation?
-  {
-    var result: BLEDeviceInformation? = nil
-
-    if self.peripheralDescriptors[uuid] != nil
-    {
-      result = self.peripheralDescriptors[uuid]
-    }
-
-    return result
   }
   
   //MARK: -
@@ -238,13 +225,6 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       peripheral.delegate = self
       peripherals[uuid] = peripheral
 
-      // Put associated advertisement data
-      let descriptor = BLEDeviceInformation()
-      descriptor.isSupported = isSupported
-      descriptor.dataServiceUUID = dataServiceUUID
-      descriptor.manufacturerData = manufacturerData
-      self.peripheralDescriptors[uuid] = descriptor
-
       // Debug (Connect immediately)
       self.connectPeriperal(peripheral: peripheral)
 
@@ -285,11 +265,6 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
     if self.peripherals[uuid] != nil
     {
       self.peripherals.removeValue(forKey: uuid)
-    }
-
-    if self.peripheralDescriptors[uuid] != nil
-    {
-      self.peripheralDescriptors.removeValue(forKey: uuid)
     }
 
     // Low level notification about CoreBluetooth peripheral disconnection

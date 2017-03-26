@@ -187,8 +187,6 @@ class ConfigTree: NSObject
     wrappedPayload.append(&sendPacketNum, length: 1)
     wrappedPayload.append(payload)
     
-    let sentPacketNum: UInt8 = sendPacketNum
-    
     sendPacketNum = sendPacketNum + 1
     
     // TODO: send data via device's write characteristic

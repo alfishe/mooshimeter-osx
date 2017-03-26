@@ -1,41 +1,6 @@
 import Foundation
 import CoreBluetooth
 
-enum DeviceInputMode: Int8
-{
-  case NATIVE = 0
-  case TEMP = 1
-  case AUX_V = 2
-  case RESISTANCE = 3
-  case DIODE = 4
-}
-
-enum GainType: Int8
-{
-  case PGA_GAIN_1 = 0
-  case PGA_GAIN_4 = 1
-  case PGA_GAIN_12 = 2
-  case PGA_IGNORE = 3
-}
-
-enum GPIOSetting: Int8
-{
-  case GPIO0 = 0
-  case GPIO1 = 1
-  case GPIO2 = 2
-  case GPIO3 = 3
-  case GPIO_IGNORE = 4
-}
-
-enum ISrcSetting: Int8
-{
-  case ISRC_OFF = 0
-  case ISRC_LOW = 1
-  case ISRC_MID = 2
-  case ISRC_HIGH = 3
-  case ISRC_IGNOR = 4
-}
-
 class Device: NSObject
 {
   static let badreadData = "BADREAD".data(using: .ascii)
@@ -48,6 +13,7 @@ class Device: NSObject
   private var writeCharacteristic: CBCharacteristic?
   
   private var deviceReady: Bool = false
+  private var deviceState: DeviceState = DeviceState()
   
   // Receive/send variables
   private var receiveBuffer: [UInt8] = [UInt8]()
@@ -255,6 +221,7 @@ class Device: NSObject
       if self.expectFirstPacket
       {
         self.command = self.currentFrame[1]
+        let commandType = DeviceCommandType(rawValue: self.command)!
         let resultType = DeviceCommand.getResultTypeByCommand(command: self.command)
         
         switch resultType
@@ -285,8 +252,10 @@ class Device: NSObject
           case .val_FLT:
             let value = DeviceCommand.getPacketValue(data: Data(self.currentFrame))
             
+            self.deviceState.setValue(commandType, value: value as AnyObject?)
+            
             self.dumpCommandPacket(data: Data(self.currentFrame))
-            print("Decoded: \(String(describing: value!.type)) = \(DeviceCommand.printValue(valueTuple: value))")
+            print("Decoded: \(String(describing: value!.type)) = \(DeviceCommand.printValue(commandType: commandType, valueTuple: value))")
             
             decodingFinished = true
           default:
@@ -351,12 +320,21 @@ class Device: NSObject
     }
   }
   
-  func decompressTreeData(data: [UInt8])
+  func decompressTreeData(data: [UInt8]) -> [UInt8]?
   {
+    var result: [UInt8]? = nil
+    
     let compressedData: Data = Data(data)
     
     let decompressedData = compressedData.unzip()
     //let decompressedData = try! compressedData.blockUnzip(skipCheckSumValidation: false)
+    
+    if decompressedData != nil
+    {
+      result =  [UInt8](decompressedData!)
+    }
+    
+    return result
   }
   
   //MARK: -

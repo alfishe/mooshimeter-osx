@@ -13,9 +13,7 @@
 		18415505F6D205704D1F5FDF /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1841563FACC0086580FF4C2B /* DeviceManager.swift */; };
 		18415555F0E172E7CC4561B4 /* FloatHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184159A377214E7ABA7DCE71 /* FloatHelper.swift */; };
 		184157478653F7A07C53A448 /* DisplayFormatHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415E971ED3D56D67C58AF9 /* DisplayFormatHelper.swift */; };
-		184158448F15BAC709964658 /* BLECharacteristic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415283E886C7AFE7993ED0 /* BLECharacteristic.swift */; };
 		1841584B0524455A315CA657 /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184153FE97E9B80263791AA4 /* Enumerations.swift */; };
-		1841598E6F48B0025FF2EA5D /* BLEDeviceInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415A9FDA3227B992A1964F /* BLEDeviceInformation.swift */; };
 		18415A90E3C69944DB3539F2 /* DeviceManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184154BB0062952AADAD23EE /* DeviceManagerTests.swift */; };
 		18415B3041238E813FA10BFB /* MeterReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415C00509A3EFAC52A9C39 /* MeterReading.swift */; };
 		18415B7D2BC34657152F9499 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415C878C0E2852DD6486D5 /* Device.swift */; };
@@ -29,6 +27,7 @@
 		D7988FA91E062FDA002F7D38 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D7988FA71E062FDA002F7D38 /* InfoPlist.strings */; };
 		D7988FAC1E062FDA002F7D38 /* today-extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D7988F9A1E062FDA002F7D38 /* today-extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D7988FB21E06443D002F7D38 /* fluke.png in Resources */ = {isa = PBXBuildFile; fileRef = D7988FB11E06443D002F7D38 /* fluke.png */; };
+		D7A310281E881EF400B46F19 /* DeviceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A310271E881EF400B46F19 /* DeviceState.swift */; };
 		D7A8E8571D93565A00606FAE /* DeviceCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A8E8561D93565A00606FAE /* DeviceCommand.swift */; };
 		D7A8E8591D936DB000606FAE /* ConfigTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A8E8581D936DB000606FAE /* ConfigTree.swift */; };
 		D7B6843F1D72105C0096F296 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6843E1D72105C0096F296 /* AppDelegate.swift */; };
@@ -86,7 +85,6 @@
 
 /* Begin PBXFileReference section */
 		184150258C12D04E34C1230E /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = Common/Extensions.swift; sourceTree = "<group>"; };
-		18415283E886C7AFE7993ED0 /* BLECharacteristic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLECharacteristic.swift; path = BLE/BLECharacteristic.swift; sourceTree = "<group>"; };
 		184153A80C70D13DA19B6CF7 /* ThreadHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ThreadHelper.swift; path = Common/ThreadHelper.swift; sourceTree = "<group>"; };
 		184153FE97E9B80263791AA4 /* Enumerations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Enumerations.swift; path = Common/Enumerations.swift; sourceTree = "<group>"; };
 		184154BB0062952AADAD23EE /* DeviceManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceManagerTests.swift; path = Device/DeviceManagerTests.swift; sourceTree = "<group>"; };
@@ -96,7 +94,6 @@
 		1841592F53318E551740F95D /* deflate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = deflate.swift; path = 3rdParty/Deflate/deflate.swift; sourceTree = "<group>"; };
 		184159A377214E7ABA7DCE71 /* FloatHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FloatHelper.swift; path = Common/FloatHelper.swift; sourceTree = "<group>"; };
 		18415A9C28B1CD4E2742CB04 /* UOMHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UOMHelperTests.swift; sourceTree = "<group>"; };
-		18415A9FDA3227B992A1964F /* BLEDeviceInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BLEDeviceInformation.swift; path = BLE/BLEDeviceInformation.swift; sourceTree = "<group>"; };
 		18415BF854095F9F489FC05B /* crc32.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = crc32.swift; path = 3rdParty/CRC32/crc32.swift; sourceTree = "<group>"; };
 		18415C00509A3EFAC52A9C39 /* MeterReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeterReading.swift; sourceTree = "<group>"; };
 		18415C878C0E2852DD6486D5 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
@@ -110,6 +107,7 @@
 		D7988FA61E062FDA002F7D38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7988FA81E062FDA002F7D38 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D7988FB11E06443D002F7D38 /* fluke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fluke.png; sourceTree = "<group>"; };
+		D7A310271E881EF400B46F19 /* DeviceState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceState.swift; sourceTree = "<group>"; };
 		D7A8E8561D93565A00606FAE /* DeviceCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCommand.swift; sourceTree = "<group>"; };
 		D7A8E8581D936DB000606FAE /* ConfigTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTree.swift; sourceTree = "<group>"; };
 		D7B6843B1D72105C0096F296 /* mooshimeter-osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mooshimeter-osx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -175,6 +173,7 @@
 				D7A8E8561D93565A00606FAE /* DeviceCommand.swift */,
 				D7A8E8581D936DB000606FAE /* ConfigTree.swift */,
 				D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */,
+				D7A310271E881EF400B46F19 /* DeviceState.swift */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -332,8 +331,6 @@
 			isa = PBXGroup;
 			children = (
 				D7B6846A1D72117A0096F296 /* BLEManager.swift */,
-				18415A9FDA3227B992A1964F /* BLEDeviceInformation.swift */,
-				18415283E886C7AFE7993ED0 /* BLECharacteristic.swift */,
 			);
 			name = BLE;
 			sourceTree = "<group>";
@@ -562,7 +559,6 @@
 				D7B6846E1D721AC70096F296 /* Constants.swift in Sources */,
 				18415C347FBA20D79C9D8504 /* Extensions.swift in Sources */,
 				D7E8D9FF1E6BD34200C78454 /* DeviceEnumerations.swift in Sources */,
-				1841598E6F48B0025FF2EA5D /* BLEDeviceInformation.swift in Sources */,
 				18415505F6D205704D1F5FDF /* DeviceManager.swift in Sources */,
 				18415B7D2BC34657152F9499 /* Device.swift in Sources */,
 				D7B684781D73A6FD0096F296 /* Async.swift in Sources */,
@@ -572,7 +568,7 @@
 				1841584B0524455A315CA657 /* Enumerations.swift in Sources */,
 				D7A8E8571D93565A00606FAE /* DeviceCommand.swift in Sources */,
 				184152FDB6605FFCD2FCA6B7 /* crc32.swift in Sources */,
-				184158448F15BAC709964658 /* BLECharacteristic.swift in Sources */,
+				D7A310281E881EF400B46F19 /* DeviceState.swift in Sources */,
 				18415B3041238E813FA10BFB /* MeterReading.swift in Sources */,
 				184157478653F7A07C53A448 /* DisplayFormatHelper.swift in Sources */,
 				184151328AE83E9E3640FF80 /* UOMHelper.swift in Sources */,

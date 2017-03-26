@@ -115,6 +115,23 @@ class DeviceCommand: NSObject
     return result
   }
   
+  class func getPacketCommandType(data: Data?) -> DeviceCommandType?
+  {
+    var result: DeviceCommandType? = nil
+    
+    if data != nil && data!.count >= 2
+    {
+      // Strip first byte from the packet (packet number)
+      let payloadData = data!.subdata(in: 1..<data!.count)
+      
+      // Command type is located in the first byte of packet payload
+      let commandTypeByte: UInt8 = payloadData.first!
+      result = DeviceCommandType(rawValue: commandTypeByte)
+    }
+    
+    return result
+  }
+  
   /**
    - parameters:
    - data: Packet data bytes
@@ -207,7 +224,7 @@ class DeviceCommand: NSObject
     return result
   }
   
-  class func printValue(valueTuple: (type: ResultType, value: AnyObject?)?) -> String
+  class func printValue(commandType: DeviceCommandType, valueTuple: (type: ResultType, value: AnyObject?)?) -> String
   {
     var result: String = ""
     
@@ -224,6 +241,7 @@ class DeviceCommand: NSObject
         case .chooser:
           let val: UInt8 = value as! UInt8
           result = String(format: "0x%02x", val)
+          result = result + " " + printChooserValue(commandType: commandType, value: val)
         case .val_U8:
           let val: UInt8 = value as! UInt8
           result = String(format: "0x%02x", val)
@@ -248,9 +266,10 @@ class DeviceCommand: NSObject
   {
     var result: String = ""
     
+    let commandType = getPacketCommandType(data: data)
     let valueTuple = getPacketValue(data: data)
     
-    result = printValue(valueTuple: valueTuple)
+    result = printValue(commandType: commandType!, valueTuple: valueTuple)
     
     return result
   }
