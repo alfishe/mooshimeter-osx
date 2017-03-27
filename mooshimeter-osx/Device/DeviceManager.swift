@@ -92,6 +92,9 @@ class DeviceManager: NSObject
     {
       print("-> Device \(device!.UUID) disconnected")
 
+      // Stop all internal device work (timers, notifications)
+      device!.stop()
+      
       self.removeMeter(device!)
     }
 

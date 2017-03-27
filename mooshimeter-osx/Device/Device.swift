@@ -8,6 +8,7 @@ class Device: NSObject
   
   private var readCharacteristic: CBCharacteristic?
   private var writeCharacteristic: CBCharacteristic?
+  private var heartbeatTimer: Timer?
   
   private var deviceReady: Bool = false
   let peripheral: CBPeripheral
@@ -59,6 +60,17 @@ class Device: NSObject
   
   deinit
   {
+    self.stop()
+  }
+  
+  func stop()
+  {
+    // Stop heartbeat timer
+    if self.heartbeatTimer != nil && (self.heartbeatTimer?.isValid)!
+    {
+      self.heartbeatTimer?.invalidate()
+    }
+    
     // Unsubscribe from any notifications
     NotificationCenter.default.removeObserver(self)
   }
@@ -355,6 +367,29 @@ class Device: NSObject
               //TODO: Remove test commands
               self.getPCBVersion()
               self.getSamplingRate()
+              self.getTime()
+              self.getTimeMs()
+            
+              DispatchQueue.main.async
+              {
+                if #available(OSX 10.12, *)
+                {
+                  self.heartbeatTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false)
+                  { timer in
+                    self.getTime()
+                    self.getTimeMs()
+                  }
+                }
+                else
+                {
+                  self.heartbeatTimer = Timer.scheduledTimer(
+                    timeInterval: 1,
+                    target: self,
+                    selector: #selector(self.heartbeatTimerFire(timer:)),
+                    userInfo: nil,
+                    repeats: true)
+                }
+              }
             case .Diagnostic:
               print(self.receiveBuffer)
             default:
@@ -386,6 +421,13 @@ class Device: NSObject
     }
     
     return result
+  }
+  
+  @objc
+  private func heartbeatTimerFire(timer: Timer)
+  {
+    self.getTime()
+    self.getTimeMs()
   }
   
   //MARK: -
@@ -545,6 +587,24 @@ class Device: NSObject
   func setTime(_ time: Double)
   {
 
+  }
+  
+  func getTimeMs()
+  {
+    print("Getting Time_UTCms...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.TimeUTCms))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+  
+  func setTimeMs(_ time: UInt16)
+  {
+    
   }
 
   //MARK: -

@@ -84,12 +84,16 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="yXK-SA-lVQ" userLabel="Features Container View">
                                 <rect key="frame" x="0.0" y="44" width="761" height="281"/>
                                 <subviews>
-                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YPv-Ve-JcM" customClass="DeviceCommandStatusView" customModule="mooshimeter_osx" customModuleProvider="target">
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YPv-Ve-JcM" userLabel="CRC32 View" customClass="DeviceCommandStatusView" customModule="mooshimeter_osx" customModuleProvider="target">
                                         <rect key="frame" x="20" y="249" width="360" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </customView>
-                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="faM-GJ-ssq" customClass="DeviceCommandStatusView" customModule="mooshimeter_osx" customModuleProvider="target">
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="faM-GJ-ssq" userLabel="Battery View" customClass="DeviceCommandStatusView" customModule="mooshimeter_osx" customModuleProvider="target">
                                         <rect key="frame" x="20" y="218" width="360" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A4c-aa-w7K" userLabel="Sample Rate View" customClass="DeviceCommandStatusView" customModule="mooshimeter_osx" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="187" width="360" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </customView>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1re-7O-FRk">
@@ -104,24 +108,20 @@
                                         <rect key="frame" x="20" y="1" width="360" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </customView>
-                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C6c-b7-elB">
-                                        <rect key="frame" x="381" y="241" width="360" height="40"/>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C6c-b7-elB" userLabel="PCB Version View" customClass="DeviceCommandStatusView" customModule="mooshimeter_osx" customModuleProvider="target">
+                                        <rect key="frame" x="381" y="249" width="360" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </customView>
-                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8fz-xG-ym0">
-                                        <rect key="frame" x="381" y="193" width="360" height="40"/>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8fz-xG-ym0" userLabel="TimeUTC View" customClass="DeviceCommandStatusView" customModule="mooshimeter_osx" customModuleProvider="target">
+                                        <rect key="frame" x="381" y="218" width="360" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qKs-uu-jR2" userLabel="TimeUTC Ms View" customClass="DeviceCommandStatusView" customModule="mooshimeter_osx" customModuleProvider="target">
+                                        <rect key="frame" x="381" y="187" width="360" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </customView>
                                     <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2tF-fk-0hs">
                                         <rect key="frame" x="381" y="97" width="360" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    </customView>
-                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qKs-uu-jR2">
-                                        <rect key="frame" x="381" y="145" width="360" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                    </customView>
-                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A4c-aa-w7K" userLabel="View Status03" customClass="DeviceCommandStatusView" customModule="mooshimeter_osx" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="187" width="360" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                     </customView>
                                 </subviews>
@@ -155,9 +155,12 @@
                         <outlet property="lblConnectionStatus" destination="ybB-fd-gi9" id="Pyl-2w-5cY"/>
                         <outlet property="lblDeviceName" destination="rhL-e6-1NA" id="DuZ-kG-e8F"/>
                         <outlet property="lblDeviceUUID" destination="y0E-Ji-5VS" id="o8G-J8-bAu"/>
+                        <outlet property="viewPCBVersion" destination="C6c-b7-elB" id="PJf-6I-vMe"/>
                         <outlet property="viewStatus01" destination="YPv-Ve-JcM" id="GQv-Kb-CuR"/>
                         <outlet property="viewStatus02" destination="faM-GJ-ssq" id="HOj-Mv-p7y"/>
                         <outlet property="viewStatus03" destination="A4c-aa-w7K" id="5Wb-RB-tv5"/>
+                        <outlet property="viewTimeUTC" destination="8fz-xG-ym0" id="YaJ-YC-Csi"/>
+                        <outlet property="viewTimeUTCMs" destination="qKs-uu-jR2" id="dKx-dO-LoD"/>
                     </connections>
                 </viewController>
                 <customObject id="k3O-Az-Mse" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

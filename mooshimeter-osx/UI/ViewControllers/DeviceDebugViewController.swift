@@ -16,6 +16,10 @@ class DeviceDebugViewController : NSViewController
   @IBOutlet weak var viewStatus01: DeviceCommandStatusView!
   @IBOutlet weak var viewStatus02: DeviceCommandStatusView!
   @IBOutlet weak var viewStatus03: DeviceCommandStatusView!
+  @IBOutlet weak var viewPCBVersion: DeviceCommandStatusView!
+  @IBOutlet weak var viewTimeUTC: DeviceCommandStatusView!
+  @IBOutlet weak var viewTimeUTCMs: DeviceCommandStatusView!
+  
   
   private var device: Device? = nil
   
@@ -35,21 +39,24 @@ class DeviceDebugViewController : NSViewController
     viewStatus01.setCommandName(name: "CRC32")
     viewStatus02.setCommandName(name: "Battery")
     viewStatus03.setCommandName(name: "Sampling Rate")
+    viewPCBVersion.setCommandName(name: "PCB Version")
+    viewTimeUTC.setCommandName(name: "Time UTC")
+    viewTimeUTCMs.setCommandName(name: "Time UTC ms")
     
     viewStatus01.setValue(value: "N/A")
     viewStatus02.setValue(value: "N/A")
     viewStatus03.setValue(value: "N/A")
-    viewStatus01.hideIndicator()
-    viewStatus02.hideIndicator()
-    viewStatus03.hideIndicator()
+    viewPCBVersion.setValue(value: "N/A")
+    viewTimeUTC.setValue(value: "N/A")
+    viewTimeUTCMs.setValue(value: "N/A")
+    
+    self.hideAllIndicators()
   }
   
   override func viewWillDisappear()
   {
-    // Cancel all animations
-    viewStatus01.hideIndicator()
-    viewStatus02.hideIndicator()
-    viewStatus03.hideIndicator()
+    // Cancel all animations and hide indicators
+    self.hideAllIndicators()
     
     // Unsubscribe from all notifications
     NotificationCenter.default.removeObserver(self)
@@ -57,6 +64,17 @@ class DeviceDebugViewController : NSViewController
   
   //MARK: -
   //MARK: Helper methods
+  
+  fileprivate func hideAllIndicators()
+  {
+    viewStatus01.hideIndicator()
+    viewStatus02.hideIndicator()
+    viewStatus03.hideIndicator()
+    viewPCBVersion.hideIndicator()
+    viewTimeUTC.hideIndicator()
+    viewTimeUTCMs.hideIndicator()
+  }
+  
   @objc
   fileprivate func deviceConnected(_ notification: Notification)
   {
@@ -83,9 +101,7 @@ class DeviceDebugViewController : NSViewController
       self.lblDeviceUUID.stringValue = "N/A"
       self.lblConnectionStatus.stringValue = "Disconnected"
       
-      self.viewStatus01.hideIndicator()
-      self.viewStatus02.hideIndicator()
-      self.viewStatus03.hideIndicator()
+      self.hideAllIndicators()
     }
   }
   
@@ -113,6 +129,19 @@ class DeviceDebugViewController : NSViewController
         case .SamplingRate:
           let msg = String(format: "%@", DeviceCommand.printChooserValue(commandType: deviceCommand, value: (value as! UInt8)))
           self.viewStatus03.setValue(value: msg)
+        case .PCBVersion:
+          let msg = String(format: "%d", value as! UInt8)
+          self.viewPCBVersion.setValue(value: msg)
+        case .TimeUTC:
+          let date = NSDate(timeIntervalSince1970: TimeInterval(value as! UInt32))
+          let dayTimePeriodFormatter = DateFormatter()
+          dayTimePeriodFormatter.dateFormat = "MMM dd YYYY hh:mm:ss a"
+          dayTimePeriodFormatter.timeZone = TimeZone.current
+          let msg = dayTimePeriodFormatter.string(from: date as Date)
+          self.viewTimeUTC.setValue(value: msg)
+        case .TimeUTCms:
+          let msg = String(format: "%u", value as! UInt16)
+          self.viewTimeUTCMs.setValue(value: msg)
         default:
           break
       }
