@@ -27,11 +27,16 @@
 		D7988FA91E062FDA002F7D38 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D7988FA71E062FDA002F7D38 /* InfoPlist.strings */; };
 		D7988FAC1E062FDA002F7D38 /* today-extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D7988F9A1E062FDA002F7D38 /* today-extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D7988FB21E06443D002F7D38 /* fluke.png in Resources */ = {isa = PBXBuildFile; fileRef = D7988FB11E06443D002F7D38 /* fluke.png */; };
-		D7A310281E881EF400B46F19 /* DeviceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A310271E881EF400B46F19 /* DeviceState.swift */; };
+		D7A310281E881EF400B46F19 /* DeviceContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A310271E881EF400B46F19 /* DeviceContext.swift */; };
+		D7A3102F1E88408300B46F19 /* DeviceDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A3102E1E88408300B46F19 /* DeviceDebugViewController.swift */; };
+		D7A310311E88417800B46F19 /* DeviceCommandStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A310301E88417800B46F19 /* DeviceCommandStatusView.swift */; };
+		D7A310341E88436200B46F19 /* DeviceCommandStatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7A310331E88436200B46F19 /* DeviceCommandStatusView.xib */; };
+		D7A310371E88516300B46F19 /* DeviceDebugWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A310361E88516300B46F19 /* DeviceDebugWindow.swift */; };
+		D7A3103B1E8854B100B46F19 /* Debug.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7A3103A1E8854B100B46F19 /* Debug.storyboard */; };
+		D7A3103D1E885E5B00B46F19 /* DeviceSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A3103C1E885E5B00B46F19 /* DeviceSelectionViewController.swift */; };
 		D7A8E8571D93565A00606FAE /* DeviceCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A8E8561D93565A00606FAE /* DeviceCommand.swift */; };
 		D7A8E8591D936DB000606FAE /* ConfigTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A8E8581D936DB000606FAE /* ConfigTree.swift */; };
 		D7B6843F1D72105C0096F296 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6843E1D72105C0096F296 /* AppDelegate.swift */; };
-		D7B684411D72105C0096F296 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684401D72105C0096F296 /* ViewController.swift */; };
 		D7B684431D72105C0096F296 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7B684421D72105C0096F296 /* Assets.xcassets */; };
 		D7B684461D72105C0096F296 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7B684441D72105C0096F296 /* Main.storyboard */; };
 		D7B684511D72105C0096F296 /* mooshimeter_osxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684501D72105C0096F296 /* mooshimeter_osxTests.swift */; };
@@ -42,6 +47,7 @@
 		D7B684741D7269F40096F296 /* TemperatureHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684731D7269F40096F296 /* TemperatureHelper.swift */; };
 		D7B684751D72A0910096F296 /* UOMHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415A9C28B1CD4E2742CB04 /* UOMHelperTests.swift */; };
 		D7B684781D73A6FD0096F296 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684771D73A6FD0096F296 /* Async.swift */; };
+		D7DAC5111E8881D000703DDC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAC5101E8881D000703DDC /* ViewController.swift */; };
 		D7E8D9FF1E6BD34200C78454 /* DeviceEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */; };
 /* End PBXBuildFile section */
 
@@ -107,12 +113,17 @@
 		D7988FA61E062FDA002F7D38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7988FA81E062FDA002F7D38 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D7988FB11E06443D002F7D38 /* fluke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fluke.png; sourceTree = "<group>"; };
-		D7A310271E881EF400B46F19 /* DeviceState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceState.swift; sourceTree = "<group>"; };
+		D7A310271E881EF400B46F19 /* DeviceContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceContext.swift; sourceTree = "<group>"; };
+		D7A3102E1E88408300B46F19 /* DeviceDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceDebugViewController.swift; path = UI/ViewControllers/DeviceDebugViewController.swift; sourceTree = "<group>"; };
+		D7A310301E88417800B46F19 /* DeviceCommandStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceCommandStatusView.swift; path = UI/ViewControllers/DeviceCommandStatusView.swift; sourceTree = "<group>"; };
+		D7A310331E88436200B46F19 /* DeviceCommandStatusView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeviceCommandStatusView.xib; path = Resources/DeviceCommandStatusView.xib; sourceTree = "<group>"; };
+		D7A310361E88516300B46F19 /* DeviceDebugWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceDebugWindow.swift; path = UI/Windows/DeviceDebugWindow.swift; sourceTree = "<group>"; };
+		D7A3103A1E8854B100B46F19 /* Debug.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Debug.storyboard; path = Resources/Debug.storyboard; sourceTree = "<group>"; };
+		D7A3103C1E885E5B00B46F19 /* DeviceSelectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceSelectionViewController.swift; path = UI/ViewControllers/DeviceSelectionViewController.swift; sourceTree = "<group>"; };
 		D7A8E8561D93565A00606FAE /* DeviceCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCommand.swift; sourceTree = "<group>"; };
 		D7A8E8581D936DB000606FAE /* ConfigTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTree.swift; sourceTree = "<group>"; };
 		D7B6843B1D72105C0096F296 /* mooshimeter-osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mooshimeter-osx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B6843E1D72105C0096F296 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D7B684401D72105C0096F296 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D7B684421D72105C0096F296 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D7B684451D72105C0096F296 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D7B684471D72105C0096F296 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -127,6 +138,7 @@
 		D7B684701D7263810096F296 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D7B684731D7269F40096F296 /* TemperatureHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemperatureHelper.swift; path = Common/TemperatureHelper.swift; sourceTree = "<group>"; };
 		D7B684771D73A6FD0096F296 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Async.swift; path = 3rdParty/Async/Async.swift; sourceTree = "<group>"; };
+		D7DAC5101E8881D000703DDC /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = UI/ViewControllers/ViewController.swift; sourceTree = "<group>"; };
 		D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceEnumerations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -173,7 +185,7 @@
 				D7A8E8561D93565A00606FAE /* DeviceCommand.swift */,
 				D7A8E8581D936DB000606FAE /* ConfigTree.swift */,
 				D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */,
-				D7A310271E881EF400B46F19 /* DeviceState.swift */,
+				D7A310271E881EF400B46F19 /* DeviceContext.swift */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -265,6 +277,53 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		D7A310291E883D2000B46F19 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				D7A310351E88514700B46F19 /* Windows */,
+				D7A3102B1E883D3A00B46F19 /* Views */,
+				D7A3102A1E883D2E00B46F19 /* ViewControllers */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		D7A3102A1E883D2E00B46F19 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D7DAC5101E8881D000703DDC /* ViewController.swift */,
+				D7A3102E1E88408300B46F19 /* DeviceDebugViewController.swift */,
+				D7A3103C1E885E5B00B46F19 /* DeviceSelectionViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		D7A3102B1E883D3A00B46F19 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D7A310301E88417800B46F19 /* DeviceCommandStatusView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		D7A310321E88432500B46F19 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D7B684421D72105C0096F296 /* Assets.xcassets */,
+				D7B684441D72105C0096F296 /* Main.storyboard */,
+				D7A3103A1E8854B100B46F19 /* Debug.storyboard */,
+				D7A310331E88436200B46F19 /* DeviceCommandStatusView.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		D7A310351E88514700B46F19 /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				D7A310361E88516300B46F19 /* DeviceDebugWindow.swift */,
+			);
+			name = Windows;
+			sourceTree = "<group>";
+		};
 		D7B684321D72105C0096F296 = {
 			isa = PBXGroup;
 			children = (
@@ -295,14 +354,13 @@
 				D7B6846C1D721AB20096F296 /* Common */,
 				D7B684691D7211650096F296 /* BLE */,
 				1841524CED44AB94A45B9AF1 /* Device */,
+				1841556BDA63EBE43B167DDE /* Measurements */,
+				D7A310291E883D2000B46F19 /* UI */,
 				D7B6843E1D72105C0096F296 /* AppDelegate.swift */,
-				D7B684401D72105C0096F296 /* ViewController.swift */,
-				D7B684421D72105C0096F296 /* Assets.xcassets */,
-				D7B684441D72105C0096F296 /* Main.storyboard */,
+				D7A310321E88432500B46F19 /* Resources */,
 				D7B684471D72105C0096F296 /* Info.plist */,
 				D7B684721D7264FD0096F296 /* Frameworks */,
 				18415DD02124CC2448CD9D5E /* Settings */,
-				1841556BDA63EBE43B167DDE /* Measurements */,
 			);
 			path = "mooshimeter-osx";
 			sourceTree = "<group>";
@@ -520,7 +578,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7B684431D72105C0096F296 /* Assets.xcassets in Resources */,
+				D7A3103B1E8854B100B46F19 /* Debug.storyboard in Resources */,
 				D7B684461D72105C0096F296 /* Main.storyboard in Resources */,
+				D7A310341E88436200B46F19 /* DeviceCommandStatusView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,14 +613,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7B684411D72105C0096F296 /* ViewController.swift in Sources */,
 				D7B6846B1D72117A0096F296 /* BLEManager.swift in Sources */,
+				D7A310371E88516300B46F19 /* DeviceDebugWindow.swift in Sources */,
 				D7B6843F1D72105C0096F296 /* AppDelegate.swift in Sources */,
 				D7B6846E1D721AC70096F296 /* Constants.swift in Sources */,
 				18415C347FBA20D79C9D8504 /* Extensions.swift in Sources */,
 				D7E8D9FF1E6BD34200C78454 /* DeviceEnumerations.swift in Sources */,
 				18415505F6D205704D1F5FDF /* DeviceManager.swift in Sources */,
 				18415B7D2BC34657152F9499 /* Device.swift in Sources */,
+				D7A310311E88417800B46F19 /* DeviceCommandStatusView.swift in Sources */,
+				D7A3102F1E88408300B46F19 /* DeviceDebugViewController.swift in Sources */,
 				D7B684781D73A6FD0096F296 /* Async.swift in Sources */,
 				D7B684741D7269F40096F296 /* TemperatureHelper.swift in Sources */,
 				184150444E0895218166D5F1 /* deflate.swift in Sources */,
@@ -568,11 +630,13 @@
 				1841584B0524455A315CA657 /* Enumerations.swift in Sources */,
 				D7A8E8571D93565A00606FAE /* DeviceCommand.swift in Sources */,
 				184152FDB6605FFCD2FCA6B7 /* crc32.swift in Sources */,
-				D7A310281E881EF400B46F19 /* DeviceState.swift in Sources */,
+				D7A310281E881EF400B46F19 /* DeviceContext.swift in Sources */,
 				18415B3041238E813FA10BFB /* MeterReading.swift in Sources */,
 				184157478653F7A07C53A448 /* DisplayFormatHelper.swift in Sources */,
 				184151328AE83E9E3640FF80 /* UOMHelper.swift in Sources */,
+				D7DAC5111E8881D000703DDC /* ViewController.swift in Sources */,
 				18415555F0E172E7CC4561B4 /* FloatHelper.swift in Sources */,
+				D7A3103D1E885E5B00B46F19 /* DeviceSelectionViewController.swift in Sources */,
 				18415BAF73733CBD25D9674E /* DeviceProtocol.swift in Sources */,
 				D771A2731E691B3F00DF0CC7 /* SwiftDataCompression.swift in Sources */,
 				18415C272C09D5FC0E13ACBF /* ThreadHelper.swift in Sources */,

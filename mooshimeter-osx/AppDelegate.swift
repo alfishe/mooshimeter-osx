@@ -12,10 +12,14 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate
 {
   let bleManager = BLEManager.sharedInstance
+  var deviceDebugWindow: DeviceDebugWindow?
   
   func applicationDidFinishLaunching(_ aNotification: Notification)
   {
     bleManager.start()
+    
+    //showDeviceSelectionWindow()
+    showDeviceDebugWindow()
   }
 
   func applicationWillTerminate(_ aNotification: Notification)
@@ -70,6 +74,22 @@ class AppDelegate: NSObject, NSApplicationDelegate
   {
     print("-> exitApplication")
     NSApplication.shared().reply(toApplicationShouldTerminate: true)
+  }
+  
+  fileprivate func showDeviceSelectionWindow()
+  {
+    let mainStoryboard = NSStoryboard.init(name: "Main", bundle: nil)
+    let deviceSelectionWindow = mainStoryboard.instantiateController(withIdentifier: "DeviceSelectionWindow") as? NSWindowController
+    
+    let application = NSApplication.shared()
+    application.runModal(for: (deviceSelectionWindow?.window)!)
+  }
+  
+  fileprivate func showDeviceDebugWindow()
+  {
+    let debugStoryboard = NSStoryboard.init(name: "Debug", bundle: nil)
+    deviceDebugWindow = debugStoryboard.instantiateController(withIdentifier: "DeviceDebugWindow") as? DeviceDebugWindow
+    deviceDebugWindow?.showWindow(self)
   }
 }
 

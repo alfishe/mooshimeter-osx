@@ -6,18 +6,18 @@ class Device: NSObject
   static let badreadData = "BADREAD".data(using: .ascii)
   static let badwriteData = "BADWRITE".data(using: .ascii)
   
-  let peripheral: CBPeripheral
-  let UUID: String
-  
   private var readCharacteristic: CBCharacteristic?
   private var writeCharacteristic: CBCharacteristic?
   
   private var deviceReady: Bool = false
-  private var deviceState: DeviceState = DeviceState()
+  let peripheral: CBPeripheral
+  let UUID: String
+  private var deviceContext: DeviceContext? = nil
+  private var handshakePassed: Bool = false
   
   // Receive/send variables
   private var receiveBuffer: [UInt8] = [UInt8]()
-  private var currentFrame: [UInt8] = [UInt8](repeating: UInt8(), count: 20)
+  private var currentFrame: [UInt8] = [UInt8](repeating: UInt8(), count: Constants.DEVICE_PACKET_SIZE)
   private var expectFirstPacket: Bool = false
   private var expectMoreData: Bool = false
   private var receivePacketNum: UInt8 = 0
@@ -52,7 +52,15 @@ class Device: NSObject
     
     super.init()
     
+    self.deviceContext = DeviceContext(device: self)
+    
     self.resetSendPacketNum()
+  }
+  
+  deinit
+  {
+    // Unsubscribe from any notifications
+    NotificationCenter.default.removeObserver(self)
   }
 
   func isConnected() -> Bool
@@ -64,6 +72,13 @@ class Device: NSObject
       result = true
     }
 
+    return result
+  }
+  
+  func isHandshakePassed() -> Bool
+  {
+    let result = self.handshakePassed
+    
     return result
   }
   
@@ -234,6 +249,7 @@ class Device: NSObject
             self.receiveBuffer.append(contentsOf: self.currentFrame.suffix(from: 4))
             break
           case .val_STR:
+            //TODO: Strings might be lengthy so potentially logic for BIN needs to be replicated here
             fallthrough
           case .chooser:
             fallthrough
@@ -252,10 +268,31 @@ class Device: NSObject
           case .val_FLT:
             let value = DeviceCommand.getPacketValue(data: Data(self.currentFrame))
             
-            self.deviceState.setValue(commandType, value: value as AnyObject?)
+            // Store received and decoded value in a context
+            self.deviceContext?.setValue(commandType, value: value as AnyObject?)
             
+            // If ADMIN:CRC32 response received and value matches to previously calculated checksum from context => handshake passed successfully
+            if !self.handshakePassed && commandType == .CRC32 && value?.type == ResultType.val_U32
+            {
+              let calculatedCRC = self.deviceContext?.getCalculatedCRC32()
+              if calculatedCRC == (value!.value as! UInt32)
+              {
+                self.handshakePassed = true
+                
+                // Notify subscribers that handshake passed for the device and normal workflow unblocked
+                NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_DEVICE_HANDSHAKE_PASSED), object: self)
+                
+                // Debug
+                print("Handshake passed successfully. Full workflow unblocked.")
+                // End Debug
+              }
+            }
+            
+            
+            // Debug
             self.dumpCommandPacket(data: Data(self.currentFrame))
             print("Decoded: \(String(describing: value!.type)) = \(DeviceCommand.printValue(commandType: commandType, valueTuple: value))")
+            // End Debug
             
             decodingFinished = true
           default:
@@ -278,6 +315,7 @@ class Device: NSObject
         }
       }
       
+      // Logic for long BIN/STR data blocks only. All single-packet values for the rest of datatypes are handled in a switch case above
       if decodingFinished == false
       {
         if self.receiveBuffer.count < expectingBytes
@@ -298,11 +336,24 @@ class Device: NSObject
               let compressedBuffer: [UInt8] = Array(self.receiveBuffer)
               let compressedData: Data = Data(compressedBuffer)
               
+              // Calculate CRC32 over received ADMIN:TREE data (as-is, in compressed form)
               let crc: UInt32 = compressedData.getCrc32()
+              
+              // Store calculated CRC32 value in a context
+              self.deviceContext?.setCalculatedCRC32(value: crc)
+              
+              // Send calculated CRC32 value to Mooshimeter device in order to complete handshake procedure
               self.sendCRC32(crc: crc)
               
-              self.decompressTreeData(data: compressedBuffer)
+              // Decompress ADMIN:TREE data and store in a context
+              let decompressedTree = self.decompressTreeData(data: compressedBuffer)
+              if decompressedTree != nil
+              {
+                self.deviceContext?.adminTree = decompressedTree
+              }
             
+              //TODO: Remove test commands
+              self.getPCBVersion()
               self.getSamplingRate()
             case .Diagnostic:
               print(self.receiveBuffer)

@@ -61,7 +61,7 @@ class DeviceManager: NSObject
       // Ensure that device disconnected properly
       if device.isConnected()
       {
-        // Start disconnection (device will be removed only when disconnected
+        // Start disconnection (device will be removed only when disconnected)
         bleManager.disconnectPeripheral(peripheral: device.peripheral)
       }
       else

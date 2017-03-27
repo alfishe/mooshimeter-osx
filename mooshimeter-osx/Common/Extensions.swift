@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Cocoa
 import CoreBluetooth
 
 extension CBUUID
@@ -255,5 +256,14 @@ extension Double
     let result = Double.compareWithPrecision(self, arg2: arg2, precision: precision)
 
     return result
+  }
+}
+
+extension NSView
+{
+  func setBackgroundColor(_ color: NSColor)
+  {
+    wantsLayer = true
+    layer?.backgroundColor = color.cgColor
   }
 }

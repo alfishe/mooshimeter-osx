@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="gku-yH-BkN">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="xub-rA-KEA">
+            <objects>
+                <windowController storyboardIdentifier="DeviceDebugWindow" showSeguePresentationStyle="single" id="gku-yH-BkN" customClass="DeviceDebugWindow" customModule="mooshimeter_osx" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Device Debug" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="lN2-iP-jSC">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="245" y="301" width="664" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                    </window>
+                    <connections>
+                        <segue destination="PB8-51-YE1" kind="relationship" relationship="window.shadowedContentViewController" id="2qR-qH-GDf"/>
+                    </connections>
+                </windowController>
+                <customObject id="NWB-1O-3ng" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="65" y="49"/>
+        </scene>
+        <!--Device Debug View Controller-->
+        <scene sceneID="Yg3-2b-08K">
+            <objects>
+                <viewController storyboardIdentifier="DeviceDebugViewController" id="PB8-51-YE1" customClass="DeviceDebugViewController" customModule="mooshimeter_osx" customModuleProvider="target" sceneMemberID="viewController">
+                    <customView key="view" id="kDA-D5-BDT" userLabel="Container View">
+                        <rect key="frame" x="0.0" y="0.0" width="761" height="412"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="stR-uK-prE" userLabel="Device Container View">
+                                <rect key="frame" x="0.0" y="358" width="761" height="56"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WPb-fj-Jeb">
+                                        <rect key="frame" x="18" y="19" width="88" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Device Name:" id="h4g-Gj-O1f">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rhL-e6-1NA" userLabel="Device Name Label">
+                                        <rect key="frame" x="107" y="19" width="145" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="N/A" id="DQj-Oi-mXs">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="td3-iI-rBi">
+                                        <rect key="frame" x="380" y="19" width="85" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Device UUID:" id="fxb-97-siJ">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="y0E-Ji-5VS" userLabel="Device UUID Label">
+                                        <rect key="frame" x="469" y="19" width="274" height="17"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="N/A" id="OIj-wW-zP3">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                            </customView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0bR-Q7-t36">
+                                <rect key="frame" x="18" y="333" width="215" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Mooshimeter commands / features" id="com-Es-XJu">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="yXK-SA-lVQ" userLabel="Features Container View">
+                                <rect key="frame" x="0.0" y="44" width="761" height="281"/>
+                                <subviews>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YPv-Ve-JcM" customClass="DeviceCommandStatusView" customModule="mooshimeter_osx" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="249" width="360" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="faM-GJ-ssq" customClass="DeviceCommandStatusView" customModule="mooshimeter_osx" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="218" width="360" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1re-7O-FRk">
+                                        <rect key="frame" x="20" y="97" width="360" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WxF-xB-cEE">
+                                        <rect key="frame" x="20" y="49" width="360" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dDb-Se-GT8">
+                                        <rect key="frame" x="20" y="1" width="360" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C6c-b7-elB">
+                                        <rect key="frame" x="381" y="241" width="360" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8fz-xG-ym0">
+                                        <rect key="frame" x="381" y="193" width="360" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2tF-fk-0hs">
+                                        <rect key="frame" x="381" y="97" width="360" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qKs-uu-jR2">
+                                        <rect key="frame" x="381" y="145" width="360" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
+                                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A4c-aa-w7K" userLabel="View Status03" customClass="DeviceCommandStatusView" customModule="mooshimeter_osx" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="187" width="360" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                    </customView>
+                                </subviews>
+                            </customView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ybB-fd-gi9" userLabel="Connection Status Label">
+                                <rect key="frame" x="655" y="19" width="88" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Disconnected" id="BZK-hM-ULx">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="stR-uK-prE" firstAttribute="leading" secondItem="kDA-D5-BDT" secondAttribute="leading" id="0wv-UY-QnJ"/>
+                            <constraint firstItem="ybB-fd-gi9" firstAttribute="top" secondItem="yXK-SA-lVQ" secondAttribute="bottom" constant="8" symbolic="YES" id="6Nd-Zh-N7U"/>
+                            <constraint firstItem="stR-uK-prE" firstAttribute="top" secondItem="kDA-D5-BDT" secondAttribute="top" constant="-2" id="BNH-Ae-PLF"/>
+                            <constraint firstAttribute="trailing" secondItem="ybB-fd-gi9" secondAttribute="trailing" constant="20" id="CQh-de-BNA"/>
+                            <constraint firstItem="0bR-Q7-t36" firstAttribute="leading" secondItem="kDA-D5-BDT" secondAttribute="leading" constant="20" id="Ec3-Id-JFG"/>
+                            <constraint firstItem="0bR-Q7-t36" firstAttribute="top" secondItem="stR-uK-prE" secondAttribute="bottom" constant="8" symbolic="YES" id="PEX-7z-bXu"/>
+                            <constraint firstItem="stR-uK-prE" firstAttribute="trailing" secondItem="yXK-SA-lVQ" secondAttribute="trailing" id="Qyb-zR-2SU"/>
+                            <constraint firstAttribute="bottom" secondItem="ybB-fd-gi9" secondAttribute="bottom" constant="19" id="SHE-Wq-UNZ"/>
+                            <constraint firstItem="stR-uK-prE" firstAttribute="top" secondItem="kDA-D5-BDT" secondAttribute="top" constant="-2" id="SvL-rb-1e6"/>
+                            <constraint firstItem="stR-uK-prE" firstAttribute="leading" secondItem="yXK-SA-lVQ" secondAttribute="leading" id="W8A-Mj-KhF"/>
+                            <constraint firstItem="yXK-SA-lVQ" firstAttribute="top" secondItem="0bR-Q7-t36" secondAttribute="bottom" constant="8" symbolic="YES" id="bbT-Dh-ADz"/>
+                            <constraint firstItem="0bR-Q7-t36" firstAttribute="top" secondItem="kDA-D5-BDT" secondAttribute="top" constant="62" id="lqe-yd-qU1"/>
+                            <constraint firstItem="stR-uK-prE" firstAttribute="width" secondItem="kDA-D5-BDT" secondAttribute="width" id="ohM-z7-np4"/>
+                        </constraints>
+                    </customView>
+                    <connections>
+                        <outlet property="lblConnectionStatus" destination="ybB-fd-gi9" id="Pyl-2w-5cY"/>
+                        <outlet property="lblDeviceName" destination="rhL-e6-1NA" id="DuZ-kG-e8F"/>
+                        <outlet property="lblDeviceUUID" destination="y0E-Ji-5VS" id="o8G-J8-bAu"/>
+                        <outlet property="viewStatus01" destination="YPv-Ve-JcM" id="GQv-Kb-CuR"/>
+                        <outlet property="viewStatus02" destination="faM-GJ-ssq" id="HOj-Mv-p7y"/>
+                        <outlet property="viewStatus03" destination="A4c-aa-w7K" id="5Wb-RB-tv5"/>
+                    </connections>
+                </viewController>
+                <customObject id="k3O-Az-Mse" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="65.5" y="566"/>
+        </scene>
+    </scenes>
+</document>

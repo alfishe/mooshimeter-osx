@@ -136,9 +136,9 @@ class DeviceCommand: NSObject
    - parameters:
    - data: Packet data bytes
    */
-  class func getPacketValue(data: Data?) -> (type: ResultType, value: AnyObject?)?
+  class func getPacketValue(data: Data?) -> (type: ResultType, value: AnyObject)?
   {
-    var result: (type: ResultType, value: AnyObject?)? = nil
+    var result: (type: ResultType, value: AnyObject)? = nil
     
     if data != nil && data!.count > 2
     {
@@ -217,14 +217,14 @@ class DeviceCommand: NSObject
             break
         }
         
-        result = (valueType, value)
+        result = (valueType, value!)
       }
     }
     
     return result
   }
   
-  class func printValue(commandType: DeviceCommandType, valueTuple: (type: ResultType, value: AnyObject?)?) -> String
+  class func printValue(commandType: DeviceCommandType, valueTuple: (type: ResultType, value: AnyObject)?) -> String
   {
     var result: String = ""
     

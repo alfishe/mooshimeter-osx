@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="6198" systemVersion="14A297b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6198"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -641,12 +643,12 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="mooshimeter_osx" customModuleProvider="target"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="0.0"/>
+            <point key="canvasLocation" x="50" y="-150"/>
         </scene>
-        <!--Window Controller - Window-->
+        <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
@@ -662,20 +664,193 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="50" y="68"/>
+        </scene>
+        <!--Device Selection Window Controller-->
+        <scene sceneID="sKx-sI-bEG">
+            <objects>
+                <windowController storyboardIdentifier="DeviceSelectionWindow" id="XPR-ZD-Jjb" userLabel="Device Selection Window Controller" sceneMemberID="viewController">
+                    <window key="window" title="Device Selection" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="ZbZ-Rk-t4A">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="245" y="301" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                    </window>
+                    <connections>
+                        <segue destination="YMB-Vy-MnW" kind="relationship" relationship="window.shadowedContentViewController" id="Zog-oU-hHu"/>
+                    </connections>
+                </windowController>
+                <customObject id="qnJ-qW-e4Q" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="50" y="455"/>
+        </scene>
+        <!--Device Selection View Controller-->
+        <scene sceneID="qrR-aB-IwW">
+            <objects>
+                <viewController id="YMB-Vy-MnW" userLabel="Device Selection View Controller" customClass="DeviceSelectionViewController" customModule="mooshimeter_osx" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="v1S-4y-jVq">
+                        <rect key="frame" x="0.0" y="0.0" width="381" height="468"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vGb-X7-ged">
+                                <rect key="frame" x="91" y="431" width="199" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Connect Mooshimeter Device(s)" id="MAd-hU-ihy">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="dA2-TH-VCb" userLabel="Meter 1 View">
+                                <rect key="frame" x="20" y="381" width="341" height="42"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vHh-cF-WOn" userLabel="Meter 1 Label">
+                                        <rect key="frame" x="18" y="13" width="164" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="g9p-zo-d0u"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Meter 1" id="gMr-hd-2g7">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CVP-SL-5oc">
+                                        <rect key="frame" x="235" y="3" width="92" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="UhG-lS-x92"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="push" title="Connect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TXv-PX-cdJ">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="CVP-SL-5oc" firstAttribute="leading" secondItem="vHh-cF-WOn" secondAttribute="trailing" constant="61" id="7Tv-4t-8Fy"/>
+                                    <constraint firstAttribute="trailing" secondItem="CVP-SL-5oc" secondAttribute="trailing" constant="20" id="Al4-oU-Jpq"/>
+                                    <constraint firstItem="vHh-cF-WOn" firstAttribute="centerY" secondItem="dA2-TH-VCb" secondAttribute="centerY" id="akj-Tj-hWp"/>
+                                    <constraint firstItem="CVP-SL-5oc" firstAttribute="centerY" secondItem="dA2-TH-VCb" secondAttribute="centerY" id="jSz-dn-53r"/>
+                                    <constraint firstItem="vHh-cF-WOn" firstAttribute="leading" secondItem="dA2-TH-VCb" secondAttribute="leading" constant="20" id="vWh-ho-Zfq"/>
+                                </constraints>
+                            </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="o7N-P6-e5V" userLabel="Meter 2 View">
+                                <rect key="frame" x="20" y="321" width="341" height="42"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="k4O-lG-HM8">
+                                        <rect key="frame" x="235" y="3" width="92" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="Zvh-qR-hdz"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="push" title="Connect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="P1L-8D-OWU">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yk7-lV-b7t" userLabel="Meter 2 Label">
+                                        <rect key="frame" x="18" y="13" width="164" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="qFa-p0-8jg"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Meter 2" id="ODF-iU-ZOf">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="k4O-lG-HM8" firstAttribute="centerY" secondItem="o7N-P6-e5V" secondAttribute="centerY" id="1oX-3C-jZm"/>
+                                    <constraint firstItem="yk7-lV-b7t" firstAttribute="leading" secondItem="o7N-P6-e5V" secondAttribute="leading" constant="20" id="20r-Z8-Gge"/>
+                                    <constraint firstItem="k4O-lG-HM8" firstAttribute="leading" secondItem="yk7-lV-b7t" secondAttribute="trailing" constant="61" id="Oq4-KE-es2"/>
+                                    <constraint firstAttribute="trailing" secondItem="k4O-lG-HM8" secondAttribute="trailing" constant="20" id="rsj-sa-Am9"/>
+                                    <constraint firstItem="yk7-lV-b7t" firstAttribute="centerY" secondItem="o7N-P6-e5V" secondAttribute="centerY" id="vWy-rH-6mF"/>
+                                </constraints>
+                            </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="VBE-A9-nbH" userLabel="Meter 3 View">
+                                <rect key="frame" x="20" y="260" width="341" height="42"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="szh-TB-i6q">
+                                        <rect key="frame" x="235" y="3" width="92" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="3xS-EL-0vL"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="push" title="Connect" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yqf-dR-JXi">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uLw-o8-Qjh" userLabel="Meter 3 Label">
+                                        <rect key="frame" x="18" y="13" width="164" height="17"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="QoM-QR-N5b"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Meter 3" id="Si9-i2-xO1">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="szh-TB-i6q" firstAttribute="centerY" secondItem="VBE-A9-nbH" secondAttribute="centerY" id="5vk-6k-zRv"/>
+                                    <constraint firstItem="szh-TB-i6q" firstAttribute="leading" secondItem="uLw-o8-Qjh" secondAttribute="trailing" constant="61" id="PHt-rw-xuc"/>
+                                    <constraint firstItem="uLw-o8-Qjh" firstAttribute="leading" secondItem="VBE-A9-nbH" secondAttribute="leading" constant="20" id="VBC-gc-n4d"/>
+                                    <constraint firstAttribute="trailing" secondItem="szh-TB-i6q" secondAttribute="trailing" constant="20" id="huu-W4-T7Z"/>
+                                    <constraint firstItem="uLw-o8-Qjh" firstAttribute="centerY" secondItem="VBE-A9-nbH" secondAttribute="centerY" id="oHr-Q5-DwL"/>
+                                </constraints>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="dA2-TH-VCb" secondAttribute="bottom" constant="381" id="3f7-4e-njY"/>
+                            <constraint firstItem="vGb-X7-ged" firstAttribute="centerX" secondItem="v1S-4y-jVq" secondAttribute="centerX" id="4hh-oD-Z7c"/>
+                            <constraint firstItem="dA2-TH-VCb" firstAttribute="top" secondItem="v1S-4y-jVq" secondAttribute="top" constant="45" id="58z-EE-8QB"/>
+                            <constraint firstItem="VBE-A9-nbH" firstAttribute="width" secondItem="dA2-TH-VCb" secondAttribute="width" id="6Km-jJ-KcQ"/>
+                            <constraint firstItem="o7N-P6-e5V" firstAttribute="top" secondItem="dA2-TH-VCb" secondAttribute="bottom" constant="18" id="7ec-zn-zHb"/>
+                            <constraint firstItem="o7N-P6-e5V" firstAttribute="width" secondItem="dA2-TH-VCb" secondAttribute="width" id="C2f-ay-rvu"/>
+                            <constraint firstItem="VBE-A9-nbH" firstAttribute="top" secondItem="o7N-P6-e5V" secondAttribute="bottom" constant="19" id="EYg-NI-NUa"/>
+                            <constraint firstItem="dA2-TH-VCb" firstAttribute="leading" secondItem="v1S-4y-jVq" secondAttribute="leading" constant="20" id="HLa-3Y-edK"/>
+                            <constraint firstItem="o7N-P6-e5V" firstAttribute="leading" secondItem="dA2-TH-VCb" secondAttribute="leading" id="MOf-0B-tbu"/>
+                            <constraint firstItem="VBE-A9-nbH" firstAttribute="height" secondItem="dA2-TH-VCb" secondAttribute="height" id="ThH-lE-sND"/>
+                            <constraint firstItem="VBE-A9-nbH" firstAttribute="leading" secondItem="dA2-TH-VCb" secondAttribute="leading" id="ptf-gK-XrI"/>
+                            <constraint firstAttribute="trailing" secondItem="dA2-TH-VCb" secondAttribute="trailing" constant="20" id="pto-vr-NMK"/>
+                            <constraint firstItem="o7N-P6-e5V" firstAttribute="height" secondItem="dA2-TH-VCb" secondAttribute="height" id="qwa-kZ-ae6"/>
+                            <constraint firstItem="vGb-X7-ged" firstAttribute="top" secondItem="v1S-4y-jVq" secondAttribute="top" constant="20" id="t8n-Sx-h0D"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="SRT-L8-heq" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="615.5" y="519"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="mooshimeter_osx" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="znl-Rr-qEV">
+                                <rect key="frame" x="425" y="233" width="31" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="VCC" id="UXL-ef-mbj">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="znl-Rr-qEV" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="gyJ-aw-Kvi"/>
+                            <constraint firstAttribute="trailing" secondItem="znl-Rr-qEV" secondAttribute="trailing" constant="26" id="wiu-5O-kte"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="lblVCC" destination="znl-Rr-qEV" id="XMm-gY-Ohz"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="665" y="68"/>
         </scene>
     </scenes>
 </document>
