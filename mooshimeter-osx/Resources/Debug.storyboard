@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="gku-yH-BkN">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1510" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="gku-yH-BkN">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
@@ -155,10 +155,10 @@
                         <outlet property="lblConnectionStatus" destination="ybB-fd-gi9" id="Pyl-2w-5cY"/>
                         <outlet property="lblDeviceName" destination="rhL-e6-1NA" id="DuZ-kG-e8F"/>
                         <outlet property="lblDeviceUUID" destination="y0E-Ji-5VS" id="o8G-J8-bAu"/>
+                        <outlet property="viewBattery" destination="faM-GJ-ssq" id="agm-7H-KX7"/>
+                        <outlet property="viewCRC32" destination="YPv-Ve-JcM" id="cqB-g4-9cu"/>
                         <outlet property="viewPCBVersion" destination="C6c-b7-elB" id="PJf-6I-vMe"/>
-                        <outlet property="viewStatus01" destination="YPv-Ve-JcM" id="GQv-Kb-CuR"/>
-                        <outlet property="viewStatus02" destination="faM-GJ-ssq" id="HOj-Mv-p7y"/>
-                        <outlet property="viewStatus03" destination="A4c-aa-w7K" id="5Wb-RB-tv5"/>
+                        <outlet property="viewSamplingRate" destination="A4c-aa-w7K" id="ThS-tl-9Yk"/>
                         <outlet property="viewTimeUTC" destination="8fz-xG-ym0" id="YaJ-YC-Csi"/>
                         <outlet property="viewTimeUTCMs" destination="qKs-uu-jR2" id="dKx-dO-LoD"/>
                     </connections>

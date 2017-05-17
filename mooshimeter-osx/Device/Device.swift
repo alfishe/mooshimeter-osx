@@ -369,6 +369,8 @@ class Device: NSObject
               self.getSamplingRate()
               self.getTime()
               self.getTimeMs()
+              self.setSamplingRate(SamplingRateType.Freq125Hz)
+              self.getSamplingRate()
             
               DispatchQueue.main.async
               {
@@ -616,6 +618,20 @@ class Device: NSObject
     var dataBytes: [UInt8] = [UInt8]()
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.SamplingRate))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+  
+  func setSamplingRate(_ samplerate: SamplingRateType)
+  {
+    print("Setting Sampling Rate...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getWriteCommandCode(type: DeviceCommandType.SamplingRate))
+    dataBytes.append(contentsOf: DeviceCommand.getCommandPayload(commandType: DeviceCommandType.SamplingRate, value: samplerate as AnyObject))
     
     self.dumpData(data: Data(dataBytes))
     

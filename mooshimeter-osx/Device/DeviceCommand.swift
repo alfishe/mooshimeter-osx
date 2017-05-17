@@ -24,6 +24,62 @@ class DeviceCommand: NSObject
     return result
   }
   
+  class func getCommandPayload(commandType: DeviceCommandType, value: AnyObject) -> [UInt8]
+  {
+    var result = [UInt8]()
+    
+    let resultType = getResultTypeByCommand(command: commandType.rawValue)
+    
+    switch resultType
+    {
+      case .chooser:
+        if (value as? DeviceChooser) != nil
+        {
+          let chooserValue: UInt8? = getChooserValueForCommand(commandType: commandType, value: value as! DeviceChooser)
+          if chooserValue != nil
+          {
+            result.append(chooserValue!)
+          }
+          else
+          {
+            print("Unable to serialize chooser")
+          }
+        }
+        break
+      case .val_U8:
+        print("Not implemented")
+        break
+      case .val_U16:
+        print("Not implemented")
+        break
+      case .val_U32:
+        print("Not implemented")
+        break
+      case .val_S8:
+        print("Not implemented")
+        break
+      case .val_S16:
+        print("Not implemented")
+        break
+      case .val_S32:
+        print("Not implemented")
+        break
+      case .val_STR:
+        print("Not implemented")
+        break
+      case .val_BIN:
+        print("Not implemented")
+        break
+      case .val_FLT:
+        print("Not implemented")
+        break
+      default:
+        break
+    }
+    
+    return result
+  }
+  
   class func getResultTypeByCommand(command: UInt8) -> ResultType
   {
     var result: ResultType = .notset
@@ -305,6 +361,40 @@ class DeviceCommand: NSObject
     
     return result
   }
+  
+  //MARK: -
+  //MARK: Send oriented commands
+  class func getChooserValueForCommand(commandType: DeviceCommandType, value: DeviceChooser) -> UInt8?
+  {
+    var result: UInt8? = nil
+    
+    switch commandType
+    {
+      case .Reboot:
+        result = (value as! RebootType).rawValue
+      case .SamplingRate:
+        result = (value as! SamplingRateType).rawValue
+      case .SamplingDepth:
+        result = (value as! SamplingDepthType).rawValue
+      case .SamplingTrigger:
+        result = (value as! SamplingTriggerType).rawValue
+      case .Channel1Mapping:
+        result = (value as! Channel1MappingType).rawValue
+      case .Channel1Analysis:
+        result = (value as! Channel1AnalysisType).rawValue
+      case .Channel2Mapping:
+        result = (value as! Channel2MappingType).rawValue
+      case .Channel2Analysis:
+        result = (value as! Channel2AnalysisType).rawValue
+      case .Shared:
+        result = (value as! SharedModeType).rawValue
+      default:
+        break
+    }
+    
+    return result
+  }
 }
+
 
 

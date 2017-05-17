@@ -36,6 +36,11 @@ extension CBUUID
     }
 }
 
+// Allow to throw message exceptions
+extension String: Error
+{
+}
+
 extension Data
 {
   // To/from generic conversions

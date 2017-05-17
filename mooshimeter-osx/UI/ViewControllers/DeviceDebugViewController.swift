@@ -13,9 +13,9 @@ class DeviceDebugViewController : NSViewController
   @IBOutlet weak var lblDeviceName: NSTextField!
   @IBOutlet weak var lblDeviceUUID: NSTextField!
   @IBOutlet weak var lblConnectionStatus: NSTextField!
-  @IBOutlet weak var viewStatus01: DeviceCommandStatusView!
-  @IBOutlet weak var viewStatus02: DeviceCommandStatusView!
-  @IBOutlet weak var viewStatus03: DeviceCommandStatusView!
+  @IBOutlet weak var viewCRC32: DeviceCommandStatusView!
+  @IBOutlet weak var viewBattery: DeviceCommandStatusView!
+  @IBOutlet weak var viewSamplingRate: DeviceCommandStatusView!
   @IBOutlet weak var viewPCBVersion: DeviceCommandStatusView!
   @IBOutlet weak var viewTimeUTC: DeviceCommandStatusView!
   @IBOutlet weak var viewTimeUTCMs: DeviceCommandStatusView!
@@ -36,16 +36,16 @@ class DeviceDebugViewController : NSViewController
     self.lblDeviceUUID.stringValue = "N/A"
     self.lblConnectionStatus.stringValue = "Disconnected"
     
-    viewStatus01.setCommandName(name: "CRC32")
-    viewStatus02.setCommandName(name: "Battery")
-    viewStatus03.setCommandName(name: "Sampling Rate")
+    viewCRC32.setCommandName(name: "CRC32")
+    viewBattery.setCommandName(name: "Battery")
+    viewSamplingRate.setCommandName(name: "Sampling Rate")
     viewPCBVersion.setCommandName(name: "PCB Version")
     viewTimeUTC.setCommandName(name: "Time UTC")
     viewTimeUTCMs.setCommandName(name: "Time UTC ms")
     
-    viewStatus01.setValue(value: "N/A")
-    viewStatus02.setValue(value: "N/A")
-    viewStatus03.setValue(value: "N/A")
+    viewCRC32.setValue(value: "N/A")
+    viewBattery.setValue(value: "N/A")
+    viewSamplingRate.setValue(value: "N/A")
     viewPCBVersion.setValue(value: "N/A")
     viewTimeUTC.setValue(value: "N/A")
     viewTimeUTCMs.setValue(value: "N/A")
@@ -67,9 +67,9 @@ class DeviceDebugViewController : NSViewController
   
   fileprivate func hideAllIndicators()
   {
-    viewStatus01.hideIndicator()
-    viewStatus02.hideIndicator()
-    viewStatus03.hideIndicator()
+    viewCRC32.hideIndicator()
+    viewBattery.hideIndicator()
+    viewSamplingRate.hideIndicator()
     viewPCBVersion.hideIndicator()
     viewTimeUTC.hideIndicator()
     viewTimeUTCMs.hideIndicator()
@@ -122,13 +122,13 @@ class DeviceDebugViewController : NSViewController
       {
         case .CRC32:
           let msg = String(format: "0x%x", value as! UInt32)
-          self.viewStatus01.setValue(value: msg)
+          self.viewCRC32.setValue(value: msg)
         case .Battery:
           let msg = String(format: "%.6f", value as! Float)
-          self.viewStatus02.setValue(value: msg)
+          self.viewBattery.setValue(value: msg)
         case .SamplingRate:
           let msg = String(format: "%@", DeviceCommand.printChooserValue(commandType: deviceCommand, value: (value as! UInt8)))
-          self.viewStatus03.setValue(value: msg)
+          self.viewSamplingRate.setValue(value: msg)
         case .PCBVersion:
           let msg = String(format: "%d", value as! UInt8)
           self.viewPCBVersion.setValue(value: msg)

@@ -8,6 +8,11 @@
 
 import Foundation
 
+// Marks enumeration as chooser type
+protocol DeviceChooser
+{
+}
+
 enum DeviceCommandType: UInt8
 {
   case CRC32 = 0
@@ -190,7 +195,7 @@ enum RebootType: UInt8
   }
 }
 
-enum SamplingRateType: UInt8
+enum SamplingRateType: UInt8, DeviceChooser
 {
   case Freq125Hz = 0
   case Freq250Hz = 1
