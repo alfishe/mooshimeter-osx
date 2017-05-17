@@ -46,15 +46,15 @@ class DeviceContext
   }
   
   func setValue(_ command: DeviceCommandType, value: AnyObject?) -> Void
-  {
+  {    
     commandStates[command] = value
     
     // Notify about state value changed
-    let valueTuple = value as! (valueType: ResultType, value: AnyObject)
+    let valueTuple = value as! (type: ResultType, value: AnyObject)
     let changeObject = DeviceStateChange(
       UUID: self.device.UUID,
       commandType: command,
-      valueType: valueTuple.valueType,
+      valueType: valueTuple.type,
       value: valueTuple.value)
     NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_DEVICE_STATE_VALUE_CHANGED), object: changeObject)
   }
