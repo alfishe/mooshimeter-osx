@@ -376,7 +376,7 @@ class Device: NSObject
               {
                 if #available(OSX 10.12, *)
                 {
-                  self.heartbeatTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false)
+                  self.heartbeatTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true)
                   { timer in
                     self.getTime()
                     self.getTimeMs()
@@ -392,6 +392,7 @@ class Device: NSObject
                     repeats: true)
                 }
               }
+            // End of Debug test commands
             case .Diagnostic:
               print(self.receiveBuffer)
             default:
@@ -448,6 +449,12 @@ class Device: NSObject
   
   func dumpCommandPacket(data: Data) -> Void
   {
+    if data.count == 0
+    {
+        print("Unable to dump empty packet")
+        return
+    }
+    
     let packetNumber = data.first!
     let commandTypeByte = data.suffix(from: 1).first!
     let commandType = DeviceCommandType(rawValue: commandTypeByte)!
