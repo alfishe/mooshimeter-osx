@@ -46,7 +46,13 @@ class DeviceContext
   }
   
   func setValue(_ command: DeviceCommandType, value: AnyObject?) -> Void
-  {    
+  {
+    if value == nil
+    {
+        print("Unable to set empty value for " + command.description)
+        return
+    }
+    
     commandStates[command] = value
     
     // Notify about state value changed

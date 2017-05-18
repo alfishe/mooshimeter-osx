@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
   var deviceDebugWindow: DeviceDebugWindow?
   
   func applicationDidFinishLaunching(_ aNotification: Notification)
-  {
+  {   
     bleManager.start()
     
     //showDeviceSelectionWindow()
