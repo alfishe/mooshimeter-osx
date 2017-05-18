@@ -48,6 +48,7 @@
 		D7B684751D72A0910096F296 /* UOMHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415A9C28B1CD4E2742CB04 /* UOMHelperTests.swift */; };
 		D7B684781D73A6FD0096F296 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684771D73A6FD0096F296 /* Async.swift */; };
 		D7DAC5111E8881D000703DDC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAC5101E8881D000703DDC /* ViewController.swift */; };
+		D7DF26AB1ECC0AA000401042 /* StatisticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF26AA1ECC0AA000401042 /* StatisticsManager.swift */; };
 		D7E8D9FF1E6BD34200C78454 /* DeviceEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */; };
 /* End PBXBuildFile section */
 
@@ -139,6 +140,7 @@
 		D7B684731D7269F40096F296 /* TemperatureHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemperatureHelper.swift; path = Common/TemperatureHelper.swift; sourceTree = "<group>"; };
 		D7B684771D73A6FD0096F296 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Async.swift; path = 3rdParty/Async/Async.swift; sourceTree = "<group>"; };
 		D7DAC5101E8881D000703DDC /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = UI/ViewControllers/ViewController.swift; sourceTree = "<group>"; };
+		D7DF26AA1ECC0AA000401042 /* StatisticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatisticsManager.swift; path = Stats/StatisticsManager.swift; sourceTree = "<group>"; };
 		D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceEnumerations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -355,6 +357,7 @@
 				D7B684691D7211650096F296 /* BLE */,
 				1841524CED44AB94A45B9AF1 /* Device */,
 				1841556BDA63EBE43B167DDE /* Measurements */,
+				D7DF26A91ECC0A6C00401042 /* Stats */,
 				D7A310291E883D2000B46F19 /* UI */,
 				D7B6843E1D72105C0096F296 /* AppDelegate.swift */,
 				D7A310321E88432500B46F19 /* Resources */,
@@ -431,6 +434,14 @@
 				D7B684771D73A6FD0096F296 /* Async.swift */,
 			);
 			name = Async;
+			sourceTree = "<group>";
+		};
+		D7DF26A91ECC0A6C00401042 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				D7DF26AA1ECC0AA000401042 /* StatisticsManager.swift */,
+			);
+			name = Stats;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -637,6 +648,7 @@
 				D7DAC5111E8881D000703DDC /* ViewController.swift in Sources */,
 				18415555F0E172E7CC4561B4 /* FloatHelper.swift in Sources */,
 				D7A3103D1E885E5B00B46F19 /* DeviceSelectionViewController.swift in Sources */,
+				D7DF26AB1ECC0AA000401042 /* StatisticsManager.swift in Sources */,
 				18415BAF73733CBD25D9674E /* DeviceProtocol.swift in Sources */,
 				D771A2731E691B3F00DF0CC7 /* SwiftDataCompression.swift in Sources */,
 				18415C272C09D5FC0E13ACBF /* ThreadHelper.swift in Sources */,
