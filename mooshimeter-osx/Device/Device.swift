@@ -190,6 +190,13 @@ class Device: NSObject
 
   func handleReadData(_ data: Data?)
   {
+    // Debug
+    if isHandshakePassed()
+    {
+      print(">>" + getDataDumpString(data: data))
+    }
+    // End debug
+    
     if let unwrappedData = data
     {
       if unwrappedData.count > 0
@@ -221,7 +228,7 @@ class Device: NSObject
           self.decodeData()
           
           // Debug
-          //self.dumpPacket(packetNum: packetNum, data: unwrappedData)
+          // self.dumpPacket(packetNum: packetNum, data: unwrappedData)
         }
         
         self.receivePacketNum = packetNum
@@ -248,6 +255,13 @@ class Device: NSObject
       if self.expectFirstPacket
       {
         self.command = self.currentFrame[1]
+        
+        if (self.command > DeviceCommandType.RealPwr.rawValue)
+        {
+          print("Unknown command code received: \(self.command)")
+          return
+        }
+        
         let commandType = DeviceCommandType(rawValue: self.command)!
         let resultType = DeviceCommand.getResultTypeByCommand(command: self.command)
         
@@ -303,7 +317,15 @@ class Device: NSObject
             
             // Debug
             self.dumpCommandPacket(data: Data(self.currentFrame))
-            print("Decoded: \(String(describing: value!.type)) = \(DeviceCommand.printValue(commandType: commandType, valueTuple: value))")
+            
+            if value != nil
+            {
+              print("Decoded: \(String(describing: value!.type)) = \(DeviceCommand.printValue(commandType: commandType, valueTuple: value))")
+            }
+            else
+            {
+              print("Unable to parse value during decode")
+            }
             // End Debug
             
             decodingFinished = true
@@ -365,33 +387,34 @@ class Device: NSObject
               }
             
               //TODO: Remove test commands
-              self.getPCBVersion()
-              self.getSamplingRate()
-              self.getTime()
-              self.getTimeMs()
-              self.setSamplingRate(SamplingRateType.Freq125Hz)
-              self.getSamplingRate()
+              DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3)
+              {
+                self.getPCBVersion()
+                self.getChannel1Mapping()
+                self.getChannel2Mapping()
+                self.getSamplingRate()
+                self.getSamplingDepth()
+                self.getSamplingTrigger()
+                self.getTime()
+                self.getTimeMs()
+                
+                self.setSamplingRate(SamplingRateType.Freq1000Hz)
+                
+                // Switching to continuous triggering mode activates streaming from the device side (multiple command+payload values transmitted as stream in several sequential packets)
+                //self.setSamplingTrigger(SamplingTriggerType.Continuous)
+              }
+              
             
               DispatchQueue.main.async
               {
-                if #available(OSX 10.12, *)
-                {
-                  self.heartbeatTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false)
-                  { timer in
-                    self.getTime()
-                    self.getTimeMs()
-                  }
-                }
-                else
-                {
                   self.heartbeatTimer = Timer.scheduledTimer(
                     timeInterval: 1,
                     target: self,
                     selector: #selector(self.heartbeatTimerFire(timer:)),
                     userInfo: nil,
                     repeats: true)
-                }
               }
+            // End of Debug test commands
             case .Diagnostic:
               print(self.receiveBuffer)
             default:
@@ -428,15 +451,22 @@ class Device: NSObject
   @objc
   private func heartbeatTimerFire(timer: Timer)
   {
-    self.getTime()
-    self.getTimeMs()
+    //self.getTime()
+    //self.getTimeMs()
+    
+    //self.getChannel1Mapping()
+    self.getChannel1Value()
+    
+    //self.getChannel2Mapping()
+    self.getChannel2Value()
   }
   
   //MARK: -
   //MARK: - Debug methods
   func dumpPacket(packetNum: UInt8, data: Data) -> Void
   {
-    var text: String = "Packet #\(String(packetNum))"
+    let hex = getDataDumpString(data: data)
+    var text: String = "Pkt: #\(String(packetNum)) len: \(data.count) hex: \(hex)"
     if let value = String(data: data, encoding: .ascii)
     {
       text = text + ". Value: " + value
@@ -448,6 +478,12 @@ class Device: NSObject
   
   func dumpCommandPacket(data: Data) -> Void
   {
+    if data.count == 0
+    {
+        print("Unable to dump empty packet")
+        return
+    }
+    
     let packetNumber = data.first!
     let commandTypeByte = data.suffix(from: 1).first!
     let commandType = DeviceCommandType(rawValue: commandTypeByte)!
@@ -488,7 +524,12 @@ class Device: NSObject
   
   func getDataDumpString(data: Data?) -> String
   {
-    let result = data!.map{ String(format: "%02x ", $0) }.joined()
+    var result = ""
+    
+    if data != nil
+    {
+      result = data!.map{ String(format: "%02x ", $0) }.joined()
+    }
     
     return result
   }
@@ -610,7 +651,7 @@ class Device: NSObject
   }
 
   //MARK: -
-  //MARK: Sample rate methods
+  //MARK: Sampling methods
   func getSamplingRate()
   {
     print("Getting Sampling Rate...")
@@ -637,4 +678,143 @@ class Device: NSObject
     
     self.writeValueAsync(bytes: dataBytes)
   }
+  
+  func getSamplingDepth()
+  {
+    print("Getting Sampling Depth...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.SamplingDepth))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+  
+  func setSamplingDepth(_ depth: SamplingDepthType)
+  {
+    print("Setting Sampling Depth...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getWriteCommandCode(type: DeviceCommandType.SamplingDepth))
+    dataBytes.append(contentsOf: DeviceCommand.getCommandPayload(commandType: DeviceCommandType.SamplingDepth, value: depth as AnyObject))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+  
+  func getSamplingTrigger()
+  {
+    print("Getting Sampling Trigger...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.SamplingTrigger))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+  
+  func setSamplingTrigger(_ trigger: SamplingTriggerType)
+  {
+    print("Setting Sampling Trigger...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getWriteCommandCode(type: DeviceCommandType.SamplingTrigger))
+    dataBytes.append(contentsOf: DeviceCommand.getCommandPayload(commandType: DeviceCommandType.SamplingTrigger, value: trigger as AnyObject))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+    
+  //MARK: -
+  //MARK: Channel1 methods
+  func getChannel1Mapping()
+  {
+    print("Getting Channel1 Mapping...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Channel1Mapping))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+  
+  func setChannel1Mapping(_ mapping: Channel1MappingType)
+  {
+    print("Setting Channel1 Mapping...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getWriteCommandCode(type: DeviceCommandType.Channel1Mapping))
+    dataBytes.append(contentsOf: DeviceCommand.getCommandPayload(commandType: DeviceCommandType.Channel1Mapping, value: mapping as AnyObject))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+  
+  func getChannel1Value()
+  {
+    print("Getting Channel1 Value...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Channel1Value))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+  
+  //MARK: -
+  //MARK: Channel2 methods
+  func getChannel2Mapping()
+  {
+    print("Getting Channel2 Mapping...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Channel2Mapping))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+  
+  func setChannel2Mapping(_ mapping: Channel1MappingType)
+  {
+    print("Setting Channel2 Mapping...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getWriteCommandCode(type: DeviceCommandType.Channel2Mapping))
+    dataBytes.append(contentsOf: DeviceCommand.getCommandPayload(commandType: DeviceCommandType.Channel2Mapping, value: mapping as AnyObject))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+  
+  func getChannel2Value()
+  {
+    print("Getting Channel2 Value...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Channel2Value))
+    
+    self.dumpData(data: Data(dataBytes))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+
 }

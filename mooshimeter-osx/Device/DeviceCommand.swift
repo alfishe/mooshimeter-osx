@@ -24,6 +24,109 @@ class DeviceCommand: NSObject
     return result
   }
   
+  /*
+   * Return max limit allowed for current command type value. For enums - max enumeration index value
+   */
+  class func getCommandPayloadLimit(commandType: DeviceCommandType) -> UInt8?
+  {
+    var result: UInt8? = nil
+    
+    switch commandType
+    {
+      case .CRC32:
+        break
+      case .Tree:
+        break
+      case .Diagnostic:
+        break
+      case .PCBVersion:
+        break
+      case .Name:
+        break
+      case .TimeUTC:
+        break
+      case .TimeUTCms:
+        break
+      case .Battery:
+        break
+      case .Reboot:
+        result = RebootType.Shipping.rawValue
+        break
+      case .SamplingRate:
+        result = SamplingRateType.Freq8000Hz.rawValue
+      break
+      case .SamplingDepth:
+        result = SamplingDepthType.Depth256.rawValue
+        break
+      case .SamplingTrigger:
+        result = SamplingTriggerType.Continuous.rawValue
+      break
+      case .LoggingOn:
+        break
+      case .LoggingInterval:
+        break
+      case .LoggingStatus:
+        break
+      case .LoggingPollDir:
+        break
+      case .LoggingInfoIndex:
+        break
+      case .LoggingInfoEndTime:
+        break
+      case .LoggingInfoBytesNum:
+        break
+      case .LoggingStreamIndex:
+        break
+      case .LoggingStreamOffset:
+        break
+      case .LoggingStreamData:
+        break
+      case .Channel1Mapping:
+        result = Channel1MappingType.Shared.rawValue
+        break
+      case .Channel1Range:
+        break
+      case .Channel1Analysis:
+        result = Channel1AnalysisType.Buffer.rawValue
+        break
+      case .Channel1Value:
+        break
+      case .Channel1Offset:
+        break
+      case .Channel1Buf:
+        break
+      case .Channel1BufBPS:
+        break
+      case .Channel1BufLSBNative:
+        break
+      case .Channel2Mapping:
+        result = Channel2MappingType.Shared.rawValue
+        break
+      case .Channel2Range:
+        break
+      case .Channel2Analysis:
+        result = Channel2AnalysisType.Buffer.rawValue
+        break
+      case .Channel2Value:
+        break
+      case .Channel2Offset:
+        break
+      case .Channel2Buf:
+        break
+      case .Channel2BufBPS:
+        break
+      case .Channel2BufLSBNative:
+        break
+      case .Shared:
+        result = SharedModeType.Diode.rawValue
+        break
+      case .RealPwr:
+        break
+    }
+    
+    return result
+  }
+  
   class func getCommandPayload(commandType: DeviceCommandType, value: AnyObject) -> [UInt8]
   {
     var result = [UInt8]()
@@ -91,7 +194,7 @@ class DeviceCommand: NSObject
       case 1:
         result = .val_BIN
       case 2:
-        result = .val_STR
+        result = .val_BIN
       case 3:
         result = .val_U8
       case 4:
@@ -165,6 +268,7 @@ class DeviceCommand: NSObject
       case 39:
         result = .val_FLT
       default:
+        print("Unknown command code %d", command)
         break
     }
     
@@ -273,7 +377,14 @@ class DeviceCommand: NSObject
             break
         }
         
-        result = (valueType, value!)
+        if value != nil
+        {
+          result = (valueType, value!)
+        }
+        else
+        {
+          print("Unable to parse value for %@", valueType)
+        }
       }
     }
     
@@ -333,6 +444,16 @@ class DeviceCommand: NSObject
   class func printChooserValue(commandType: DeviceCommandType, value: UInt8) -> String
   {
     var result: String = ""
+    
+    let limit = getCommandPayloadLimit(commandType: commandType)
+    if limit != nil
+    {
+      if value > limit!
+      {
+        print("CommandType: \(commandType.description) has value: \(value), which is bigger than allowed limit: \(limit!)")
+        return result
+      }
+    }
     
     switch commandType
     {

@@ -171,7 +171,7 @@ enum ResultType: Int
   case notset   = -1  // May be an informational node, or a choice in a chooser
 }
 
-enum RebootType: UInt8
+enum RebootType: UInt8, DeviceChooser
 {
   case Normal = 0
   case Shipping = 1
@@ -234,7 +234,7 @@ enum SamplingRateType: UInt8, DeviceChooser
   }
 }
 
-enum SamplingDepthType: UInt8
+enum SamplingDepthType: UInt8, DeviceChooser
 {
   case Depth32 = 0
   case Depth64 = 1
@@ -264,7 +264,7 @@ enum SamplingDepthType: UInt8
   }
 }
 
-enum SamplingTriggerType: UInt8
+enum SamplingTriggerType: UInt8, DeviceChooser
 {
   case Off = 0
   case Single = 1
@@ -291,7 +291,7 @@ enum SamplingTriggerType: UInt8
   }
 }
 
-enum Channel1MappingType: UInt8
+enum Channel1MappingType: UInt8, DeviceChooser
 {
   case Current = 0
   case Temperature = 1
@@ -318,7 +318,7 @@ enum Channel1MappingType: UInt8
   }
 }
 
-enum Channel2MappingType: UInt8
+enum Channel2MappingType: UInt8, DeviceChooser
 {
   case Voltage = 0
   case Temperature = 1
@@ -345,7 +345,7 @@ enum Channel2MappingType: UInt8
   }
 }
 
-enum Channel1AnalysisType: UInt8
+enum Channel1AnalysisType: UInt8, DeviceChooser
 {
   case Mean = 0
   case RMS = 1
@@ -372,7 +372,7 @@ enum Channel1AnalysisType: UInt8
   }
 }
 
-enum Channel2AnalysisType: UInt8
+enum Channel2AnalysisType: UInt8, DeviceChooser
 {
   case Mean = 0
   case RMS = 1
@@ -399,7 +399,7 @@ enum Channel2AnalysisType: UInt8
   }
 }
 
-enum SharedModeType: UInt8
+enum SharedModeType: UInt8, DeviceChooser
 {
   case AuxVoltage = 0
   case Resistance = 1
@@ -426,7 +426,7 @@ enum SharedModeType: UInt8
   }
 }
 
-enum AuxVoltageRangeType: UInt8
+enum AuxVoltageRangeType: UInt8, DeviceChooser
 {
   case AuxRange0_1 = 0
   case AuxRange0_3 = 1
@@ -453,7 +453,7 @@ enum AuxVoltageRangeType: UInt8
   }
 }
 
-enum ResistanceRangeType: UInt8
+enum ResistanceRangeType: UInt8, DeviceChooser
 {
   case ResistanceRange1k = 0
   case ResistanceRange10k = 1
@@ -486,7 +486,7 @@ enum ResistanceRangeType: UInt8
   }
 }
 
-enum DiodeRangeType: UInt8
+enum DiodeRangeType: UInt8, DeviceChooser
 {
   case DiodeRange1_2 = 0
   
