@@ -34,7 +34,7 @@ class ViewController: NSViewController
     
     if object != nil
     {
-      let deviceStateChange = object as! DeviceStateChange
+      let deviceStateChange = object as! DeviceStateChangeEvent
       let deviceUUID = deviceStateChange.UUID
       let deviceCommand = deviceStateChange.commandType
       let valueType = deviceStateChange.valueType

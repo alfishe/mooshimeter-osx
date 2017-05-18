@@ -143,9 +143,9 @@ class DeviceDebugViewController : NSViewController
   {
     let object = notification.object
     
-    if object != nil
+    if object != nil && (object as? DeviceStateChangeEvent) != nil
     {
-      let deviceStateChange = object as! DeviceStateChange
+      let deviceStateChange = object as! DeviceStateChangeEvent
       let deviceUUID = deviceStateChange.UUID
       let deviceCommand = deviceStateChange.commandType
       let valueType = deviceStateChange.valueType

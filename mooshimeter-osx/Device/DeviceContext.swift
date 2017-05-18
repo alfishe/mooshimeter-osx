@@ -8,7 +8,19 @@
 
 import Foundation
 
-class DeviceStateChange
+class DeviceEvent
+{
+  let UUID: String
+  let payload: AnyObject?
+  
+  init(UUID: String, payload: AnyObject?)
+  {
+    self.UUID = UUID
+    self.payload = payload
+  }
+}
+
+class DeviceStateChangeEvent
 {
   let UUID: String
   let commandType: DeviceCommandType
@@ -26,7 +38,7 @@ class DeviceStateChange
 
 class DeviceContext
 {
-  private let device: Device
+  weak private var device: Device?
   
   private var calculatedCRC32: UInt32 = 0
   private var commandStates: [DeviceCommandType: AnyObject?] = [:]
@@ -57,8 +69,8 @@ class DeviceContext
     
     // Notify about state value changed
     let valueTuple = value as! (type: ResultType, value: AnyObject)
-    let changeObject = DeviceStateChange(
-      UUID: self.device.UUID,
+    let changeObject = DeviceStateChangeEvent(
+      UUID: (self.device?.UUID)!,
       commandType: command,
       valueType: valueTuple.type,
       value: valueTuple.value)
@@ -76,6 +88,4 @@ class DeviceContext
   {
     self.calculatedCRC32 = value
   }
-  
-  
 }

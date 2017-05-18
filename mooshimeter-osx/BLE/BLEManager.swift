@@ -17,6 +17,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   var centralManager: CBCentralManager!
   var peripherals = [String: CBPeripheral]()
 
+  var dataServiceUUID: String!
   fileprivate var isStarted = false
 
   override init()
@@ -175,7 +176,6 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
     var isConnectable: Bool = false
     var isSupported: Bool = false
-    var dataServiceUUID: String!
     var manufacturerData: UInt32 = 0xFFFFFFFF
 
     if let value = advertisementData["kCBAdvDataIsConnectable"]
@@ -379,7 +379,6 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       case Constants.METER_SERVICE_OUT_UUID:
         let value = characteristic.value
         device?.handleReadData(value)
-        //print("Characteristic: \(characteristicUUID) value: \(value?.hexEncodedString())")
       default:
         var value: Data!
         if characteristic.value != nil

@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Device
+extension DeviceCommandStream
 {
   //MARK: -
   //MARK: - Dump methods

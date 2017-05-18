@@ -38,8 +38,6 @@ extension Device
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Tree))
     
-    self.dumpData(data: Data(dataBytes))
-    
     self.writeValueAsync(bytes: dataBytes)
   }
   
@@ -51,8 +49,6 @@ extension Device
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getWriteCommandCode(type: DeviceCommandType.CRC32))
     dataBytes.append(contentsOf: crc.byteArray())
-    
-    self.dumpData(data: Data(dataBytes))
     
     self.writeValueAsync(bytes: dataBytes)
   }
@@ -67,8 +63,6 @@ extension Device
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Diagnostic))
     
-    self.dumpData(data: Data(dataBytes))
-    
     self.writeValueAsync(bytes: dataBytes)
   }
   
@@ -80,8 +74,6 @@ extension Device
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.PCBVersion))
     
-    self.dumpData(data: Data(dataBytes))
-    
     self.writeValueAsync(bytes: dataBytes)
   }
   
@@ -92,8 +84,6 @@ extension Device
     var dataBytes: [UInt8] = [UInt8]()
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Name))
-    
-    self.dumpData(data: Data(dataBytes))
     
     self.writeValueAsync(bytes: dataBytes)
   }
@@ -107,8 +97,6 @@ extension Device
     var dataBytes: [UInt8] = [UInt8]()
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.TimeUTC))
-    
-    self.dumpData(data: Data(dataBytes))
     
     self.writeValueAsync(bytes: dataBytes)
   }
@@ -125,8 +113,6 @@ extension Device
     var dataBytes: [UInt8] = [UInt8]()
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.TimeUTCms))
-    
-    self.dumpData(data: Data(dataBytes))
     
     self.writeValueAsync(bytes: dataBytes)
   }
@@ -146,8 +132,6 @@ extension Device
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.SamplingRate))
     
-    self.dumpData(data: Data(dataBytes))
-    
     self.writeValueAsync(bytes: dataBytes)
   }
   
@@ -160,8 +144,6 @@ extension Device
     dataBytes.append(DeviceCommand.getWriteCommandCode(type: DeviceCommandType.SamplingRate))
     dataBytes.append(contentsOf: DeviceCommand.getCommandPayload(commandType: DeviceCommandType.SamplingRate, value: samplerate as AnyObject))
     
-    self.dumpData(data: Data(dataBytes))
-    
     self.writeValueAsync(bytes: dataBytes)
   }
   
@@ -172,8 +154,6 @@ extension Device
     var dataBytes: [UInt8] = [UInt8]()
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.SamplingDepth))
-    
-    self.dumpData(data: Data(dataBytes))
     
     self.writeValueAsync(bytes: dataBytes)
   }
@@ -187,8 +167,6 @@ extension Device
     dataBytes.append(DeviceCommand.getWriteCommandCode(type: DeviceCommandType.SamplingDepth))
     dataBytes.append(contentsOf: DeviceCommand.getCommandPayload(commandType: DeviceCommandType.SamplingDepth, value: depth as AnyObject))
     
-    self.dumpData(data: Data(dataBytes))
-    
     self.writeValueAsync(bytes: dataBytes)
   }
   
@@ -199,8 +177,6 @@ extension Device
     var dataBytes: [UInt8] = [UInt8]()
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.SamplingTrigger))
-    
-    self.dumpData(data: Data(dataBytes))
     
     self.writeValueAsync(bytes: dataBytes)
   }
@@ -213,8 +189,6 @@ extension Device
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getWriteCommandCode(type: DeviceCommandType.SamplingTrigger))
     dataBytes.append(contentsOf: DeviceCommand.getCommandPayload(commandType: DeviceCommandType.SamplingTrigger, value: trigger as AnyObject))
-    
-    self.dumpData(data: Data(dataBytes))
     
     self.writeValueAsync(bytes: dataBytes)
   }
@@ -229,8 +203,6 @@ extension Device
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Channel1Mapping))
     
-    self.dumpData(data: Data(dataBytes))
-    
     self.writeValueAsync(bytes: dataBytes)
   }
   
@@ -243,8 +215,6 @@ extension Device
     dataBytes.append(DeviceCommand.getWriteCommandCode(type: DeviceCommandType.Channel1Mapping))
     dataBytes.append(contentsOf: DeviceCommand.getCommandPayload(commandType: DeviceCommandType.Channel1Mapping, value: mapping as AnyObject))
     
-    self.dumpData(data: Data(dataBytes))
-    
     self.writeValueAsync(bytes: dataBytes)
   }
   
@@ -255,8 +225,6 @@ extension Device
     var dataBytes: [UInt8] = [UInt8]()
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Channel1Value))
-    
-    self.dumpData(data: Data(dataBytes))
     
     self.writeValueAsync(bytes: dataBytes)
   }
@@ -271,8 +239,6 @@ extension Device
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Channel2Mapping))
     
-    self.dumpData(data: Data(dataBytes))
-    
     self.writeValueAsync(bytes: dataBytes)
   }
   
@@ -285,8 +251,6 @@ extension Device
     dataBytes.append(DeviceCommand.getWriteCommandCode(type: DeviceCommandType.Channel2Mapping))
     dataBytes.append(contentsOf: DeviceCommand.getCommandPayload(commandType: DeviceCommandType.Channel2Mapping, value: mapping as AnyObject))
     
-    self.dumpData(data: Data(dataBytes))
-    
     self.writeValueAsync(bytes: dataBytes)
   }
   
@@ -297,8 +261,6 @@ extension Device
     var dataBytes: [UInt8] = [UInt8]()
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Channel2Value))
-    
-    self.dumpData(data: Data(dataBytes))
     
     self.writeValueAsync(bytes: dataBytes)
   }
