@@ -56,14 +56,10 @@ extension Data
   }
   // End of From/to generic conversions
   
-  func hexEncodedString() -> String
+  // Allows to get subdata using ClosedRange<>
+  func subdata(in range: ClosedRange<Index>) -> Data
   {
-    let result = map
-      {
-        String(format: "%02hhx", $0)
-      }.joined()
-    
-    return result
+    return subdata(in: range.lowerBound ..< range.upperBound + 1)
   }
   
   func contains(_ data: Data?) -> Bool
@@ -78,10 +74,22 @@ extension Data
     return result
   }
   
+  // Calculate CRC32 checksum for the whole data
   func getCrc32() -> UInt32
   {
     var result: UInt32 = crc32(0, buffer: nil, length: 0)
     result = crc32(result, data: self)
+    
+    return result
+  }
+  
+  // Dumps data content bytes as two-digit hex to String
+  func hexEncodedString() -> String
+  {
+    let result = map
+    {
+      String(format: "%02hhx", $0)
+    }.joined()
     
     return result
   }

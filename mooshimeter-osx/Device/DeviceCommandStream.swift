@@ -15,25 +15,25 @@ class DeviceCommandStream
   static let BadwriteData = "BADWRITE".data(using: .ascii)
   
   // Back reference for the device in-serve
-  weak private var device: Device?
-  weak private var deviceContext: DeviceContext?
+  weak internal var device: Device?
+  weak internal var deviceContext: DeviceContext?
   
   // Packet numeration counters
-  private var receivePacketNum: UInt8 = 0
-  private var sendPacketNum: UInt8 = 0
+  internal var receivePacketNum: UInt8 = 0
+  internal var sendPacketNum: UInt8 = 0
   
   // Receive buffers and helpers
-  private var receiveBuffer: [UInt8] = [UInt8]()
-  private var currentFrame: [UInt8] = [UInt8](repeating: UInt8(), count: Constants.DEVICE_PACKET_SIZE)
-  private var expectFirstPacket: Bool = false
-  private var expectMoreData: Bool = false
+  internal var receiveBuffer: [UInt8] = [UInt8]()
+  internal var currentFrame: [UInt8] = [UInt8](repeating: UInt8(), count: Constants.DEVICE_PACKET_SIZE)
+  internal var expectFirstPacket: Bool = false
+  internal var expectMoreData: Bool = false
 
   // Command result parsing state
-  private var command: UInt8 = 0
-  private var expectingBytes: Int = 0
+  internal var command: UInt8 = 0
+  internal var expectingBytes: Int = 0
   
   // Higher level session state properties
-  private var handshakePassed: Bool = false
+  internal var handshakePassed: Bool = false
   
   init(device: Device, context: DeviceContext)
   {
@@ -121,6 +121,89 @@ class DeviceCommandStream
         }
         
         self.receivePacketNum = packetNum
+      }
+    }
+  }
+  
+  func verifyPacket(_ packet: Data) throws
+  {
+    // Check 1: BLE packet is not empty
+    if packet.count == 0
+    {
+      throw CommandStreamPacketError.emptyPacket
+    }
+    
+    // Check 2: Packet number is in sequence (no packets missed)
+    let packetNum: UInt8 = packet[0]
+    if packetNum != self.receivePacketNum &+ 1
+    {
+      throw CommandStreamPacketError.packetNumOutOfOrder
+    }
+    
+    let dataPacket = packet.subdata(in: 1...packet.count)
+    
+    // Check 3: Data packet is not empty
+    if dataPacket.count == 0
+    {
+      throw CommandStreamPacketError.emptyDataPacket
+    }
+    
+    // Check 4: Verify that the device didn't respond either with BADREAD or BADWRITE values
+    if packet.contains(DeviceCommandStream.BadreadData)
+    {
+      throw CommandStreamPacketError.badReadData
+    }
+    else if packet.contains(DeviceCommandStream.BadwriteData)
+    {
+      throw CommandStreamPacketError.badWriteData
+    }
+  }
+  
+  func verifyCommand(_ commandData: Data) throws
+  {
+    // Check 1: Data bytes are not empty
+    if commandData.count == 0
+    {
+      throw CommandStreamCommandError.emptyCommand
+    }
+    
+    let commandType: UInt8 = commandData[0]
+    
+    // Check 2: Check that command is valid (command code is correct)
+    if commandType > DeviceCommandType.RealPwr.rawValue
+    {
+      throw CommandStreamCommandError.invalidCommand
+    }
+    
+    let payloadData = commandData.subdata(in: 1...commandData.count)
+    let payloadSize = payloadData.count
+    let resultType = DeviceCommand.getResultTypeByCommand(command: commandType)
+    let resultSize = DeviceCommand.getResultSizeType(resultType)
+    
+    // Check 3: Check that payload is presented in full
+    if resultSize == 0
+    {
+      // Nothing to do
+    }
+    else if resultSize == Constants.DEVICE_COMMAND_PAYLOAD_VARIABLE_LEN
+    {
+      // Variable length result has 2 bytes value for real length
+      if payloadSize < 2
+      {
+        throw CommandStreamCommandError.incompletePayload
+      }
+    
+      let realLength = Int(payloadData.to(type: UInt16.self))
+      if payloadSize - 2 < realLength
+      {
+        throw CommandStreamCommandError.incompletePayload
+      }
+    }
+    else
+    {
+      if payloadSize < resultSize
+      {
+        throw CommandStreamCommandError.incompletePayload
       }
     }
   }

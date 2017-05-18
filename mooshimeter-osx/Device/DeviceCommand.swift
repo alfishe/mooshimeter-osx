@@ -275,6 +275,43 @@ class DeviceCommand: NSObject
     return result
   }
   
+  class func getResultSizeType(_ resultType: ResultType) -> Int
+  {
+    var result: Int = 0
+    
+    switch resultType
+    {
+      case .plain:
+        result = 0
+      case .link:
+        result = 0
+      case .chooser:
+        result = 1
+      case .val_U8:
+        result = 1
+      case .val_U16:
+        result = 2
+      case .val_U32:
+        result = 4
+      case .val_S8:
+        result = 1
+      case .val_S16:
+        result = 2
+      case .val_S32:
+        result = 4
+      case .val_STR:
+        result = Constants.DEVICE_COMMAND_PAYLOAD_VARIABLE_LEN
+      case .val_BIN:
+        result = Constants.DEVICE_COMMAND_PAYLOAD_VARIABLE_LEN
+      case .val_FLT:
+        result = 4
+      default:
+        break
+    }
+    
+    return result
+  }
+  
   class func getPacketCommandType(data: Data?) -> DeviceCommandType?
   {
     var result: DeviceCommandType? = nil

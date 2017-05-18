@@ -64,6 +64,8 @@ struct Constants
   
   // Transmission parameters
   static let DEVICE_PACKET_SIZE: Int = 20
+  
+  static let DEVICE_COMMAND_PAYLOAD_VARIABLE_LEN: Int = -1
 
   // Notification name IDs
   static let NOTIFICATION_DEVICE_CONNECTED = "DEVICE_CONNECTED"

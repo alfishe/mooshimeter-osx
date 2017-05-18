@@ -28,10 +28,10 @@ class DeviceManagerTests: XCTestCase
     let peripheral = CBPeripheral()
     let testUUID1 = "1234-5678-9012"
     let testUUID2 = "2222-2222-2222"
-    let device1 = Device(peripheral)
-    device1.UUID = testUUID1
-    let device2 = Device(peripheral)
-    device2.UUID = testUUID2
+    let device1 = Device(peripheral: peripheral)
+    //device1.UUID = testUUID1
+    let device2 = Device(peripheral: peripheral)
+    //device2.UUID = testUUID2
     
     
     var result = deviceManager.getDeviceForUUID(testUUID1)
@@ -53,11 +53,8 @@ class DeviceManagerTests: XCTestCase
   {
     let testUUID1 = "1234-5678-9012"
     let testUUID2 = "2222-2222-2222"
-    let device1 = Device()
-    device1.UUID = testUUID1
-    let device2 = Device()
-    device2.UUID = testUUID2
-    
+    let device1 = Device(UUID: testUUID1)
+    let device2 = Device(UUID: testUUID2)
     
     var result = deviceManager.getDeviceForUUID(testUUID1)
     XCTAssertNil(result)
@@ -94,7 +91,7 @@ class DeviceManagerTests: XCTestCase
   
   fileprivate func clear()
   {
-    deviceManager.devices.removeAll(keepCapacity: false)
-    deviceManager.devicesReverse.removeAll(keepCapacity: false)
+    deviceManager.devices.removeAll(keepingCapacity: false)
+    deviceManager.devicesReverse.removeAll(keepingCapacity: false)
   }
 }

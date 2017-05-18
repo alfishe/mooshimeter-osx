@@ -52,6 +52,8 @@
 		D7DF26AD1ECD279100401042 /* DeviceCommandStreamDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF26AC1ECD279100401042 /* DeviceCommandStreamDebug.swift */; };
 		D7DF26AF1ECD30BF00401042 /* DeviceCommandStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF26AE1ECD30BF00401042 /* DeviceCommandStream.swift */; };
 		D7E8D9FF1E6BD34200C78454 /* DeviceEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */; };
+		D7EA545B1ECE054100E2A253 /* DeviceCommandStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA545A1ECE054100E2A253 /* DeviceCommandStreamTests.swift */; };
+		D7EA545D1ECE2D7400E2A253 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA545C1ECE2D7400E2A253 /* Errors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +148,8 @@
 		D7DF26AC1ECD279100401042 /* DeviceCommandStreamDebug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCommandStreamDebug.swift; sourceTree = "<group>"; };
 		D7DF26AE1ECD30BF00401042 /* DeviceCommandStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCommandStream.swift; sourceTree = "<group>"; };
 		D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceEnumerations.swift; sourceTree = "<group>"; };
+		D7EA545A1ECE054100E2A253 /* DeviceCommandStreamTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceCommandStreamTests.swift; path = Device/DeviceCommandStreamTests.swift; sourceTree = "<group>"; };
+		D7EA545C1ECE2D7400E2A253 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Errors.swift; path = Common/Errors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -406,6 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				D7B6846D1D721AC70096F296 /* Constants.swift */,
+				D7EA545C1ECE2D7400E2A253 /* Errors.swift */,
 				184150258C12D04E34C1230E /* Extensions.swift */,
 				184153FE97E9B80263791AA4 /* Enumerations.swift */,
 				D7B684731D7269F40096F296 /* TemperatureHelper.swift */,
@@ -421,6 +426,7 @@
 			isa = PBXGroup;
 			children = (
 				184154BB0062952AADAD23EE /* DeviceManagerTests.swift */,
+				D7EA545A1ECE054100E2A253 /* DeviceCommandStreamTests.swift */,
 			);
 			name = Device;
 			sourceTree = "<group>";
@@ -643,6 +649,7 @@
 				D7B684781D73A6FD0096F296 /* Async.swift in Sources */,
 				D7B684741D7269F40096F296 /* TemperatureHelper.swift in Sources */,
 				184150444E0895218166D5F1 /* deflate.swift in Sources */,
+				D7EA545D1ECE2D7400E2A253 /* Errors.swift in Sources */,
 				D7A8E8591D936DB000606FAE /* ConfigTree.swift in Sources */,
 				1841584B0524455A315CA657 /* Enumerations.swift in Sources */,
 				D7DF26AF1ECD30BF00401042 /* DeviceCommandStream.swift in Sources */,
@@ -670,6 +677,7 @@
 				D7B684751D72A0910096F296 /* UOMHelperTests.swift in Sources */,
 				D7B684511D72105C0096F296 /* mooshimeter_osxTests.swift in Sources */,
 				18415A90E3C69944DB3539F2 /* DeviceManagerTests.swift in Sources */,
+				D7EA545B1ECE054100E2A253 /* DeviceCommandStreamTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

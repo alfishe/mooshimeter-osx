@@ -3,17 +3,17 @@ import CoreBluetooth
 
 class Device: NSObject
 {
-  private var readCharacteristic: CBCharacteristic?
-  private var writeCharacteristic: CBCharacteristic?
-  private var heartbeatTimer: Timer?
+  internal var readCharacteristic: CBCharacteristic?
+  internal var writeCharacteristic: CBCharacteristic?
+  internal var heartbeatTimer: Timer?
   
-  let peripheral: CBPeripheral
-  let UUID: String
+  internal let peripheral: CBPeripheral
+  internal let UUID: String
 
-  private var deviceCommandStream: DeviceCommandStream? = nil
-  private var deviceContext: DeviceContext? = nil
+  internal var deviceCommandStream: DeviceCommandStream? = nil
+  internal var deviceContext: DeviceContext? = nil
   
-  private var deviceReady: Bool = false
+  internal var deviceReady: Bool = false
 
   //MARK: -
   //MARK: Class methods
@@ -49,6 +49,20 @@ class Device: NSObject
       selector: #selector(self.crc32Calculated),
       name: NSNotification.Name(rawValue: Constants.NOTIFICATION_ADMINTREE_CRC32_READY),
       object: nil)
+  }
+  
+  /*
+   * Testing only constructor
+   */
+  init(UUID: String)
+  {
+    self.peripheral = CBPeripheral()
+    self.UUID = UUID
+    
+    super.init()
+    
+    self.deviceContext = DeviceContext(device: self)
+    self.deviceCommandStream = DeviceCommandStream(device: self, context: self.deviceContext!)
   }
   
   deinit
