@@ -49,6 +49,8 @@
 		D7B684781D73A6FD0096F296 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684771D73A6FD0096F296 /* Async.swift */; };
 		D7DAC5111E8881D000703DDC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAC5101E8881D000703DDC /* ViewController.swift */; };
 		D7DF26AB1ECC0AA000401042 /* StatisticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF26AA1ECC0AA000401042 /* StatisticsManager.swift */; };
+		D7DF26AD1ECD279100401042 /* DeviceDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF26AC1ECD279100401042 /* DeviceDebug.swift */; };
+		D7DF26AF1ECD30BF00401042 /* DeviceCommandStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF26AE1ECD30BF00401042 /* DeviceCommandStream.swift */; };
 		D7E8D9FF1E6BD34200C78454 /* DeviceEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +143,8 @@
 		D7B684771D73A6FD0096F296 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Async.swift; path = 3rdParty/Async/Async.swift; sourceTree = "<group>"; };
 		D7DAC5101E8881D000703DDC /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = UI/ViewControllers/ViewController.swift; sourceTree = "<group>"; };
 		D7DF26AA1ECC0AA000401042 /* StatisticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatisticsManager.swift; path = Stats/StatisticsManager.swift; sourceTree = "<group>"; };
+		D7DF26AC1ECD279100401042 /* DeviceDebug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDebug.swift; sourceTree = "<group>"; };
+		D7DF26AE1ECD30BF00401042 /* DeviceCommandStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCommandStream.swift; sourceTree = "<group>"; };
 		D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceEnumerations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -184,6 +188,8 @@
 				1841563FACC0086580FF4C2B /* DeviceManager.swift */,
 				18415C878C0E2852DD6486D5 /* Device.swift */,
 				18415588608CA78E46BFA694 /* DeviceProtocol.swift */,
+				D7DF26AC1ECD279100401042 /* DeviceDebug.swift */,
+				D7DF26AE1ECD30BF00401042 /* DeviceCommandStream.swift */,
 				D7A8E8561D93565A00606FAE /* DeviceCommand.swift */,
 				D7A8E8581D936DB000606FAE /* ConfigTree.swift */,
 				D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */,
@@ -639,9 +645,11 @@
 				184150444E0895218166D5F1 /* deflate.swift in Sources */,
 				D7A8E8591D936DB000606FAE /* ConfigTree.swift in Sources */,
 				1841584B0524455A315CA657 /* Enumerations.swift in Sources */,
+				D7DF26AF1ECD30BF00401042 /* DeviceCommandStream.swift in Sources */,
 				D7A8E8571D93565A00606FAE /* DeviceCommand.swift in Sources */,
 				184152FDB6605FFCD2FCA6B7 /* crc32.swift in Sources */,
 				D7A310281E881EF400B46F19 /* DeviceContext.swift in Sources */,
+				D7DF26AD1ECD279100401042 /* DeviceDebug.swift in Sources */,
 				18415B3041238E813FA10BFB /* MeterReading.swift in Sources */,
 				184157478653F7A07C53A448 /* DisplayFormatHelper.swift in Sources */,
 				184151328AE83E9E3640FF80 /* UOMHelper.swift in Sources */,
