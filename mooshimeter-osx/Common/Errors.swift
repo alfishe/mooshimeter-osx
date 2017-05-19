@@ -18,7 +18,7 @@ enum CommandStreamPacketError: Error
   case invalidCommand
 }
 
-enum CommandStreamCommandError: Error
+enum CommandError: Error
 {
   case emptyCommand
   case invalidCommand

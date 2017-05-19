@@ -83,8 +83,20 @@ class DeviceCommandStream
   
   //MARK: -
   //MARK: Data receive processor
-  
   func handleReadData(_ data: Data?)
+  {
+    // Just skip all exception handlers for initial version
+    let packetVerified: Bool? = try? verifyPacket(data)
+    
+    if packetVerified != nil
+    {
+      let packetNumber = data![0]
+      let packetData = data!.subdata(in: 1...data!.count - 1)
+      parsePacket(packetData)
+    }
+  }
+  
+  func prevLogic(_ data: Data?)
   {
     if let unwrappedData = data
     {
@@ -125,22 +137,26 @@ class DeviceCommandStream
     }
   }
   
-  func verifyPacket(_ packet: Data) throws
+  //MARK: -
+  //MARK: Verification
+  func verifyPacket(_ packet: Data?) throws -> Bool
   {
+    let result: Bool = true
+    
     // Check 1: BLE packet is not empty
-    if packet.count == 0
+    if packet == nil || packet!.count == 0
     {
       throw CommandStreamPacketError.emptyPacket
     }
     
     // Check 2: Packet number is in sequence (no packets missed)
-    let packetNum: UInt8 = packet[0]
+    let packetNum: UInt8 = packet![0]
     if packetNum != self.receivePacketNum &+ 1
     {
       throw CommandStreamPacketError.packetNumOutOfOrder
     }
     
-    let dataPacket = packet.subdata(in: 1...packet.count)
+    let dataPacket = packet!.subdata(in: 1...packet!.count - 1)
     
     // Check 3: Data packet is not empty
     if dataPacket.count == 0
@@ -149,22 +165,26 @@ class DeviceCommandStream
     }
     
     // Check 4: Verify that the device didn't respond either with BADREAD or BADWRITE values
-    if packet.contains(DeviceCommandStream.BadreadData)
+    if dataPacket.contains(DeviceCommandStream.BadreadData)
     {
       throw CommandStreamPacketError.badReadData
     }
-    else if packet.contains(DeviceCommandStream.BadwriteData)
+    else if dataPacket.contains(DeviceCommandStream.BadwriteData)
     {
       throw CommandStreamPacketError.badWriteData
     }
+    
+    return result
   }
   
-  func verifyCommand(_ commandData: Data) throws
+  func verifyCommand(_ commandData: Data) throws -> Bool
   {
+    let result: Bool = true
+    
     // Check 1: Data bytes are not empty
     if commandData.count == 0
     {
-      throw CommandStreamCommandError.emptyCommand
+      throw CommandError.emptyCommand
     }
     
     let commandType: UInt8 = commandData[0]
@@ -172,10 +192,10 @@ class DeviceCommandStream
     // Check 2: Check that command is valid (command code is correct)
     if commandType > DeviceCommandType.RealPwr.rawValue
     {
-      throw CommandStreamCommandError.invalidCommand
+      throw CommandError.invalidCommand
     }
     
-    let payloadData = commandData.subdata(in: 1...commandData.count)
+    let payloadData = commandData.subdata(in: 1...commandData.count - 1)
     let payloadSize = payloadData.count
     let resultType = DeviceCommand.getResultTypeByCommand(command: commandType)
     let resultSize = DeviceCommand.getResultSizeType(resultType)
@@ -190,22 +210,66 @@ class DeviceCommandStream
       // Variable length result has 2 bytes value for real length
       if payloadSize < 2
       {
-        throw CommandStreamCommandError.incompletePayload
+        throw CommandError.incompletePayload
       }
     
       let realLength = Int(payloadData.to(type: UInt16.self))
       if payloadSize - 2 < realLength
       {
-        throw CommandStreamCommandError.incompletePayload
+        throw CommandError.incompletePayload
       }
     }
     else
     {
       if payloadSize < resultSize
       {
-        throw CommandStreamCommandError.incompletePayload
+        throw CommandError.incompletePayload
       }
     }
+    
+    return result
+  }
+  
+  //MARK: -
+  //MARK: Decode
+  func parsePacket(_ packetData: Data)
+  {
+    if self.expectFirstPacket
+    {
+      var moreDataAvailable = false
+      var dataBlock = packetData
+      
+      // New packet should start from command. It's not a tail of previously started data stream
+      repeat
+      {
+        do
+        {
+          moreDataAvailable = try parseCommand(&dataBlock)
+        }
+        catch CommandError.incompletePayload
+        {
+          
+        }
+        catch let error
+        {
+          //print(error.localizedDescription)
+        }
+      }
+      while moreDataAvailable
+    }
+    else
+    {
+      // Packet will be parsed as a tail of previously started data stream
+    }
+  }
+  
+  func parseCommand(_ data: inout Data) throws -> Bool
+  {
+    var result = false
+    
+    let commandVerified = try? verifyCommand(data)
+    
+    return result
   }
   
   func decodeData()
@@ -343,7 +407,7 @@ class DeviceCommandStream
             NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_ADMINTREE_CRC32_READY), object: deviceEvent)
             
             // Decompress ADMIN:TREE data and store in a context
-            let decompressedTree = self.decompressTreeData(data: compressedBuffer)
+            let decompressedTree = self.decompressTreeData(treeData: compressedBuffer)
             if decompressedTree != nil
             {
               self.deviceContext?.adminTree = decompressedTree
@@ -364,11 +428,11 @@ class DeviceCommandStream
     }
   }
   
-  func decompressTreeData(data: [UInt8]) -> [UInt8]?
+  func decompressTreeData(treeData: [UInt8]) -> [UInt8]?
   {
     var result: [UInt8]? = nil
     
-    let compressedData: Data = Data(data)
+    let compressedData: Data = Data(treeData)
     
     let decompressedData = compressedData.unzip()
     
@@ -380,6 +444,8 @@ class DeviceCommandStream
     return result
   }
   
+  //MARK: -
+  //MARK: Helper methods
   func resetReceiveBufferState()
   {
     self.currentFrame.removeAll(keepingCapacity: true)
