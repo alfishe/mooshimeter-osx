@@ -158,7 +158,6 @@ class DeviceCommandStream
     let resultType = DeviceCommand.getResultTypeByCommand(command: commandType)
     let resultSize = DeviceCommand.getResultSizeType(resultType)
     
-    // Check 3: Check that payload is presented in full
     if resultSize == 0
     {
       // Nothing to do
@@ -175,13 +174,23 @@ class DeviceCommandStream
       
       if resultSize == Constants.DEVICE_COMMAND_PAYLOAD_VARIABLE_LEN
       {
+        // Check 3: Check that payload is presented in full
         // Variable length result has 2 bytes value for real length
         if payloadSize < 2
         {
           throw CommandError.incompletePayload
         }
-      
+        
+        // Extract BIN/STR real value length
         let realLength = Int(payloadData.to(type: UInt16.self))
+        
+        // Check 4: Check that payload length is in expected range (1024 bytes)
+        if realLength > 1024
+        {
+          throw CommandError.valueLengthTooBig
+        }
+      
+        // Check 5: Check that current packet holds full value
         if payloadSize - 2 < realLength
         {
           throw CommandError.incompletePayload
@@ -350,14 +359,12 @@ class DeviceCommandStream
     }
     else if pendingDataBlockDownload
     {
-      let receivedLen = self.receiveBuffer.count
-      let packetLen = commandData.count
+      let receivedLen = commandData.count
+      self.receiveBuffer = commandData
       
-      if receivedLen + packetLen >= self.expectingBytes
+      if receivedLen >= self.expectingBytes
       {
         // All expected data received
-        self.receiveBuffer.append(commandData)
-        
         let commandType = DeviceCommandType(rawValue: self.command)!
         let resultType = DeviceCommand.getResultTypeByCommand(command: self.command)
         let value = self.receiveBuffer.subdata(in: 0...expectingBytes - 1)
@@ -369,7 +376,6 @@ class DeviceCommandStream
       else
       {
         // More data needed
-        self.receiveBuffer.append(commandData)
       }
     }
     else if incompletePayload
