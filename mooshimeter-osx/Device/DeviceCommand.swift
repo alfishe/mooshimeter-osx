@@ -428,6 +428,61 @@ class DeviceCommand: NSObject
     return result
   }
   
+  class func getValue(resultType: ResultType, data: Data) -> AnyObject?
+  {
+    var result: AnyObject? = nil
+
+    // Parse the value
+    switch resultType
+    {
+      case .chooser:
+        if data.count >= 1
+        {
+          result = data.to(type: UInt8.self) as AnyObject?
+        }
+      case .val_U8:
+        if data.count >= 1
+        {
+          result = data.to(type: UInt8.self) as AnyObject?
+        }
+      case .val_U16:
+        if data.count >= 2
+        {
+          result = data.to(type: UInt16.self) as AnyObject?
+        }
+      case .val_U32:
+        if data.count >= 4
+        {
+          result = data.to(type: UInt32.self) as AnyObject?
+        }
+      case .val_S8:
+        if data.count >= 1
+        {
+          result = data.to(type: Int8.self) as AnyObject?
+        }
+      case .val_S16:
+        if data.count >= 2
+        {
+          result = data.to(type: Int16.self) as AnyObject?
+        }
+      case .val_S32:
+        if data.count >= 4
+        {
+          result = data.to(type: Int32.self) as AnyObject?
+        }
+      case .val_FLT:
+        if data.count >= 4
+        {
+          result = data.to(type: Float.self) as AnyObject?
+        }
+        break
+      default:
+        break
+      }
+    
+    return result
+  }
+  
   class func printValue(commandType: DeviceCommandType, valueTuple: (type: ResultType, value: AnyObject)?) -> String
   {
     var result: String = ""

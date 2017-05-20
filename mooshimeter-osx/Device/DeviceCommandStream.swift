@@ -23,9 +23,9 @@ class DeviceCommandStream
   internal var sendPacketNum: UInt8 = 0
   
   // Receive buffers and helpers
-  internal var receiveBuffer: [UInt8] = [UInt8]()
+  internal var receiveBuffer: Data = Data()
   internal var currentFrame: [UInt8] = [UInt8](repeating: UInt8(), count: Constants.DEVICE_PACKET_SIZE)
-  internal var expectFirstPacket: Bool = false
+  internal var expectFirstPacket: Bool = true
   internal var expectMoreData: Bool = false
 
   // Command result parsing state
@@ -90,50 +90,11 @@ class DeviceCommandStream
     
     if packetVerified != nil
     {
-      let packetNumber = data![0]
+      let packetNum = data![0]
       let packetData = data!.subdata(in: 1...data!.count - 1)
       parsePacket(packetData)
-    }
-  }
-  
-  func prevLogic(_ data: Data?)
-  {
-    if let unwrappedData = data
-    {
-      if unwrappedData.count > 0
-      {
-        let packetNum: UInt8 = unwrappedData[0]
-        
-        if unwrappedData.contains(DeviceCommandStream.BadreadData)
-        {
-          print("Bad read data received. Packet #\(String(packetNum))")
-          
-          self.resetReceiveBufferState()
-        }
-        else if unwrappedData.contains(DeviceCommandStream.BadwriteData)
-        {
-          print("Bad write data received. Packet #\(String(packetNum))")
-          
-          self.resetReceiveBufferState()
-        }
-        else if !self.expectFirstPacket && packetNum != self.receivePacketNum &+ 1
-        {
-          print ("Packet #\(String(packetNum)) received out of order. Expected #\(String(self.receivePacketNum))")
-        }
-        else
-        {
-          // Store current frame for decoding purposes
-          self.currentFrame.removeAll()
-          self.currentFrame.append(contentsOf: unwrappedData)
-          
-          self.decodeData()
-          
-          // Debug
-          // self.dumpPacket(packetNum: packetNum, data: unwrappedData)
-        }
-        
-        self.receivePacketNum = packetNum
-      }
+      
+      self.receivePacketNum = packetNum
     }
   }
   
@@ -194,9 +155,8 @@ class DeviceCommandStream
     {
       throw CommandError.invalidCommand
     }
+
     
-    let payloadData = commandData.subdata(in: 1...commandData.count - 1)
-    let payloadSize = payloadData.count
     let resultType = DeviceCommand.getResultTypeByCommand(command: commandType)
     let resultSize = DeviceCommand.getResultSizeType(resultType)
     
@@ -205,25 +165,36 @@ class DeviceCommandStream
     {
       // Nothing to do
     }
-    else if resultSize == Constants.DEVICE_COMMAND_PAYLOAD_VARIABLE_LEN
-    {
-      // Variable length result has 2 bytes value for real length
-      if payloadSize < 2
-      {
-        throw CommandError.incompletePayload
-      }
-    
-      let realLength = Int(payloadData.to(type: UInt16.self))
-      if payloadSize - 2 < realLength
-      {
-        throw CommandError.incompletePayload
-      }
-    }
     else
     {
-      if payloadSize < resultSize
+      if commandData.count == 1
       {
         throw CommandError.incompletePayload
+      }
+      
+      let payloadData = commandData.subdata(in: 1...commandData.count - 1)
+      let payloadSize = payloadData.count
+      
+      if resultSize == Constants.DEVICE_COMMAND_PAYLOAD_VARIABLE_LEN
+      {
+        // Variable length result has 2 bytes value for real length
+        if payloadSize < 2
+        {
+          throw CommandError.incompletePayload
+        }
+      
+        let realLength = Int(payloadData.to(type: UInt16.self))
+        if payloadSize - 2 < realLength
+        {
+          throw CommandError.incompletePayload
+        }
+      }
+      else
+      {
+        if payloadSize < resultSize
+        {
+          throw CommandError.incompletePayload
+        }
       }
     }
     
@@ -234,40 +205,130 @@ class DeviceCommandStream
   //MARK: Decode
   func parsePacket(_ packetData: Data)
   {
+    var dataBlock: Data
+    
     if self.expectFirstPacket
     {
-      var moreDataAvailable = false
-      var dataBlock = packetData
-      
       // New packet should start from command. It's not a tail of previously started data stream
-      repeat
-      {
-        do
-        {
-          moreDataAvailable = try parseCommand(&dataBlock)
-        }
-        catch CommandError.incompletePayload
-        {
-          
-        }
-        catch let error
-        {
-          //print(error.localizedDescription)
-        }
-      }
-      while moreDataAvailable
+      dataBlock = packetData
     }
     else
     {
       // Packet will be parsed as a tail of previously started data stream
+      dataBlock = self.receiveBuffer
+      dataBlock.append(packetData)
     }
+    
+    var moreDataAvailable = false
+    
+    repeat
+    {
+      self.resetReceiveBufferState()
+      
+      do
+      {
+        moreDataAvailable = try parseCommand(&dataBlock)
+      }
+      catch CommandError.incompletePayload
+      {
+        
+      }
+      catch let error
+      {
+        //print(error.localizedDescription)
+      }
+    }
+    while moreDataAvailable
   }
   
-  func parseCommand(_ data: inout Data) throws -> Bool
+  func parseCommand(_ commandData: inout Data) throws -> Bool
   {
     var result = false
+    var value: AnyObject? = nil
     
-    let commandVerified = try? verifyCommand(data)
+    let commandVerified = try? verifyCommand(commandData)
+
+    if commandVerified != nil
+    {
+      let commandTypeByte: UInt8 = commandData[0]
+      let commandType = DeviceCommandType(rawValue: commandTypeByte)!
+      let payloadData = commandData.subdata(in: 1...commandData.count - 1)
+      let payloadSize = payloadData.count
+      let resultType = DeviceCommand.getResultTypeByCommand(command: commandTypeByte)
+      let resultSize = DeviceCommand.getResultSizeType(resultType)
+      var leftoverSize = 0
+      
+      switch resultType
+      {
+        case .val_BIN:
+          fallthrough
+        case .val_STR:
+          self.command = commandTypeByte
+        
+          let valueLength = Int(payloadData.to(type: UInt16.self))
+          if valueLength > payloadData.count - 2  // 2 bytes block length value
+          {
+            // Binary or string data block does not fit into current packet. Expect more
+            let valueChunk = payloadData.subdata(in: 2...payloadData.count - 1)
+            self.expectingBytes = valueLength
+            self.receiveBuffer.append(valueChunk)
+            self.expectMoreData = true
+            self.expectFirstPacket = false
+          }
+          else
+          {
+            // Data block fits current packet
+            let valueData = payloadData.subdata(in: 2...valueLength + 1) // [2: 2 + valuelength - 1]
+
+            if resultType == .val_BIN
+            {
+              value = [UInt8](valueData) as AnyObject?
+            }
+
+            if resultType == .val_STR
+            {
+              value = String(data: valueData, encoding: String.Encoding.utf8) as AnyObject?
+            }
+
+            leftoverSize = payloadData.count - 2 - valueLength
+          }
+        default:
+          let payload = payloadData.subdata(in: 0...resultSize - 1)
+          value = DeviceCommand.getValue(resultType: resultType, data: payload)
+          leftoverSize = payloadSize - resultSize
+          break
+      }
+
+      // Store received and decoded value in a context
+      if value != nil
+      {
+        let tupleValue = (type: resultType, value: value!)
+        self.deviceContext?.setValue(commandType, value: tupleValue as AnyObject?)
+      }
+
+      if leftoverSize > 0
+      {
+        // Report about data bytes left unprocessed
+        commandData = commandData.subdata(in: commandData.count - leftoverSize...commandData.count - 1)
+        result = true
+      }
+      else
+      {
+        // No more data to process - prepare for next packet
+        self.resetReceiveBufferState()
+      }
+    }
+    else
+    {
+      self.expectFirstPacket = false
+      self.expectMoreData = true
+      self.receiveBuffer.removeAll()
+      
+      if commandData.count > 0
+      {
+        self.receiveBuffer.append(commandData)
+      }
+    }
     
     return result
   }
