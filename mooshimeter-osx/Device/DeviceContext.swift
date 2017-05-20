@@ -20,6 +20,7 @@ class DeviceEvent
   }
 }
 
+
 class DeviceStateChangeEvent
 {
   let UUID: String
@@ -34,6 +35,13 @@ class DeviceStateChangeEvent
     self.valueType = valueType
     self.value = value
   }
+}
+
+struct DeviceValueChange
+{
+  let commandType: DeviceCommandType
+  let resultType: ResultType
+  let value: AnyObject?
 }
 
 class DeviceContext
@@ -74,7 +82,42 @@ class DeviceContext
       commandType: command,
       valueType: valueTuple.type,
       value: valueTuple.value)
+    
+    // Broadcast generic KVO notification
     NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_DEVICE_STATE_VALUE_CHANGED), object: changeObject)
+    
+    // Generate specific events (if conditions detected)
+    routeEvent(changeObject)
+  }
+  
+  /*
+   * Generates more specific events based on generic KVO changes
+   */
+  func routeEvent(_ changeObject: DeviceStateChangeEvent)
+  {
+    let commandType = changeObject.commandType
+    let valueType = changeObject.valueType
+    let value = changeObject.value
+    
+    switch commandType
+    {
+      case .Tree:
+        let deviceEvent = DeviceEvent(UUID: changeObject.UUID, payload: changeObject)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_ADMINTREE_RECEIVED), object: deviceEvent)
+      case .CRC32:
+        let crc32Value = changeObject.value as! UInt32
+        if crc32Value == self.calculatedCRC32
+        {
+          let deviceEvent = DeviceEvent(UUID: changeObject.UUID, payload: changeObject)
+          NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_DEVICE_HANDSHAKE_PASSED), object: deviceEvent)
+        }
+      case .Channel1Mapping:
+        break
+      case .Channel2Mapping:
+        break
+      default:
+        break
+    }
   }
   
   func getCalculatedCRC32() -> UInt32

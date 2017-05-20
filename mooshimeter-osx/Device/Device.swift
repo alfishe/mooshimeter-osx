@@ -14,6 +14,7 @@ class Device: NSObject
   internal var deviceContext: DeviceContext? = nil
   
   internal var deviceReady: Bool = false
+  internal var handshakePassed: Bool = false
 
   //MARK: -
   //MARK: Class methods
@@ -43,11 +44,19 @@ class Device: NSObject
     self.deviceContext = DeviceContext(device: self)
     self.deviceCommandStream = DeviceCommandStream(device: self, context: self.deviceContext!)
     
-    // Subscribe for notification when CRC32 calculated for AdminTree retrieved from the device
+    
+    // Subscribe for notification when ADMINTREE data retrieved from the device
     NotificationCenter.default.addObserver(
       self,
-      selector: #selector(self.crc32Calculated),
-      name: NSNotification.Name(rawValue: Constants.NOTIFICATION_ADMINTREE_CRC32_READY),
+      selector: #selector(self.adminTreeReceived(_:)),
+      name: NSNotification.Name(rawValue: Constants.NOTIFICATION_ADMINTREE_RECEIVED),
+      object: nil)
+    
+    // Subscribe for notification when handshake with device finished
+    NotificationCenter.default.addObserver(
+      self,
+      selector: #selector(self.handshakePassed(_:)),
+      name: NSNotification.Name(rawValue: Constants.NOTIFICATION_ADMINTREE_RECEIVED),
       object: nil)
   }
   
@@ -80,6 +89,9 @@ class Device: NSObject
     
     // Unsubscribe from any notifications
     NotificationCenter.default.removeObserver(self)
+    
+    // Reset session handshake passed flag
+    self.handshakePassed = false
   }
 
   func isConnected() -> Bool
@@ -96,9 +108,7 @@ class Device: NSObject
   
   func isHandshakePassed() -> Bool
   {
-    let result = self.deviceCommandStream!.isHandshakePassed()
-    
-    return result
+    return self.handshakePassed
   }
   
   func setCharacteristics(read: CBCharacteristic, write: CBCharacteristic)
@@ -116,22 +126,46 @@ class Device: NSObject
     }
   }
   
+  //MARK: -
+  //MARK: Event handlers
   @objc
-  fileprivate func crc32Calculated(_ notification: Notification)
+  fileprivate func adminTreeReceived(_ notification: Notification)
   {
-    let object = notification.object
+    let deviceEvent = getDeviceEvent(notification)
     
-    if object != nil && (object as? DeviceEvent) != nil
+    if deviceEvent != nil
     {
-      let deviceEvent = object as! DeviceEvent
-      let deviceUUID = deviceEvent.UUID
+      let eventData = deviceEvent!.payload as! DeviceStateChangeEvent
+      let adminTreeData = eventData.value as! Data
       
-      if self.UUID == deviceUUID
+      // Calculate crc32 value for compressed data block to complete session handshake with device
+      let crc32 = calculateCRC32(adminTreeData)
+      deviceContext?.setCalculatedCRC32(value: crc32)
+      
+      // Send calculated CRC32 to device
+      self.sendCRC32(crc: crc32)
+      
+      // Decompress tree data (zlib)
+      let decompressedTreeData = decompressAdminTreeData(adminTreeData)
+      if decompressedTreeData != nil
       {
-        let crc32 = deviceEvent.payload as! UInt32
-      
-        self.sendCRC32(crc: crc32)
+        // Decompressed data can be parsed to get initial value state
       }
+    }
+  }
+  
+  @objc
+  fileprivate func handshakePassed(_ notification: Notification)
+  {
+    let deviceEvent = getDeviceEvent(notification)
+    
+    if deviceEvent != nil
+    {
+      self.handshakePassed = true
+      
+      // DEBUG
+      testCommands()
+      // End DEBUG
     }
   }
   
@@ -144,6 +178,38 @@ class Device: NSObject
     {
       self.deviceCommandStream?.handleReadData(data!)
     }
+  }
+  
+  func getDeviceEvent(_ notification: Notification) -> DeviceEvent?
+  {
+    var result: DeviceEvent? = nil
+    let object = notification.object
+    
+    if object != nil && (object as? DeviceEvent) != nil
+    {
+      let deviceEvent = object as! DeviceEvent
+      let deviceUUID = deviceEvent.UUID
+      
+      if self.UUID == deviceUUID
+      {
+        result = deviceEvent
+      }
+    }
+    
+    return result
+  }
+  
+  func decompressAdminTreeData(_ compressedData: Data) -> Data?
+  {
+    let result = compressedData.unzip()
+    
+    return result
+  }
+  
+  func calculateCRC32(_ data: Data) -> UInt32
+  {
+    let result = data.getCrc32()
+    return result
   }
   
   func getNextSendPacketNum() -> UInt8
@@ -194,6 +260,9 @@ class Device: NSObject
   }
 
     
+
+  //MARK: -
+  //MARK: Test debug code
   @objc
   private func heartbeatTimerFire(timer: Timer)
   {
@@ -206,6 +275,7 @@ class Device: NSObject
     //self.getChannel2Mapping()
     self.getChannel2Value()
   }
+
   
   private func testCommands()
   {
@@ -224,19 +294,20 @@ class Device: NSObject
       self.setSamplingRate(SamplingRateType.Freq1000Hz)
       
       // Switching to continuous triggering mode activates streaming from the device side (multiple command+payload values transmitted as stream in several sequential packets)
-      //self.setSamplingTrigger(SamplingTriggerType.Continuous)
+      self.setSamplingTrigger(SamplingTriggerType.Continuous)
     }
     
     
     DispatchQueue.main.async
-      {
-        self.heartbeatTimer = Timer.scheduledTimer(
-          timeInterval: 1,
-          target: self,
-          selector: #selector(self.heartbeatTimerFire(timer:)),
-          userInfo: nil,
-          repeats: true)
+    {
+      self.heartbeatTimer = Timer.scheduledTimer(
+        timeInterval: 1,
+        target: self,
+        selector: #selector(self.heartbeatTimerFire(timer:)),
+        userInfo: nil,
+        repeats: true)
     }
+    
     // End of Debug test commands
   }
 }

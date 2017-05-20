@@ -22,6 +22,7 @@ enum CommandError: Error
 {
   case emptyCommand
   case invalidCommand
+  case missingPayload
   case incompletePayload
   case valueLengthTooBig
 }

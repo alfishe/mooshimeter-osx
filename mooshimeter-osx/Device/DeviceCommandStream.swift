@@ -31,20 +31,12 @@ class DeviceCommandStream
   internal var command: UInt8 = 0
   internal var expectingBytes: Int = 0
   
-  // Higher level session state properties
-  internal var handshakePassed: Bool = false
-  
   init(device: Device, context: DeviceContext)
   {
     self.device = device
     self.deviceContext = context
     
     self.resetSendPacketNum()
-  }
-  
-  func isHandshakePassed() -> Bool
-  {
-    return self.handshakePassed
   }
   
   //MARK: -
@@ -72,7 +64,6 @@ class DeviceCommandStream
   
   func prepareForDataReceive() -> Void
   {
-    resetReceiveBufferState()
   }
   
   //MARK: -
@@ -110,7 +101,7 @@ class DeviceCommandStream
     
     // Check 2: Packet number is in sequence (no packets missed)
     let packetNum: UInt8 = packet![0]
-    if packetNum != self.receivePacketNum &+ 1
+    if self.expectMoreData && packetNum != self.receivePacketNum &+ 1
     {
       throw CommandStreamPacketError.packetNumOutOfOrder
     }
@@ -254,6 +245,7 @@ class DeviceCommandStream
     
     var commandCheckEnabled = true
     var commandVerified = false
+    var missingPayload = false
     var incompletePayload = false
     var pendingDataBlockDownload = false
 
@@ -276,9 +268,16 @@ class DeviceCommandStream
       {
         commandVerified = try verifyCommand(commandData)
       }
+      catch CommandError.missingPayload
+      {
+        commandVerified = false
+        missingPayload = true
+        incompletePayload = false
+      }
       catch CommandError.incompletePayload
       {
-        commandVerified = true
+        commandVerified = false
+        missingPayload = false
         incompletePayload = true
       }
       catch is Error
@@ -286,11 +285,25 @@ class DeviceCommandStream
         // Do nothing for now
       }
     }
+    
+
+    if missingPayload == true
+    {
+      // Payload data needs to be received with next packet
+      self.expectFirstPacket = false
+      self.expectMoreData = true
+      self.receiveBuffer.removeAll()
       
-    if commandVerified == true
+      if commandData.count > 0
+      {
+        self.receiveBuffer.append(commandData)
+      }
+    }
+    else if commandVerified == true
     {
       let commandTypeByte: UInt8 = commandData[0]
       let commandType = DeviceCommandType(rawValue: commandTypeByte)!
+      
       let payloadData = commandData.subdata(in: 1...commandData.count - 1)
       let payloadSize = payloadData.count
       let resultType = DeviceCommand.getResultTypeByCommand(command: commandTypeByte)
@@ -321,7 +334,7 @@ class DeviceCommandStream
 
             if resultType == .val_BIN
             {
-              value = [UInt8](valueData) as AnyObject?
+              value = valueData as AnyObject?
             }
 
             if resultType == .val_STR
@@ -365,17 +378,25 @@ class DeviceCommandStream
       if receivedLen >= self.expectingBytes
       {
         // All expected data received
-        let commandType = DeviceCommandType(rawValue: self.command)!
-        let resultType = DeviceCommand.getResultTypeByCommand(command: self.command)
-        let value = self.receiveBuffer.subdata(in: 0...expectingBytes - 1)
+        let commandType: DeviceCommandType = DeviceCommandType(rawValue: self.command)!
+        let resultType: ResultType = DeviceCommand.getResultTypeByCommand(command: self.command)
+        let value: Data = self.receiveBuffer.subdata(in: 0...expectingBytes - 1)
         
         // Store received and decoded value in a context (all subscribers will be notified automatically)
         let tupleValue = (type: resultType, value: value)
         self.deviceContext?.setValue(commandType, value: tupleValue as AnyObject?)
+        
+        // DEBUG
+        print("\(receivedLen) / \(self.expectingBytes)")
+        
+        resetReceiveBufferState()
       }
       else
       {
         // More data needed
+        
+        // DEBUG
+        print("\(receivedLen) / \(self.expectingBytes)")
       }
     }
     else if incompletePayload
@@ -389,22 +410,6 @@ class DeviceCommandStream
       {
         self.receiveBuffer.append(commandData)
       }
-    }
-    
-    return result
-  }
-  
-  func decompressTreeData(treeData: [UInt8]) -> [UInt8]?
-  {
-    var result: [UInt8]? = nil
-    
-    let compressedData: Data = Data(treeData)
-    
-    let decompressedData = compressedData.unzip()
-    
-    if decompressedData != nil
-    {
-      result = [UInt8](decompressedData!)
     }
     
     return result
