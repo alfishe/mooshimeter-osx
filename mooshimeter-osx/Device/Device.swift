@@ -140,7 +140,10 @@ class Device: NSObject
   
   func handleReadData(_ data: Data?)
   {
-    self.deviceCommandStream?.handleReadData(data)
+    if data != nil
+    {
+      self.deviceCommandStream?.handleReadData(data!)
+    }
   }
   
   func getNextSendPacketNum() -> UInt8

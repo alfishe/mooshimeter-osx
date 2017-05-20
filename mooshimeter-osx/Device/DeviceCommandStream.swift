@@ -83,15 +83,19 @@ class DeviceCommandStream
   
   //MARK: -
   //MARK: Data receive processor
-  func handleReadData(_ data: Data?)
+  func handleReadData(_ data: Data)
   {
+    // Debug
+    // let hex = data.hexBytesEncodedString()
+    // print(hex)
+    
     // Just skip all exception handlers for initial version
     let packetVerified: Bool? = try? verifyPacket(data)
     
     if packetVerified != nil
     {
-      let packetNum = data![0]
-      let packetData = data!.subdata(in: 1...data!.count - 1)
+      let packetNum = data[0]
+      let packetData = data.subdata(in: 1...data.count - 1)
       parsePacket(packetData)
       
       self.receivePacketNum = packetNum

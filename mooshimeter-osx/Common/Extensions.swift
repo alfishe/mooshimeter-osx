@@ -83,13 +83,24 @@ extension Data
     return result
   }
   
-  // Dumps data content bytes as two-digit hex to String
+  // Dumps data content bytes to hex String
   func hexEncodedString() -> String
   {
     let result = map
     {
       String(format: "%02hhx", $0)
     }.joined()
+    
+    return result
+  }
+  
+  // Dumps data content bytes as groups of two hex symbols to String
+  func hexBytesEncodedString() -> String
+  {
+    let result = map
+      {
+        String(format: "%02hhx ", $0)
+      }.joined()
     
     return result
   }
