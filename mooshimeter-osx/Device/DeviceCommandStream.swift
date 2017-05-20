@@ -24,7 +24,6 @@ class DeviceCommandStream
   
   // Receive buffers and helpers
   internal var receiveBuffer: Data = Data()
-  internal var currentFrame: [UInt8] = [UInt8](repeating: UInt8(), count: Constants.DEVICE_PACKET_SIZE)
   internal var expectFirstPacket: Bool = true
   internal var expectMoreData: Bool = false
 
@@ -73,12 +72,7 @@ class DeviceCommandStream
   
   func prepareForDataReceive() -> Void
   {
-    self.currentFrame.removeAll(keepingCapacity: true)
-    self.receiveBuffer.removeAll(keepingCapacity: true)
-    
-    self.expectFirstPacket = true
-    self.expectMoreData = false
-    self.expectingBytes = 0
+    resetReceiveBufferState()
   }
   
   //MARK: -
@@ -214,6 +208,7 @@ class DeviceCommandStream
     if self.expectFirstPacket
     {
       // New packet should start from command. It's not a tail of previously started data stream
+      self.resetReceiveBufferState()
       dataBlock = packetData
     }
     else
@@ -227,8 +222,6 @@ class DeviceCommandStream
     
     repeat
     {
-      self.resetReceiveBufferState()
-      
       do
       {
         moreDataAvailable = try parseCommand(&dataBlock)
@@ -250,9 +243,42 @@ class DeviceCommandStream
     var result = false
     var value: AnyObject? = nil
     
-    let commandVerified = try? verifyCommand(commandData)
+    var commandCheckEnabled = true
+    var commandVerified = false
+    var incompletePayload = false
+    var pendingDataBlockDownload = false
 
-    if commandVerified != nil
+    // If we're expeting large BIN or STR data - disable command check (packet and the whole receive buffer contains no command, just accumulated data)
+    if self.command != 0xFF && self.expectingBytes > 0
+    {
+      let resultType = DeviceCommand.getResultTypeByCommand(command: self.command)
+      if resultType == .val_BIN || resultType == .val_STR
+      {
+        commandCheckEnabled = false
+        pendingDataBlockDownload = true
+      }
+    }
+
+    // Verify command validity
+    // For BIN and STR types we need to pass with incompletePayload error
+    if commandCheckEnabled
+    {
+      do
+      {
+        commandVerified = try verifyCommand(commandData)
+      }
+      catch CommandError.incompletePayload
+      {
+        commandVerified = true
+        incompletePayload = true
+      }
+      catch is Error
+      {
+        // Do nothing for now
+      }
+    }
+      
+    if commandVerified == true
     {
       let commandTypeByte: UInt8 = commandData[0]
       let commandType = DeviceCommandType(rawValue: commandTypeByte)!
@@ -267,13 +293,13 @@ class DeviceCommandStream
         case .val_BIN:
           fallthrough
         case .val_STR:
-          self.command = commandTypeByte
-        
           let valueLength = Int(payloadData.to(type: UInt16.self))
           if valueLength > payloadData.count - 2  // 2 bytes block length value
           {
             // Binary or string data block does not fit into current packet. Expect more
             let valueChunk = payloadData.subdata(in: 2...payloadData.count - 1)
+            
+            self.command = commandTypeByte
             self.expectingBytes = valueLength
             self.receiveBuffer.append(valueChunk)
             self.expectMoreData = true
@@ -303,7 +329,7 @@ class DeviceCommandStream
           break
       }
 
-      // Store received and decoded value in a context
+      // Store received and decoded value in a context (all subscribers will be notified automatically)
       if value != nil
       {
         let tupleValue = (type: resultType, value: value!)
@@ -316,14 +342,39 @@ class DeviceCommandStream
         commandData = commandData.subdata(in: commandData.count - leftoverSize...commandData.count - 1)
         result = true
       }
-      else
+      else if !incompletePayload
       {
         // No more data to process - prepare for next packet
         self.resetReceiveBufferState()
       }
     }
-    else
+    else if pendingDataBlockDownload
     {
+      let receivedLen = self.receiveBuffer.count
+      let packetLen = commandData.count
+      
+      if receivedLen + packetLen >= self.expectingBytes
+      {
+        // All expected data received
+        self.receiveBuffer.append(commandData)
+        
+        let commandType = DeviceCommandType(rawValue: self.command)!
+        let resultType = DeviceCommand.getResultTypeByCommand(command: self.command)
+        let value = self.receiveBuffer.subdata(in: 0...expectingBytes - 1)
+        
+        // Store received and decoded value in a context (all subscribers will be notified automatically)
+        let tupleValue = (type: resultType, value: value)
+        self.deviceContext?.setValue(commandType, value: tupleValue as AnyObject?)
+      }
+      else
+      {
+        // More data needed
+        self.receiveBuffer.append(commandData)
+      }
+    }
+    else if incompletePayload
+    {
+      // More data need to be received
       self.expectFirstPacket = false
       self.expectMoreData = true
       self.receiveBuffer.removeAll()
@@ -337,162 +388,6 @@ class DeviceCommandStream
     return result
   }
   
-  func decodeData()
-  {
-    var decodingFinished = false
-    
-    if self.currentFrame.count > 0
-    {
-      if self.expectFirstPacket
-      {
-        self.command = self.currentFrame[1]
-        
-        if (self.command > DeviceCommandType.RealPwr.rawValue)
-        {
-          print("Unknown command code received: \(self.command)")
-          return
-        }
-        
-        let commandType = DeviceCommandType(rawValue: self.command)!
-        let resultType = DeviceCommand.getResultTypeByCommand(command: self.command)
-        
-        switch resultType
-        {
-          // Only binary data needs to be collected across multiple packets
-        // Other types fit into a single packet and can be decoded immediately
-        case .val_BIN:
-          self.expectingBytes = Int(self.currentFrame[3]) << 8 | Int(self.currentFrame[2])
-          
-          self.receiveBuffer.append(contentsOf: self.currentFrame.suffix(from: 4))
-          break
-        case .val_STR:
-          //TODO: Strings might be lengthy so potentially logic for BIN needs to be replicated here
-          fallthrough
-        case .chooser:
-          fallthrough
-        case .val_U8:
-          fallthrough
-        case .val_U16:
-          fallthrough
-        case .val_U32:
-          fallthrough
-        case .val_S8:
-          fallthrough
-        case .val_S16:
-          fallthrough
-        case .val_S32:
-          fallthrough
-        case .val_FLT:
-          let value = DeviceCommand.getPacketValue(data: Data(self.currentFrame))
-          
-          // Store received and decoded value in a context
-          self.deviceContext?.setValue(commandType, value: value as AnyObject?)
-          
-          // If ADMIN:CRC32 response received and value matches to previously calculated checksum from context => handshake passed successfully
-          if self.handshakePassed && commandType == .CRC32 && value?.type == ResultType.val_U32
-          {
-            let calculatedCRC = self.deviceContext?.getCalculatedCRC32()
-            if calculatedCRC == (value!.value as! UInt32)
-            {
-              self.handshakePassed = true
-              
-              // Notify subscribers that handshake passed for the device and normal workflow unblocked
-              NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_DEVICE_HANDSHAKE_PASSED), object: self)
-              
-              // Debug
-              print("Handshake passed successfully. Full workflow unblocked.")
-              // End Debug
-            }
-          }
-          
-          
-          // Debug
-          self.dumpCommandPacket(data: Data(self.currentFrame))
-          
-          if value != nil
-          {
-            print("Decoded: \(String(describing: value!.type)) = \(DeviceCommand.printValue(commandType: commandType, valueTuple: value))")
-          }
-          else
-          {
-            print("Unable to parse value during decode")
-          }
-          // End Debug
-          
-          decodingFinished = true
-        default:
-          print("decodeData - unhandled data format")
-          print(String(describing: resultType))
-          self.dumpCommandPacket(data: Data(self.currentFrame))
-          
-          decodingFinished = true
-        }
-        
-        self.expectFirstPacket = false
-      }
-      else
-      {
-        let resultType = DeviceCommand.getResultTypeByCommand(command: self.command)
-        
-        if resultType == .val_BIN
-        {
-          self.receiveBuffer.append(contentsOf: self.currentFrame.suffix(from: 1))
-        }
-      }
-      
-      // Logic for long BIN/STR data blocks only. All single-packet values for the rest of datatypes are handled in a switch case above
-      if decodingFinished == false
-      {
-        if self.receiveBuffer.count < expectingBytes
-        {
-          self.expectMoreData = true
-          
-          print("\(String(self.receiveBuffer.count)) / \(String(self.expectingBytes))")
-        }
-        else
-        {
-          print("Full binary data received. Length: \(String(expectingBytes))")
-          
-          let commandType = DeviceCommandType(rawValue: self.command)!
-          
-          switch commandType
-          {
-          case .Tree:
-            let compressedBuffer: [UInt8] = Array(self.receiveBuffer)
-            let compressedData: Data = Data(compressedBuffer)
-            
-            // Calculate CRC32 over received ADMIN:TREE data (as-is, in compressed form)
-            let crc: UInt32 = compressedData.getCrc32()
-            
-            // Store calculated CRC32 value in a context
-            self.deviceContext?.setCalculatedCRC32(value: crc)
-            
-            // Initiate sending calculated CRC32 value to Mooshimeter device in order to complete handshake procedure
-            let deviceEvent = DeviceEvent(UUID: self.device!.UUID, payload: crc as AnyObject?)
-            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_ADMINTREE_CRC32_READY), object: deviceEvent)
-            
-            // Decompress ADMIN:TREE data and store in a context
-            let decompressedTree = self.decompressTreeData(treeData: compressedBuffer)
-            if decompressedTree != nil
-            {
-              self.deviceContext?.adminTree = decompressedTree
-            }
-          case .Diagnostic:
-            print(self.receiveBuffer)
-          default:
-            break
-          }
-          
-          self.resetReceiveBufferState()
-        }
-      }
-      else
-      {
-        self.resetReceiveBufferState()
-      }
-    }
-  }
-  
   func decompressTreeData(treeData: [UInt8]) -> [UInt8]?
   {
     var result: [UInt8]? = nil
@@ -503,7 +398,7 @@ class DeviceCommandStream
     
     if decompressedData != nil
     {
-      result =  [UInt8](decompressedData!)
+      result = [UInt8](decompressedData!)
     }
     
     return result
@@ -513,7 +408,7 @@ class DeviceCommandStream
   //MARK: Helper methods
   func resetReceiveBufferState()
   {
-    self.currentFrame.removeAll(keepingCapacity: true)
+    self.command = 0xFF
     self.receiveBuffer.removeAll(keepingCapacity: true)
     
     self.expectFirstPacket = true

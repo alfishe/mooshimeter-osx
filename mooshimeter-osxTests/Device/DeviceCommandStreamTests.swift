@@ -45,7 +45,7 @@ class DeviceCommandStreamTests: XCTestCase
     let packets = getTestAdminTreePackets()
     
     // Set initial receive packet num
-    self.device!.deviceCommandStream?.receivePacketNum = 0x1f
+    self.device!.deviceCommandStream?.receivePacketNum = 0x29
     
     // Traverse all packets available
     for packet in packets
