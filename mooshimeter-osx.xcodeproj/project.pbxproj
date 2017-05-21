@@ -59,6 +59,11 @@
 		D7EA545B1ECE054100E2A253 /* DeviceCommandStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA545A1ECE054100E2A253 /* DeviceCommandStreamTests.swift */; };
 		D7EA545D1ECE2D7400E2A253 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA545C1ECE2D7400E2A253 /* Errors.swift */; };
 		D7EA545F1ED0DD9C00E2A253 /* DeviceWatchDog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA545E1ED0DD9C00E2A253 /* DeviceWatchDog.swift */; };
+		D7EA546C1ED218B300E2A253 /* MeasurementsContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA546B1ED218B300E2A253 /* MeasurementsContainer.swift */; };
+		D7EA546F1ED21BB500E2A253 /* Randoms.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA546E1ED21BB500E2A253 /* Randoms.swift */; };
+		D7EA54721ED21D8C00E2A253 /* RandomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA54711ED21D8C00E2A253 /* RandomTests.swift */; };
+		D7EA54741ED2406000E2A253 /* NSColor+HSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA54731ED2406000E2A253 /* NSColor+HSL.swift */; };
+		D7EA54761ED2407E00E2A253 /* NSColor+ColorCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA54751ED2407E00E2A253 /* NSColor+ColorCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +165,11 @@
 		D7EA545A1ECE054100E2A253 /* DeviceCommandStreamTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceCommandStreamTests.swift; path = Device/DeviceCommandStreamTests.swift; sourceTree = "<group>"; };
 		D7EA545C1ECE2D7400E2A253 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Errors.swift; path = Common/Errors.swift; sourceTree = "<group>"; };
 		D7EA545E1ED0DD9C00E2A253 /* DeviceWatchDog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceWatchDog.swift; sourceTree = "<group>"; };
+		D7EA546B1ED218B300E2A253 /* MeasurementsContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementsContainer.swift; sourceTree = "<group>"; };
+		D7EA546E1ED21BB500E2A253 /* Randoms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Randoms.swift; path = Common/Randoms.swift; sourceTree = "<group>"; };
+		D7EA54711ED21D8C00E2A253 /* RandomTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomTests.swift; sourceTree = "<group>"; };
+		D7EA54731ED2406000E2A253 /* NSColor+HSL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSColor+HSL.swift"; path = "Common/NSColor+HSL.swift"; sourceTree = "<group>"; };
+		D7EA54751ED2407E00E2A253 /* NSColor+ColorCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSColor+ColorCode.swift"; path = "Common/NSColor+ColorCode.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +228,7 @@
 			children = (
 				18415C00509A3EFAC52A9C39 /* MeterReading.swift */,
 				D7C2E81E1ED122A6006881C4 /* MeasurementManager.swift */,
+				D7EA546B1ED218B300E2A253 /* MeasurementsContainer.swift */,
 			);
 			path = Measurements;
 			sourceTree = "<group>";
@@ -245,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				18415A9C28B1CD4E2742CB04 /* UOMHelperTests.swift */,
+				D7EA54711ED21D8C00E2A253 /* RandomTests.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -423,15 +435,11 @@
 		D7B6846C1D721AB20096F296 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D7EA54701ED21BDF00E2A253 /* Helpers */,
+				D7EA546D1ED21B9700E2A253 /* Extensions */,
 				D7B6846D1D721AC70096F296 /* Constants.swift */,
 				D7EA545C1ECE2D7400E2A253 /* Errors.swift */,
-				184150258C12D04E34C1230E /* Extensions.swift */,
 				184153FE97E9B80263791AA4 /* Enumerations.swift */,
-				D7B684731D7269F40096F296 /* TemperatureHelper.swift */,
-				18415E971ED3D56D67C58AF9 /* DisplayFormatHelper.swift */,
-				184154E3BF1F96E0AF50E1EC /* UOMHelper.swift */,
-				184159A377214E7ABA7DCE71 /* FloatHelper.swift */,
-				184153A80C70D13DA19B6CF7 /* ThreadHelper.swift */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -477,6 +485,29 @@
 				D7DF26AA1ECC0AA000401042 /* StatisticsManager.swift */,
 			);
 			name = Stats;
+			sourceTree = "<group>";
+		};
+		D7EA546D1ED21B9700E2A253 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				184150258C12D04E34C1230E /* Extensions.swift */,
+				D7EA546E1ED21BB500E2A253 /* Randoms.swift */,
+				D7EA54731ED2406000E2A253 /* NSColor+HSL.swift */,
+				D7EA54751ED2407E00E2A253 /* NSColor+ColorCode.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		D7EA54701ED21BDF00E2A253 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D7B684731D7269F40096F296 /* TemperatureHelper.swift */,
+				18415E971ED3D56D67C58AF9 /* DisplayFormatHelper.swift */,
+				184154E3BF1F96E0AF50E1EC /* UOMHelper.swift */,
+				184159A377214E7ABA7DCE71 /* FloatHelper.swift */,
+				184153A80C70D13DA19B6CF7 /* ThreadHelper.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -666,14 +697,17 @@
 				D7B6846E1D721AC70096F296 /* Constants.swift in Sources */,
 				18415C347FBA20D79C9D8504 /* Extensions.swift in Sources */,
 				D7E8D9FF1E6BD34200C78454 /* DeviceEnumerations.swift in Sources */,
+				D7EA54741ED2406000E2A253 /* NSColor+HSL.swift in Sources */,
 				18415505F6D205704D1F5FDF /* DeviceManager.swift in Sources */,
 				18415B7D2BC34657152F9499 /* Device.swift in Sources */,
 				D7A310311E88417800B46F19 /* DeviceCommandStatusView.swift in Sources */,
 				D7A3102F1E88408300B46F19 /* DeviceDebugViewController.swift in Sources */,
 				D7B684781D73A6FD0096F296 /* Async.swift in Sources */,
+				D7EA546F1ED21BB500E2A253 /* Randoms.swift in Sources */,
 				D7B684741D7269F40096F296 /* TemperatureHelper.swift in Sources */,
 				184150444E0895218166D5F1 /* deflate.swift in Sources */,
 				D7C2E80D1ED0F64E006881C4 /* OptionsMenuView.swift in Sources */,
+				D7EA546C1ED218B300E2A253 /* MeasurementsContainer.swift in Sources */,
 				D7C2E81D1ED10628006881C4 /* GraphView.swift in Sources */,
 				D7EA545D1ECE2D7400E2A253 /* Errors.swift in Sources */,
 				D7A8E8591D936DB000606FAE /* ConfigTree.swift in Sources */,
@@ -684,6 +718,7 @@
 				184152FDB6605FFCD2FCA6B7 /* crc32.swift in Sources */,
 				D7A310281E881EF400B46F19 /* DeviceContext.swift in Sources */,
 				D7DF26AD1ECD279100401042 /* DeviceCommandStreamDebug.swift in Sources */,
+				D7EA54761ED2407E00E2A253 /* NSColor+ColorCode.swift in Sources */,
 				18415B3041238E813FA10BFB /* MeterReading.swift in Sources */,
 				184157478653F7A07C53A448 /* DisplayFormatHelper.swift in Sources */,
 				184151328AE83E9E3640FF80 /* UOMHelper.swift in Sources */,
@@ -702,6 +737,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7EA54721ED21D8C00E2A253 /* RandomTests.swift in Sources */,
 				D7B684751D72A0910096F296 /* UOMHelperTests.swift in Sources */,
 				D7B684511D72105C0096F296 /* mooshimeter_osxTests.swift in Sources */,
 				18415A90E3C69944DB3539F2 /* DeviceManagerTests.swift in Sources */,

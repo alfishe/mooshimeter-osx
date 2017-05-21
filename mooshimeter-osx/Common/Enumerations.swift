@@ -44,3 +44,11 @@ enum DeviceState
   case SingleDeviceConnected
   case MultipleDevicesConnected
 }
+
+enum MeasurementType
+{
+  case current
+  case voltage
+  case resistance
+  case temperature
+}
