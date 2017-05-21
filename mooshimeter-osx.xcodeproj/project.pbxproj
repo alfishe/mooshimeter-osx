@@ -58,6 +58,7 @@
 		D7E8D9FF1E6BD34200C78454 /* DeviceEnumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */; };
 		D7EA545B1ECE054100E2A253 /* DeviceCommandStreamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA545A1ECE054100E2A253 /* DeviceCommandStreamTests.swift */; };
 		D7EA545D1ECE2D7400E2A253 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA545C1ECE2D7400E2A253 /* Errors.swift */; };
+		D7EA545F1ED0DD9C00E2A253 /* DeviceWatchDog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7EA545E1ED0DD9C00E2A253 /* DeviceWatchDog.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +159,7 @@
 		D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceEnumerations.swift; sourceTree = "<group>"; };
 		D7EA545A1ECE054100E2A253 /* DeviceCommandStreamTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceCommandStreamTests.swift; path = Device/DeviceCommandStreamTests.swift; sourceTree = "<group>"; };
 		D7EA545C1ECE2D7400E2A253 /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Errors.swift; path = Common/Errors.swift; sourceTree = "<group>"; };
+		D7EA545E1ED0DD9C00E2A253 /* DeviceWatchDog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceWatchDog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +208,7 @@
 				D7A8E8581D936DB000606FAE /* ConfigTree.swift */,
 				D7E8D9FE1E6BD34200C78454 /* DeviceEnumerations.swift */,
 				D7A310271E881EF400B46F19 /* DeviceContext.swift */,
+				D7EA545E1ED0DD9C00E2A253 /* DeviceWatchDog.swift */,
 			);
 			path = Device;
 			sourceTree = "<group>";
@@ -686,6 +689,7 @@
 				184151328AE83E9E3640FF80 /* UOMHelper.swift in Sources */,
 				D7DAC5111E8881D000703DDC /* ViewController.swift in Sources */,
 				18415555F0E172E7CC4561B4 /* FloatHelper.swift in Sources */,
+				D7EA545F1ED0DD9C00E2A253 /* DeviceWatchDog.swift in Sources */,
 				D7A3103D1E885E5B00B46F19 /* DeviceSelectionViewController.swift in Sources */,
 				D7DF26AB1ECC0AA000401042 /* StatisticsManager.swift in Sources */,
 				18415BAF73733CBD25D9674E /* DeviceProtocol.swift in Sources */,

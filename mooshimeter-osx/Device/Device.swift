@@ -13,6 +13,7 @@ class Device: NSObject
   internal var deviceCommandStream: DeviceCommandStream? = nil
   internal var deviceContext: DeviceContext? = nil
   internal var measurementManager: MeasurementManager? = nil
+  internal var deviceWatchDog: DeviceWatchDog? = nil
   
   internal var deviceReady: Bool = false
   internal var handshakePassed: Bool = false
@@ -45,6 +46,7 @@ class Device: NSObject
     self.deviceContext = DeviceContext(device: self)
     self.deviceCommandStream = DeviceCommandStream(device: self, context: self.deviceContext!)
     self.measurementManager = MeasurementManager(device: self)
+    self.deviceWatchDog = DeviceWatchDog()
     
     
     // Subscribe for notification when ADMINTREE data retrieved from the device
@@ -320,7 +322,8 @@ class Device: NSObject
       self.setSamplingTrigger(SamplingTriggerType.Continuous)
     }
     
-    
+    return
+  
     DispatchQueue.main.async
     {
       self.heartbeatTimer = Timer.scheduledTimer(

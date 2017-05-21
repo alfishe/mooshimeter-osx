@@ -36,3 +36,11 @@ enum UnitsOfMeasure
   case decibels
   case hertz
 }
+
+enum DeviceState
+{
+  case Idle
+  case Scanning
+  case SingleDeviceConnected
+  case MultipleDevicesConnected
+}
