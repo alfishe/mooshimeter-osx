@@ -229,6 +229,17 @@ extension Device
     self.writeValueAsync(bytes: dataBytes)
   }
   
+  func getChannel1Buffer()
+  {
+    print("Getting Channel1 Buffer...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Channel1Buf))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+  
   //MARK: -
   //MARK: Channel2 methods
   func getChannel2Mapping()
@@ -261,6 +272,17 @@ extension Device
     var dataBytes: [UInt8] = [UInt8]()
     dataBytes.append(self.getNextSendPacketNum())
     dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Channel2Value))
+    
+    self.writeValueAsync(bytes: dataBytes)
+  }
+  
+  func getChannel2Buffer()
+  {
+    print("Getting Channel2 Buffer...")
+    
+    var dataBytes: [UInt8] = [UInt8]()
+    dataBytes.append(self.getNextSendPacketNum())
+    dataBytes.append(DeviceCommand.getReadCommandCode(type: DeviceCommandType.Channel2Buf))
     
     self.writeValueAsync(bytes: dataBytes)
   }

@@ -47,6 +47,10 @@
 		D7B684741D7269F40096F296 /* TemperatureHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684731D7269F40096F296 /* TemperatureHelper.swift */; };
 		D7B684751D72A0910096F296 /* UOMHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415A9C28B1CD4E2742CB04 /* UOMHelperTests.swift */; };
 		D7B684781D73A6FD0096F296 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684771D73A6FD0096F296 /* Async.swift */; };
+		D7C2E80D1ED0F64E006881C4 /* OptionsMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C2E80C1ED0F64E006881C4 /* OptionsMenuView.swift */; };
+		D7C2E80F1ED0F677006881C4 /* OptionsMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7C2E80E1ED0F677006881C4 /* OptionsMenuView.xib */; };
+		D7C2E81D1ED10628006881C4 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C2E81C1ED10628006881C4 /* GraphView.swift */; };
+		D7C2E81F1ED122A6006881C4 /* MeasurementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C2E81E1ED122A6006881C4 /* MeasurementManager.swift */; };
 		D7DAC5111E8881D000703DDC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAC5101E8881D000703DDC /* ViewController.swift */; };
 		D7DF26AB1ECC0AA000401042 /* StatisticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF26AA1ECC0AA000401042 /* StatisticsManager.swift */; };
 		D7DF26AD1ECD279100401042 /* DeviceCommandStreamDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF26AC1ECD279100401042 /* DeviceCommandStreamDebug.swift */; };
@@ -143,6 +147,10 @@
 		D7B684701D7263810096F296 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D7B684731D7269F40096F296 /* TemperatureHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TemperatureHelper.swift; path = Common/TemperatureHelper.swift; sourceTree = "<group>"; };
 		D7B684771D73A6FD0096F296 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Async.swift; path = 3rdParty/Async/Async.swift; sourceTree = "<group>"; };
+		D7C2E80C1ED0F64E006881C4 /* OptionsMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OptionsMenuView.swift; path = UI/Views/OptionsMenuView.swift; sourceTree = "<group>"; };
+		D7C2E80E1ED0F677006881C4 /* OptionsMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OptionsMenuView.xib; path = Resources/OptionsMenuView.xib; sourceTree = "<group>"; };
+		D7C2E81C1ED10628006881C4 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphView.swift; path = UI/Views/GraphView.swift; sourceTree = "<group>"; };
+		D7C2E81E1ED122A6006881C4 /* MeasurementManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementManager.swift; sourceTree = "<group>"; };
 		D7DAC5101E8881D000703DDC /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = UI/ViewControllers/ViewController.swift; sourceTree = "<group>"; };
 		D7DF26AA1ECC0AA000401042 /* StatisticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatisticsManager.swift; path = Stats/StatisticsManager.swift; sourceTree = "<group>"; };
 		D7DF26AC1ECD279100401042 /* DeviceCommandStreamDebug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCommandStreamDebug.swift; sourceTree = "<group>"; };
@@ -206,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				18415C00509A3EFAC52A9C39 /* MeterReading.swift */,
+				D7C2E81E1ED122A6006881C4 /* MeasurementManager.swift */,
 			);
 			path = Measurements;
 			sourceTree = "<group>";
@@ -313,6 +322,8 @@
 			isa = PBXGroup;
 			children = (
 				D7A310301E88417800B46F19 /* DeviceCommandStatusView.swift */,
+				D7C2E80C1ED0F64E006881C4 /* OptionsMenuView.swift */,
+				D7C2E81C1ED10628006881C4 /* GraphView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -320,10 +331,10 @@
 		D7A310321E88432500B46F19 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D7C2E80B1ED0F606006881C4 /* Views */,
 				D7B684421D72105C0096F296 /* Assets.xcassets */,
 				D7B684441D72105C0096F296 /* Main.storyboard */,
 				D7A3103A1E8854B100B46F19 /* Debug.storyboard */,
-				D7A310331E88436200B46F19 /* DeviceCommandStatusView.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -446,6 +457,15 @@
 				D7B684771D73A6FD0096F296 /* Async.swift */,
 			);
 			name = Async;
+			sourceTree = "<group>";
+		};
+		D7C2E80B1ED0F606006881C4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D7A310331E88436200B46F19 /* DeviceCommandStatusView.xib */,
+				D7C2E80E1ED0F677006881C4 /* OptionsMenuView.xib */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		D7DF26A91ECC0A6C00401042 /* Stats */ = {
@@ -600,6 +620,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7C2E80F1ED0F677006881C4 /* OptionsMenuView.xib in Resources */,
 				D7B684431D72105C0096F296 /* Assets.xcassets in Resources */,
 				D7A3103B1E8854B100B46F19 /* Debug.storyboard in Resources */,
 				D7B684461D72105C0096F296 /* Main.storyboard in Resources */,
@@ -649,9 +670,12 @@
 				D7B684781D73A6FD0096F296 /* Async.swift in Sources */,
 				D7B684741D7269F40096F296 /* TemperatureHelper.swift in Sources */,
 				184150444E0895218166D5F1 /* deflate.swift in Sources */,
+				D7C2E80D1ED0F64E006881C4 /* OptionsMenuView.swift in Sources */,
+				D7C2E81D1ED10628006881C4 /* GraphView.swift in Sources */,
 				D7EA545D1ECE2D7400E2A253 /* Errors.swift in Sources */,
 				D7A8E8591D936DB000606FAE /* ConfigTree.swift in Sources */,
 				1841584B0524455A315CA657 /* Enumerations.swift in Sources */,
+				D7C2E81F1ED122A6006881C4 /* MeasurementManager.swift in Sources */,
 				D7DF26AF1ECD30BF00401042 /* DeviceCommandStream.swift in Sources */,
 				D7A8E8571D93565A00606FAE /* DeviceCommand.swift in Sources */,
 				184152FDB6605FFCD2FCA6B7 /* crc32.swift in Sources */,

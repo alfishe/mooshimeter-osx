@@ -12,6 +12,7 @@ class Device: NSObject
 
   internal var deviceCommandStream: DeviceCommandStream? = nil
   internal var deviceContext: DeviceContext? = nil
+  internal var measurementManager: MeasurementManager? = nil
   
   internal var deviceReady: Bool = false
   internal var handshakePassed: Bool = false
@@ -43,6 +44,7 @@ class Device: NSObject
     
     self.deviceContext = DeviceContext(device: self)
     self.deviceCommandStream = DeviceCommandStream(device: self, context: self.deviceContext!)
+    self.measurementManager = MeasurementManager(device: self)
     
     
     // Subscribe for notification when ADMINTREE data retrieved from the device
@@ -199,6 +201,25 @@ class Device: NSObject
     return result
   }
   
+  class func getDeviceEvent(_ notification: Notification, UUID: String) -> DeviceEvent?
+  {
+    var result: DeviceEvent? = nil
+    let object = notification.object
+    
+    if object != nil && (object as? DeviceEvent) != nil
+    {
+      let deviceEvent = object as! DeviceEvent
+      let deviceUUID = deviceEvent.UUID
+      
+      if UUID == deviceUUID
+      {
+        result = deviceEvent
+      }
+    }
+    
+    return result
+  }
+  
   func decompressAdminTreeData(_ compressedData: Data) -> Data?
   {
     let result = compressedData.unzip()
@@ -292,6 +313,8 @@ class Device: NSObject
       self.getTimeMs()
       
       self.setSamplingRate(SamplingRateType.Freq1000Hz)
+      
+      self.getChannel1Buffer()
       
       // Switching to continuous triggering mode activates streaming from the device side (multiple command+payload values transmitted as stream in several sequential packets)
       self.setSamplingTrigger(SamplingTriggerType.Continuous)

@@ -46,10 +46,13 @@ struct DeviceValueChange
 
 class DeviceContext
 {
-  weak private var device: Device?
+  weak var device: Device?
+  var commandStates: [DeviceCommandType: AnyObject?] = [:]
   
-  private var calculatedCRC32: UInt32 = 0
-  private var commandStates: [DeviceCommandType: AnyObject?] = [:]
+  // State variables
+  var calculatedCRC32: UInt32 = 0
+  var inStreamingMode: Bool = false
+  
   
   var adminTree:[UInt8]?
   
@@ -98,22 +101,41 @@ class DeviceContext
     let commandType = changeObject.commandType
     let valueType = changeObject.valueType
     let value = changeObject.value
+    let deviceEvent = DeviceEvent(UUID: changeObject.UUID, payload: changeObject)
     
     switch commandType
     {
       case .Tree:
-        let deviceEvent = DeviceEvent(UUID: changeObject.UUID, payload: changeObject)
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_ADMINTREE_RECEIVED), object: deviceEvent)
       case .CRC32:
         let crc32Value = changeObject.value as! UInt32
         if crc32Value == self.calculatedCRC32
         {
-          let deviceEvent = DeviceEvent(UUID: changeObject.UUID, payload: changeObject)
           NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_DEVICE_HANDSHAKE_PASSED), object: deviceEvent)
         }
+      case .SamplingTrigger:
+        let samplingTriggerModeByte = changeObject.value as! UInt8
+        let samplingTriggerMode = SamplingTriggerType(rawValue: samplingTriggerModeByte)
+      
+        if samplingTriggerMode == SamplingTriggerType.Continuous
+        {
+          self.inStreamingMode = true
+        }
+        else
+        {
+            self.inStreamingMode = false
+        }
+      case .Channel1Value:
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_CHANNEL1_VALUE_CHANGED), object: deviceEvent)
+      case .Channel2Value:
+        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.NOTIFICATION_CHANNEL2_VALUE_CHANGED), object: deviceEvent)
       case .Channel1Mapping:
         break
       case .Channel2Mapping:
+        break
+      case .Channel1Buf:
+        break
+      case .Channel2Buf:
         break
       default:
         break

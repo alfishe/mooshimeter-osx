@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+
 class DeviceDebugWindow: NSWindowController
 {
 }

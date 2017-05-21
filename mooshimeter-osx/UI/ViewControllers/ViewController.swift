@@ -11,10 +11,13 @@ import Cocoa
 class ViewController: NSViewController
 {
   @IBOutlet weak var lblVCC: NSTextField!
+  @IBOutlet weak var viewGraph: GraphView!
 
   override func viewDidLoad()
   {
     super.viewDidLoad()
+    
+    initSubviews()
 
     NotificationCenter.default.addObserver(self, selector: #selector(self.deviceStateValueChanged), name: NSNotification.Name(rawValue: Constants.NOTIFICATION_DEVICE_STATE_VALUE_CHANGED), object: nil)
   }
@@ -26,7 +29,14 @@ class ViewController: NSViewController
     // Update the view, if already loaded.
     }
   }
+  
+  func initSubviews()
+  {
+    //self.viewGraph.initialize()
+  }
 
+  //MARK: -
+  //MARK: Event handlers
   @objc
   func deviceStateValueChanged(_ notification: Notification)
   {
