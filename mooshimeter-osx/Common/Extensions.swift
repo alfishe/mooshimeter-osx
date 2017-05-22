@@ -9,6 +9,7 @@
 import Foundation
 import Cocoa
 import CoreBluetooth
+import QuartzCore
 
 extension CBUUID
 {
@@ -289,5 +290,16 @@ extension NSView
   {
     wantsLayer = true
     layer?.backgroundColor = color.cgColor
+  }
+}
+
+extension CALayer
+{
+  class func performWithoutAnimation(_ actionsWithoutAnimation: () -> Void)
+  {
+    CATransaction.begin()
+    CATransaction.setValue(true, forKey: kCATransactionDisableActions)
+    actionsWithoutAnimation()
+    CATransaction.commit()
   }
 }
