@@ -9,6 +9,7 @@ class UOMHelper : NSObject
 {
   static var prefixMultipliers = [MetricPrefix: Double]()
   static var prefixPrecision = [MetricPrefix: Int]()
+  static var prefixScale = [MetricPrefix: Int]()
   static var prefixShortName = [MetricPrefix: String]()
 
   fileprivate static var initialized = false
@@ -39,6 +40,16 @@ class UOMHelper : NSObject
     prefixPrecision[.mega] = 6
     prefixPrecision[.giga] = 6
 
+    // Number of digits after the decimal point to display
+    prefixScale[.pico] = 0
+    prefixScale[.nano] = 0
+    prefixScale[.micro] = 3
+    prefixScale[.milli] = 5
+    prefixScale[.noPrefix] = 5
+    prefixScale[.kilo] = 3
+    prefixScale[.mega] = 3
+    prefixScale[.giga] = 0
+    
     // Prefixes to be used on value display
     // Can be read from localization file
     prefixShortName[.pico] = "p"
@@ -79,6 +90,19 @@ class UOMHelper : NSObject
       result = value!
     }
 
+    return result
+  }
+  
+  class func getPrefixScale(_ prefix: MetricPrefix) -> Int
+  {
+    var result: Int = 5
+    
+    let value: Int? = prefixScale[prefix]
+    if value != nil
+    {
+      result = value!
+    }
+    
     return result
   }
 }

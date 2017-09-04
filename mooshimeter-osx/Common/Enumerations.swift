@@ -28,13 +28,47 @@ enum UnitsOfMeasure
   case none
   case degreesC
   case degreesK
-  case degreeesF
+  case degreesF
   case volts
   case ampers
   case ohms
   case watts
   case decibels
   case hertz
+  
+  var description : String
+  {
+    get
+    {
+      var result = ""
+      
+      switch self
+      {
+        case .degreesC:
+          result = "C"
+        case .degreesK:
+          result = "K"
+        case .degreesF:
+          result = "F"
+        case .volts:
+          result = "V"
+        case .ampers:
+          result = "A"
+        case .ohms:
+          result = "Ohms"
+        case .watts:
+          result = "W"
+        case .decibels:
+          result = "dB"
+        case .hertz:
+          result = "Hz"
+        default:
+          break
+      }
+      
+      return result
+    }
+  }
 }
 
 enum DeviceState

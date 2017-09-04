@@ -20,6 +20,8 @@
 		18415BAF73733CBD25D9674E /* DeviceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415588608CA78E46BFA694 /* DeviceProtocol.swift */; };
 		18415C272C09D5FC0E13ACBF /* ThreadHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184153A80C70D13DA19B6CF7 /* ThreadHelper.swift */; };
 		18415C347FBA20D79C9D8504 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184150258C12D04E34C1230E /* Extensions.swift */; };
+		D72D84981ED65B610054459F /* LargeIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72D84971ED65B610054459F /* LargeIndicatorView.swift */; };
+		D72D849A1ED65CD40054459F /* LargeIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D72D84991ED65CD40054459F /* LargeIndicatorView.xib */; };
 		D771A2731E691B3F00DF0CC7 /* SwiftDataCompression.swift in Sources */ = {isa = PBXBuildFile; fileRef = D771A2721E691B3F00DF0CC7 /* SwiftDataCompression.swift */; };
 		D7988F9D1E062FDA002F7D38 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7988F9C1E062FDA002F7D38 /* NotificationCenter.framework */; };
 		D7988FA21E062FDA002F7D38 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7988FA11E062FDA002F7D38 /* TodayViewController.swift */; };
@@ -119,6 +121,8 @@
 		18415C00509A3EFAC52A9C39 /* MeterReading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeterReading.swift; sourceTree = "<group>"; };
 		18415C878C0E2852DD6486D5 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		18415E971ED3D56D67C58AF9 /* DisplayFormatHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DisplayFormatHelper.swift; path = Common/DisplayFormatHelper.swift; sourceTree = "<group>"; };
+		D72D84971ED65B610054459F /* LargeIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LargeIndicatorView.swift; path = UI/Views/LargeIndicatorView.swift; sourceTree = "<group>"; };
+		D72D84991ED65CD40054459F /* LargeIndicatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LargeIndicatorView.xib; path = Resources/LargeIndicatorView.xib; sourceTree = "<group>"; };
 		D771A2721E691B3F00DF0CC7 /* SwiftDataCompression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftDataCompression.swift; path = 3rdParty/SwiftDataCompression/SwiftDataCompression.swift; sourceTree = "<group>"; };
 		D7988F9A1E062FDA002F7D38 /* today-extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "today-extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7988F9C1E062FDA002F7D38 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
@@ -339,6 +343,7 @@
 				D7A310301E88417800B46F19 /* DeviceCommandStatusView.swift */,
 				D7C2E80C1ED0F64E006881C4 /* OptionsMenuView.swift */,
 				D7C2E81C1ED10628006881C4 /* GraphView.swift */,
+				D72D84971ED65B610054459F /* LargeIndicatorView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -475,6 +480,7 @@
 			children = (
 				D7A310331E88436200B46F19 /* DeviceCommandStatusView.xib */,
 				D7C2E80E1ED0F677006881C4 /* OptionsMenuView.xib */,
+				D72D84991ED65CD40054459F /* LargeIndicatorView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -658,6 +664,7 @@
 				D7B684431D72105C0096F296 /* Assets.xcassets in Resources */,
 				D7A3103B1E8854B100B46F19 /* Debug.storyboard in Resources */,
 				D7B684461D72105C0096F296 /* Main.storyboard in Resources */,
+				D72D849A1ED65CD40054459F /* LargeIndicatorView.xib in Resources */,
 				D7A310341E88436200B46F19 /* DeviceCommandStatusView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -706,6 +713,7 @@
 				D7EA546F1ED21BB500E2A253 /* Randoms.swift in Sources */,
 				D7B684741D7269F40096F296 /* TemperatureHelper.swift in Sources */,
 				184150444E0895218166D5F1 /* deflate.swift in Sources */,
+				D72D84981ED65B610054459F /* LargeIndicatorView.swift in Sources */,
 				D7C2E80D1ED0F64E006881C4 /* OptionsMenuView.swift in Sources */,
 				D7EA546C1ED218B300E2A253 /* MeasurementsContainer.swift in Sources */,
 				D7C2E81D1ED10628006881C4 /* GraphView.swift in Sources */,

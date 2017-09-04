@@ -7,11 +7,28 @@ import Foundation
 
 class MeterReading
 {
-  fileprivate var value: Float
-  fileprivate var digits: UInt16
-  fileprivate var maxValue: Float
-  fileprivate var uom: UnitsOfMeasure
+  var value: Float
+  var digits: UInt16
+  var maxValue: Float
+  var prefix: MetricPrefix
+  var prefixMultiplier: Float
+  var prefixScale: Int
+  var uom: UnitsOfMeasure
+  var formattedValue: Float
 
+  init(value: Float, uom: UnitsOfMeasure)
+  {
+    self.value = value
+    self.digits = 100
+    self.maxValue = 0
+    self.uom = uom
+    self.prefix = .noPrefix
+    self.prefixMultiplier = Float(UOMHelper.prefixMultipliers[self.prefix]!)
+    self.prefixScale = UOMHelper.prefixScale[self.prefix]!
+    self.formattedValue = 0
+    
+    self.determineValueRange(value)
+  }
 
   init(value: Float, digits: UInt16, maxValue: Float, uom: UnitsOfMeasure)
   {
@@ -19,11 +36,26 @@ class MeterReading
     self.digits = digits
     self.maxValue = maxValue
     self.uom = uom
+    self.prefix = .noPrefix
+    self.prefixMultiplier = Float(UOMHelper.prefixMultipliers[self.prefix]!)
+    self.prefixScale = UOMHelper.prefixScale[self.prefix]!
+    self.formattedValue = 0
+    
+    self.determineValueRange(value)
   }
 
-  func toString()
+  func toString() -> String
   {
-
+    let result = String.init(format: "%f %@%@", self.formattedValue, UOMHelper.prefixShortName[self.prefix]!, self.uom.description)
+    
+    return result
+  }
+  
+  func toStringUOM() -> String
+  {
+    let result = self.uom.description
+    
+    return result
   }
 
   func isInRange() -> Bool
@@ -62,5 +94,27 @@ class MeterReading
 
   //MARK: -
   //MARK: Helper methods
-
+  func determineValueRange(_ value: Float)
+  {
+    let absValue = Double(abs(value))
+    let sign: Double = value > 0 ? 1 : -1
+    
+    for prefix in UOMHelper.prefixMultipliers
+    {
+      let multiplier = prefix.value
+      let prefixedValue = absValue / multiplier
+      
+      if prefixedValue > 0 && prefixedValue < 1000
+      {
+        let prefixScale = UOMHelper.prefixScale[self.prefix]!
+        let formattedValue = Float(sign * prefixedValue.round(to: prefixScale))
+        
+        self.formattedValue = formattedValue
+        self.prefix = prefix.key;
+        self.prefixMultiplier = Float(UOMHelper.prefixMultipliers[self.prefix]!)
+        self.prefixScale = prefixScale
+        break
+      }
+    }
+  }
 }

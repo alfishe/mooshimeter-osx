@@ -233,6 +233,13 @@ extension Float
 
     return result
   }
+  
+  func round(to places: Int) -> Float
+  {
+    let result = Float(Double(self).round(to: places))
+    
+    return result
+  }
 }
 
 extension Double
@@ -281,6 +288,12 @@ extension Double
     let result = Double.compareWithPrecision(self, arg2: arg2, precision: precision)
 
     return result
+  }
+  
+  func round(to places: Int) -> Double
+  {
+    let divisor = pow(10.0, Double(places))
+    return Darwin.round(self * divisor) / divisor
   }
 }
 
