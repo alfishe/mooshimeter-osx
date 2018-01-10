@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1510" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11762"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -692,7 +692,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="381" height="449"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vGb-X7-ged">
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vGb-X7-ged">
                                 <rect key="frame" x="91" y="412" width="199" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Connect Mooshimeter Device(s)" id="MAd-hU-ihy">
                                     <font key="font" metaFont="system"/>
@@ -703,7 +703,7 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="dA2-TH-VCb" userLabel="Meter 1 View">
                                 <rect key="frame" x="20" y="381" width="341" height="23"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vHh-cF-WOn" userLabel="Meter 1 Label">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vHh-cF-WOn" userLabel="Meter 1 Label">
                                         <rect key="frame" x="18" y="3" width="164" height="17"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="17" id="g9p-zo-d0u"/>
@@ -746,7 +746,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                     </button>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yk7-lV-b7t" userLabel="Meter 2 Label">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yk7-lV-b7t" userLabel="Meter 2 Label">
                                         <rect key="frame" x="18" y="3" width="164" height="17"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="17" id="qFa-p0-8jg"/>
@@ -779,7 +779,7 @@
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                     </button>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uLw-o8-Qjh" userLabel="Meter 3 Label">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uLw-o8-Qjh" userLabel="Meter 3 Label">
                                         <rect key="frame" x="18" y="3" width="164" height="17"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="17" id="QoM-QR-N5b"/>
@@ -826,50 +826,70 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="mooshimeter_osx" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                    <view key="view" id="m2S-Jp-Qdl" userLabel="Content View">
+                        <rect key="frame" x="0.0" y="0.0" width="706" height="393"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="znl-Rr-qEV">
-                                <rect key="frame" x="425" y="233" width="31" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="VCC" id="UXL-ef-mbj">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Jnr-An-16R" userLabel="Graph View" customClass="GraphView" customModule="mooshimeter_osx" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="60" width="480" height="164"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="164" id="S8P-0g-Mz2"/>
-                                </constraints>
-                            </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="FBR-f2-lbP" userLabel="Bottom Menu View">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="64"/>
+                                <rect key="frame" x="0.0" y="0.0" width="706" height="64"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="znl-Rr-qEV">
+                                        <rect key="frame" x="645" y="27" width="31" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="VCC" id="UXL-ef-mbj">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="1mf-B4-Sg5"/>
+                                    <constraint firstAttribute="trailing" secondItem="znl-Rr-qEV" secondAttribute="trailing" constant="32" id="2p5-cf-Nq7"/>
+                                    <constraint firstItem="znl-Rr-qEV" firstAttribute="top" secondItem="FBR-f2-lbP" secondAttribute="top" constant="20" id="dt2-mc-kQR"/>
+                                </constraints>
+                            </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="wzA-Fv-9XI" userLabel="Indicator Container View">
+                                <rect key="frame" x="0.0" y="149" width="706" height="244"/>
+                                <subviews>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="omb-1R-muj" userLabel="Left Indicator View" customClass="LargeIndicatorView" customModule="mooshimeter_osx" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="350" height="244"/>
+                                    </customView>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ea9-sG-QUg" userLabel="Right Indicator View" customClass="LargeIndicatorView" customModule="mooshimeter_osx" customModuleProvider="target">
+                                        <rect key="frame" x="356" y="0.0" width="350" height="244"/>
+                                    </customView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="omb-1R-muj" firstAttribute="height" secondItem="Ea9-sG-QUg" secondAttribute="height" id="37A-lh-kij"/>
+                                    <constraint firstItem="omb-1R-muj" firstAttribute="leading" secondItem="wzA-Fv-9XI" secondAttribute="leading" id="C32-Vo-Xfw"/>
+                                    <constraint firstItem="omb-1R-muj" firstAttribute="width" secondItem="Ea9-sG-QUg" secondAttribute="width" id="ORp-LH-aID"/>
+                                    <constraint firstAttribute="bottom" secondItem="omb-1R-muj" secondAttribute="bottom" id="RrC-hm-jbK"/>
+                                    <constraint firstItem="omb-1R-muj" firstAttribute="top" secondItem="wzA-Fv-9XI" secondAttribute="top" id="WLy-LR-O2S"/>
+                                    <constraint firstItem="Ea9-sG-QUg" firstAttribute="leading" secondItem="omb-1R-muj" secondAttribute="trailing" constant="6" id="cpX-YN-uCm"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ea9-sG-QUg" secondAttribute="trailing" id="mZI-Sf-wBH"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ea9-sG-QUg" secondAttribute="bottom" id="qmB-bp-m9l"/>
+                                    <constraint firstItem="Ea9-sG-QUg" firstAttribute="top" secondItem="wzA-Fv-9XI" secondAttribute="top" id="yZl-y8-M7t"/>
                                 </constraints>
                             </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Jnr-An-16R" secondAttribute="trailing" id="Bvh-h1-Jz2"/>
+                            <constraint firstItem="FBR-f2-lbP" firstAttribute="top" secondItem="wzA-Fv-9XI" secondAttribute="bottom" constant="85" id="BPu-wR-8I1"/>
+                            <constraint firstItem="wzA-Fv-9XI" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="CDp-74-PmL"/>
                             <constraint firstAttribute="bottom" secondItem="FBR-f2-lbP" secondAttribute="bottom" id="G2y-IG-GA5"/>
+                            <constraint firstAttribute="trailing" secondItem="wzA-Fv-9XI" secondAttribute="trailing" id="MhE-g8-fbx"/>
+                            <constraint firstItem="wzA-Fv-9XI" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="OU2-65-9iY"/>
                             <constraint firstAttribute="trailing" secondItem="FBR-f2-lbP" secondAttribute="trailing" id="R3E-Gn-euP"/>
-                            <constraint firstItem="Jnr-An-16R" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="VYf-L0-Xd2"/>
                             <constraint firstItem="FBR-f2-lbP" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="fzS-mR-WFk"/>
-                            <constraint firstItem="znl-Rr-qEV" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="gyJ-aw-Kvi"/>
-                            <constraint firstItem="Jnr-An-16R" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="46" id="w4A-iT-mu7"/>
-                            <constraint firstAttribute="trailing" secondItem="znl-Rr-qEV" secondAttribute="trailing" constant="26" id="wiu-5O-kte"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="lblVCC" destination="znl-Rr-qEV" id="XMm-gY-Ohz"/>
-                        <outlet property="viewGraph" destination="Jnr-An-16R" id="W1R-7y-HPh"/>
+                        <outlet property="viewLeftIndicator" destination="omb-1R-muj" id="raY-pa-0xt"/>
+                        <outlet property="viewRightIndicator" destination="Ea9-sG-QUg" id="dmZ-H9-zeD"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="665" y="68"/>
+            <point key="canvasLocation" x="778" y="129.5"/>
         </scene>
     </scenes>
 </document>

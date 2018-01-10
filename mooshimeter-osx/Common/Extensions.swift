@@ -9,6 +9,7 @@
 import Foundation
 import AppKit
 import CoreBluetooth
+import QuartzCore
 
 extension CBUUID
 {
@@ -232,6 +233,13 @@ extension Float
 
     return result
   }
+  
+  func round(to places: Int) -> Float
+  {
+    let result = Float(Double(self).round(to: places))
+    
+    return result
+  }
 }
 
 extension Double
@@ -281,6 +289,12 @@ extension Double
 
     return result
   }
+  
+  func round(to places: Int) -> Double
+  {
+    let divisor = pow(10.0, Double(places))
+    return Darwin.round(self * divisor) / divisor
+  }
 }
 
 extension NSView
@@ -289,5 +303,16 @@ extension NSView
   {
     wantsLayer = true
     layer?.backgroundColor = color.cgColor
+  }
+}
+
+extension CALayer
+{
+  class func performWithoutAnimation(_ actionsWithoutAnimation: () -> Void)
+  {
+    CATransaction.begin()
+    CATransaction.setValue(true, forKey: kCATransactionDisableActions)
+    actionsWithoutAnimation()
+    CATransaction.commit()
   }
 }

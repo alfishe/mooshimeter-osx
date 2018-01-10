@@ -220,7 +220,7 @@ extension Device
   
   func getChannel1Value()
   {
-    print("Getting Channel1 Value...")
+    //print("Getting Channel1 Value...")
     
     var dataBytes: [UInt8] = [UInt8]()
     dataBytes.append(self.getNextSendPacketNum())
@@ -267,7 +267,7 @@ extension Device
   
   func getChannel2Value()
   {
-    print("Getting Channel2 Value...")
+    //print("Getting Channel2 Value...")
     
     var dataBytes: [UInt8] = [UInt8]()
     dataBytes.append(self.getNextSendPacketNum())

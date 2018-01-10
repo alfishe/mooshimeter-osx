@@ -21,8 +21,6 @@ class GraphView: NSView
   var maxAmplitude = 0.001
   var sampleStep: Int = 5
   
-  
-		
   required init?(coder: NSCoder)
   {
     super.init(coder: coder)

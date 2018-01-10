@@ -318,7 +318,7 @@ class Device: NSObject
       self.getTime()
       self.getTimeMs()
       
-      self.setSamplingRate(SamplingRateType.Freq1000Hz)
+      self.setSamplingRate(SamplingRateType.Freq125Hz)
       
       self.getChannel1Buffer()
       
@@ -326,7 +326,7 @@ class Device: NSObject
       self.setSamplingTrigger(SamplingTriggerType.Continuous)
     }
     
-    return
+    //return
   
     DispatchQueue.main.async
     {
