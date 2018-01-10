@@ -23,8 +23,8 @@ class MeterReading
     self.maxValue = 0
     self.uom = uom
     self.prefix = .noPrefix
-    self.prefixMultiplier = Float(UOMHelper.prefixMultipliers[self.prefix]!)
-    self.prefixScale = UOMHelper.prefixScale[self.prefix]!
+    self.prefixMultiplier = Float(UOMHelper.sharedInstance.prefixMultipliers[self.prefix]!)
+    self.prefixScale = UOMHelper.sharedInstance.prefixScale[self.prefix]!
     self.formattedValue = 0
     
     self.determineValueRange(value)
@@ -37,8 +37,8 @@ class MeterReading
     self.maxValue = maxValue
     self.uom = uom
     self.prefix = .noPrefix
-    self.prefixMultiplier = Float(UOMHelper.prefixMultipliers[self.prefix]!)
-    self.prefixScale = UOMHelper.prefixScale[self.prefix]!
+    self.prefixMultiplier = Float(UOMHelper.sharedInstance.prefixMultipliers[self.prefix]!)
+    self.prefixScale = UOMHelper.sharedInstance.prefixScale[self.prefix]!
     self.formattedValue = 0
     
     self.determineValueRange(value)
@@ -46,7 +46,7 @@ class MeterReading
 
   func toString() -> String
   {
-    let result = String.init(format: "%f %@%@", self.formattedValue, UOMHelper.prefixShortName[self.prefix]!, self.uom.description)
+    let result = String.init(format: "%f %@%@", self.formattedValue, UOMHelper.sharedInstance.prefixShortName[self.prefix]!, self.uom.description)
     
     return result
   }
@@ -99,19 +99,19 @@ class MeterReading
     let absValue = Double(abs(value))
     let sign: Double = value > 0 ? 1 : -1
     
-    for prefix in UOMHelper.prefixMultipliers
+    for prefix in UOMHelper.sharedInstance.prefixMultipliers
     {
       let multiplier = prefix.value
       let prefixedValue = absValue / multiplier
       
       if prefixedValue > 0 && prefixedValue < 1000
       {
-        let prefixScale = UOMHelper.prefixScale[self.prefix]!
+        let prefixScale = UOMHelper.sharedInstance.prefixScale[self.prefix]!
         let formattedValue = Float(sign * prefixedValue.round(to: prefixScale))
         
         self.formattedValue = formattedValue
         self.prefix = prefix.key;
-        self.prefixMultiplier = Float(UOMHelper.prefixMultipliers[self.prefix]!)
+        self.prefixMultiplier = Float(UOMHelper.sharedInstance.prefixMultipliers[self.prefix]!)
         self.prefixScale = prefixScale
         break
       }

@@ -71,39 +71,51 @@ class DeviceCommandStatusView : NSView
   
   func setCommandName(name: String)
   {
-    self.lblCommandName.stringValue = name
+    DispatchQueue.main.async
+    {
+      self.lblCommandName.stringValue = name
+    }
   }
   
   func setValue(value: String)
   {
-    self.lblValue.stringValue = value
+    DispatchQueue.main.async
+    {
+      self.lblValue.stringValue = value
     
-    self.setIndicator(value: true)
+      self.setIndicator(value: true)
+    }
   }
   
   fileprivate func fadeIndicator()
   {
-    let layer = self.viewIndicator.layer
-    
-    CATransaction.begin()
-    let animation = CABasicAnimation(keyPath: "backgroundColor")
-    animation.fromValue = layer?.backgroundColor
-    animation.toValue = NSColor.gray.cgColor
-    animation.duration = 3.0;
-    animation.autoreverses = false;
-    
-    CATransaction.setCompletionBlock
+    DispatchQueue.main.async
     {
-      layer?.backgroundColor = NSColor.red.cgColor
+      let layer = self.viewIndicator.layer
+      
+      CATransaction.begin()
+      let animation = CABasicAnimation(keyPath: "backgroundColor")
+      animation.fromValue = layer?.backgroundColor
+      animation.toValue = NSColor.gray.cgColor
+      animation.duration = 3.0;
+      animation.autoreverses = false;
+      
+      CATransaction.setCompletionBlock
+      {
+        layer?.backgroundColor = NSColor.red.cgColor
+      }
+      
+      layer?.add(animation, forKey: "backgroundColor")
+      CATransaction.commit()
     }
-    
-    layer?.add(animation, forKey: "backgroundColor")
-    CATransaction.commit()
   }
   
   fileprivate func cancelIndicatorAnimation()
   {
-    let layer = self.viewIndicator.layer
-    layer?.removeAllAnimations()
+    DispatchQueue.main.async
+    {
+      let layer = self.viewIndicator.layer
+      layer?.removeAllAnimations()
+    }
   }
 }

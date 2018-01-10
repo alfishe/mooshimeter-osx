@@ -118,9 +118,12 @@ class DeviceDebugViewController : NSViewController
     {
       self.device = device
       
-      self.lblDeviceName.stringValue = (device?.peripheral?.name)!
-      self.lblDeviceUUID.stringValue = (device?.UUID)!
-      self.lblConnectionStatus.stringValue = "Connected"
+      DispatchQueue.main.async
+      {
+        self.lblDeviceName.stringValue = (device?.peripheral?.name)!
+        self.lblDeviceUUID.stringValue = (device?.UUID)!
+        self.lblConnectionStatus.stringValue = "Connected"
+      }
     }
   }
   
@@ -131,11 +134,14 @@ class DeviceDebugViewController : NSViewController
     
     if device != nil
     {
-      self.lblDeviceName.stringValue = "N/A"
-      self.lblDeviceUUID.stringValue = "N/A"
-      self.lblConnectionStatus.stringValue = "Disconnected"
+      DispatchQueue.main.async
+      {
+        self.lblDeviceName.stringValue = "N/A"
+        self.lblDeviceUUID.stringValue = "N/A"
+        self.lblConnectionStatus.stringValue = "Disconnected"
       
-      self.hideAllIndicators()
+        self.hideAllIndicators()
+      }
     }
   }
   
