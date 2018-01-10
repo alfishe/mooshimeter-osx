@@ -42,14 +42,14 @@ class UOMHelper : NSObject
     UOMHelper.prefixPrecision[.giga] = 6
 
     // Number of digits after the decimal point to display
-    prefixScale[.pico] = 0
-    prefixScale[.nano] = 0
-    prefixScale[.micro] = 3
-    prefixScale[.milli] = 5
-    prefixScale[.noPrefix] = 5
-    prefixScale[.kilo] = 3
-    prefixScale[.mega] = 3
-    prefixScale[.giga] = 0
+    UOMHelper.prefixScale[.pico] = 0
+    UOMHelper.prefixScale[.nano] = 0
+    UOMHelper.prefixScale[.micro] = 3
+    UOMHelper.prefixScale[.milli] = 5
+    UOMHelper.prefixScale[.noPrefix] = 5
+    UOMHelper.prefixScale[.kilo] = 3
+    UOMHelper.prefixScale[.mega] = 3
+    UOMHelper.prefixScale[.giga] = 0
     
     // Prefixes to be used on value display
     // Can be read from localization file
