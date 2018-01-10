@@ -43,7 +43,6 @@
 		D7B6845C1D72105C0096F296 /* mooshimeter_osxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6845B1D72105C0096F296 /* mooshimeter_osxUITests.swift */; };
 		D7B6846B1D72117A0096F296 /* BLEManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6846A1D72117A0096F296 /* BLEManager.swift */; };
 		D7B6846E1D721AC70096F296 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B6846D1D721AC70096F296 /* Constants.swift */; };
-		D7B684711D7263810096F296 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B684701D7263810096F296 /* libz.tbd */; };
 		D7B684741D7269F40096F296 /* TemperatureHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684731D7269F40096F296 /* TemperatureHelper.swift */; };
 		D7B684751D72A0910096F296 /* UOMHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18415A9C28B1CD4E2742CB04 /* UOMHelperTests.swift */; };
 		D7B684781D73A6FD0096F296 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B684771D73A6FD0096F296 /* Async.swift */; };
@@ -51,6 +50,7 @@
 		D7C2E80F1ED0F677006881C4 /* OptionsMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7C2E80E1ED0F677006881C4 /* OptionsMenuView.xib */; };
 		D7C2E81D1ED10628006881C4 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C2E81C1ED10628006881C4 /* GraphView.swift */; };
 		D7C2E81F1ED122A6006881C4 /* MeasurementManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C2E81E1ED122A6006881C4 /* MeasurementManager.swift */; };
+		D7D1E62220058E2C005EE65D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D7B684701D7263810096F296 /* libz.tbd */; };
 		D7DAC5111E8881D000703DDC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DAC5101E8881D000703DDC /* ViewController.swift */; };
 		D7DF26AB1ECC0AA000401042 /* StatisticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF26AA1ECC0AA000401042 /* StatisticsManager.swift */; };
 		D7DF26AD1ECD279100401042 /* DeviceCommandStreamDebug.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DF26AC1ECD279100401042 /* DeviceCommandStreamDebug.swift */; };
@@ -185,7 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D7B684711D7263810096F296 /* libz.tbd in Frameworks */,
+				D7D1E62220058E2C005EE65D /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,28 +592,29 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = alfishe;
 				TargetAttributes = {
 					D7988F991E062FDA002F7D38 = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 728R6XS6K7;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 					D7B6843A1D72105C0096F296 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = 728R6XS6K7;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 					};
 					D7B6844B1D72105C0096F296 = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0910;
 						TestTargetID = D7B6843A1D72105C0096F296;
 					};
 					D7B684561D72105C0096F296 = {
 						CreatedOnToolsVersion = 7.3.1;
-						LastSwiftMigration = 0820;
+						LastSwiftMigration = 0910;
 						TestTargetID = D7B6843A1D72105C0096F296;
 					};
 				};
@@ -815,7 +816,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -832,7 +834,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osx.today-extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -845,14 +848,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -892,14 +901,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -936,6 +951,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osx";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -953,6 +969,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osx";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -966,7 +983,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osxTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mooshimeter-osx.app/Contents/MacOS/mooshimeter-osx";
 			};
 			name = Debug;
@@ -980,7 +998,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osxTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mooshimeter-osx.app/Contents/MacOS/mooshimeter-osx";
 			};
 			name = Release;
@@ -993,7 +1012,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osxUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = "mooshimeter-osx";
 			};
 			name = Debug;
@@ -1006,7 +1026,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osxUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 4.0;
 				TEST_TARGET_NAME = "mooshimeter-osx";
 			};
 			name = Release;

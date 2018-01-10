@@ -169,8 +169,10 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
   func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String:Any], rssi RSSI: NSNumber)
   {
+    let identifier = peripheral.value(forKey: "identifier") as! NSUUID as UUID
+    
     let name = peripheral.name!
-    let uuid = peripheral.identifier.uuidString
+    let uuid = identifier.uuidString
 
     print("-> Peripheral '\(name)' \(uuid) discovered")
 
@@ -256,8 +258,10 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
   func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?)
   {
+    let identifier = peripheral.value(forKey: "identifier") as! NSUUID as UUID
+    
     let name = peripheral.name!
-    let uuid = peripheral.identifier.uuidString
+    let uuid = identifier.uuidString
 
     print("-> Peripheral '\(name)' \(uuid) disconnected")
 
@@ -282,7 +286,8 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
   
   func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?)
   {
-    print("Connection to \(peripheral.identifier.uuidString) failed")
+    let identifier = peripheral.value(forKey: "identifier") as! NSUUID as UUID
+    print("Connection to \(identifier.uuidString) failed")
   }
 
   //MARK: -
@@ -308,7 +313,8 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
   func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?)
   {
-    let device = DeviceManager.sharedInstance.getDeviceForUUID(peripheral.identifier.uuidString)
+    let identifier = peripheral.value(forKey: "identifier") as! NSUUID as UUID
+    let device = DeviceManager.sharedInstance.getDeviceForUUID(identifier.uuidString)
     
     if service.uuid == CBUUID.expandToUUID(Constants.GATT_DEVICE_INFORMATION)
     {
@@ -363,7 +369,8 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
 
   func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?)
   {
-    let peripheralUUID: String = peripheral.identifier.uuidString
+    let identifier = peripheral.value(forKey: "identifier") as! NSUUID as UUID
+    let peripheralUUID: String = identifier.uuidString
     let characteristicUUID: String = characteristic.uuid.uuidString
 
     let device: Device? = DeviceManager.sharedInstance.getDeviceForUUID(peripheralUUID)

@@ -6,7 +6,8 @@
 //  Copyright © 2017 alfishe. All rights reserved.
 //
 
-import Cocoa
+import Foundation
+import AppKit
 
 class DeviceDebugViewController : NSViewController
 {
@@ -117,7 +118,7 @@ class DeviceDebugViewController : NSViewController
     {
       self.device = device
       
-      self.lblDeviceName.stringValue = (device?.peripheral.name)!
+      self.lblDeviceName.stringValue = (device?.peripheral?.name)!
       self.lblDeviceUUID.stringValue = (device?.UUID)!
       self.lblConnectionStatus.stringValue = "Connected"
     }

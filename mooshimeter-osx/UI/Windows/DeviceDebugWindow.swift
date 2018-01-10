@@ -6,7 +6,8 @@
 //  Copyright © 2017 alfishe. All rights reserved.
 //
 
-import Cocoa
+import Foundation
+import AppKit
 
 class DeviceDebugWindow: NSWindowController
 {

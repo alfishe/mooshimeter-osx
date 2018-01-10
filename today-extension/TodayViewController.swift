@@ -9,6 +9,7 @@
 import Cocoa
 import NotificationCenter
 
+@objcMembers
 class TodayViewController: NSViewController, NCWidgetProviding
 {
   @IBOutlet weak var title1Label: NSTextField!
@@ -22,9 +23,9 @@ class TodayViewController: NSViewController, NCWidgetProviding
   
   var gCompletionHandler: ((NCUpdateResult) -> Void)?
   
-  override var nibName: String?
+  override var nibName: NSNib.Name?
   {
-    return "TodayViewController"
+    return NSNib.Name("TodayViewController")
   }
 
   func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void))

@@ -142,7 +142,7 @@ class ConfigNode: NSObject
         result.append(&long, length: 4)
       case .val_STR:
         let strValue = String(value as! NSString)
-        var len: Int = strValue.characters.count
+        var len: Int = strValue.count
         result.append(&len, length: 2)
         result.append(strValue, length: len)
       case .val_BIN:

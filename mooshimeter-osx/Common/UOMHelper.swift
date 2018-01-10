@@ -10,47 +10,48 @@ class UOMHelper : NSObject
   static var prefixMultipliers = [MetricPrefix: Double]()
   static var prefixPrecision = [MetricPrefix: Int]()
   static var prefixShortName = [MetricPrefix: String]()
-
+  
+  static let sharedInstance = UOMHelper()
   fileprivate static var initialized = false
-
-  override class func initialize()
+  
+  override init()
   {
-    super.initialize()
-
+    super.init()
+    
     // Multipliers for every metric prefix
-    prefixMultipliers[.pico] = 1e-12
-    prefixMultipliers[.nano] = 1e-9
-    prefixMultipliers[.micro] = 1e-6
-    prefixMultipliers[.milli] = 1e-3
-    prefixMultipliers[.noPrefix] = 1.0
-    prefixMultipliers[.kilo] = 1000.0
-    prefixMultipliers[.mega] = 1000000.0
-    prefixMultipliers[.giga] = 1000000000.0
+    UOMHelper.prefixMultipliers[.pico] = 1e-12
+    UOMHelper.prefixMultipliers[.nano] = 1e-9
+    UOMHelper.prefixMultipliers[.micro] = 1e-6
+    UOMHelper.prefixMultipliers[.milli] = 1e-3
+    UOMHelper.prefixMultipliers[.noPrefix] = 1.0
+    UOMHelper.prefixMultipliers[.kilo] = 1000.0
+    UOMHelper.prefixMultipliers[.mega] = 1000000.0
+    UOMHelper.prefixMultipliers[.giga] = 1000000000.0
 
     // Holds Float/Double comparison precision in a form pow(x, -1 * n)
     // x: prefixed value
     // n: precision value
-    prefixPrecision[.pico] = 13
-    prefixPrecision[.nano] = 10
-    prefixPrecision[.micro] = 7
-    prefixPrecision[.milli] = 6
-    prefixPrecision[.noPrefix] = 6
-    prefixPrecision[.kilo] = 6
-    prefixPrecision[.mega] = 6
-    prefixPrecision[.giga] = 6
+    UOMHelper.prefixPrecision[.pico] = 13
+    UOMHelper.prefixPrecision[.nano] = 10
+    UOMHelper.prefixPrecision[.micro] = 7
+    UOMHelper.prefixPrecision[.milli] = 6
+    UOMHelper.prefixPrecision[.noPrefix] = 6
+    UOMHelper.prefixPrecision[.kilo] = 6
+    UOMHelper.prefixPrecision[.mega] = 6
+    UOMHelper.prefixPrecision[.giga] = 6
 
     // Prefixes to be used on value display
     // Can be read from localization file
-    prefixShortName[.pico] = "p"
-    prefixShortName[.nano] = "n"
-    prefixShortName[.micro] = "\u{00B5}"
-    prefixShortName[.milli] = "m"
-    prefixShortName[.noPrefix] = ""
-    prefixShortName[.kilo] = "k"
-    prefixShortName[.mega] = "M"
-    prefixShortName[.giga] = "G"
+    UOMHelper.prefixShortName[.pico] = "p"
+    UOMHelper.prefixShortName[.nano] = "n"
+    UOMHelper.prefixShortName[.micro] = "\u{00B5}"
+    UOMHelper.prefixShortName[.milli] = "m"
+    UOMHelper.prefixShortName[.noPrefix] = ""
+    UOMHelper.prefixShortName[.kilo] = "k"
+    UOMHelper.prefixShortName[.mega] = "M"
+    UOMHelper.prefixShortName[.giga] = "G"
 
-    initialized = true
+    UOMHelper.initialized = true
   }
 
   //Mark: -

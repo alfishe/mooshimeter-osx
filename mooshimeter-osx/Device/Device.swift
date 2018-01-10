@@ -1,4 +1,5 @@
 import Foundation
+import AppKit
 import CoreBluetooth
 
 class Device: NSObject
@@ -7,7 +8,7 @@ class Device: NSObject
   internal var writeCharacteristic: CBCharacteristic?
   internal var heartbeatTimer: Timer?
   
-  internal let peripheral: CBPeripheral
+  internal let peripheral: CBPeripheral?
   internal let UUID: String
 
   internal var deviceCommandStream: DeviceCommandStream? = nil
@@ -38,8 +39,10 @@ class Device: NSObject
 
   init(peripheral: CBPeripheral)
   {
+    let identifier = peripheral.value(forKey: "identifier") as! NSUUID as UUID
+    
     self.peripheral = peripheral
-    self.UUID = peripheral.identifier.uuidString
+    self.UUID = identifier.uuidString
     
     super.init()
     
@@ -69,7 +72,8 @@ class Device: NSObject
    */
   init(UUID: String)
   {
-    self.peripheral = CBPeripheral()
+    //self.peripheral = CBPeer() as! CBPeripheral
+    self.peripheral = nil
     self.UUID = UUID
     
     super.init()
@@ -102,7 +106,7 @@ class Device: NSObject
   {
     var result = false
 
-    if peripheral.state == .connected
+    if peripheral?.state == .connected
     {
       result = true
     }
@@ -277,7 +281,7 @@ class Device: NSObject
   {
     if writeCharacteristic != nil
     {
-      self.peripheral.writeValue(data, for: self.writeCharacteristic!, type: .withResponse)
+      self.peripheral?.writeValue(data, for: self.writeCharacteristic!, type: .withResponse)
       self.deviceCommandStream?.prepareForDataReceive()
     }
   }
