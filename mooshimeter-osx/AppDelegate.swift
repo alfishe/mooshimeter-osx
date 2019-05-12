@@ -31,15 +31,15 @@ class AppDelegate: NSObject, NSApplicationDelegate
     NotificationCenter.default.removeObserver(self)
   }
 
-  func applicationShouldTerminate(_ sender: NSApplication) -> NSApplicationTerminateReply
+  func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply
   {
     print("applicationShouldTerminate")
 
-    var result: NSApplicationTerminateReply = .terminateNow
+    var result: NSApplication.TerminateReply = .terminateNow
 
     if DeviceManager.sharedInstance.count() > 0
     {
-      result = NSApplicationTerminateReply.terminateLater
+      result = NSApplication.TerminateReply.terminateLater
 
       // Disconnect all active peripheral devices asynchronously and notify application to finalize termination
       Async.background
@@ -55,7 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
         {
           // Delayed code, by default run in main thread
           print("Devices disconnection timeout. Enforcing process termination")
-          NSApplication.shared().reply(toApplicationShouldTerminate: true)
+          NSApplication.shared.reply(toApplicationShouldTerminate: true)
         }
       }
     }
@@ -74,7 +74,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
   fileprivate func exitApplication(_ notification: Notification)
   {
     print("-> exitApplication")
-    NSApplication.shared().reply(toApplicationShouldTerminate: true)
+    NSApplication.shared.reply(toApplicationShouldTerminate: true)
   }
   
   fileprivate func showDeviceSelectionWindow()
@@ -82,7 +82,7 @@ class AppDelegate: NSObject, NSApplicationDelegate
     let mainStoryboard = NSStoryboard.init(name: "Main", bundle: nil)
     let deviceSelectionWindow = mainStoryboard.instantiateController(withIdentifier: "DeviceSelectionWindow") as? NSWindowController
     
-    let application = NSApplication.shared()
+    let application = NSApplication.shared
     application.runModal(for: (deviceSelectionWindow?.window)!)
   }
   

@@ -20,24 +20,19 @@ class LargeIndicatorView: NSView
   {
     super.init(coder: coder)!
     
-    
-    var topLevelObjects = NSArray()
+    var topLevelObjects: NSArray? = nil
     var view: NSView? = nil
     let frameworkBundle = Bundle(for: classForCoder)
     if frameworkBundle.loadNibNamed("LargeIndicatorView", owner: self, topLevelObjects: &topLevelObjects)
     {
-      let views = (topLevelObjects as Array).filter { $0 is NSView }
-      if views.count > 0
-      {
-        view = views[0] as? NSView
-      }
+      view = topLevelObjects!.first(where: { $0 is NSView }) as? NSView
     }
     
     // Use bounds not frame or it'll be offset
     view?.frame = bounds
     
     // Make the view stretch with containing view
-    view?.autoresizingMask = [NSAutoresizingMaskOptions.viewWidthSizable, NSAutoresizingMaskOptions.viewHeightSizable]
+    view?.autoresizingMask = [NSView.AutoresizingMask.width, NSView.AutoresizingMask.height]
     
     if view != nil
     {

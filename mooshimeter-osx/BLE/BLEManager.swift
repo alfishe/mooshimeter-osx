@@ -442,7 +442,7 @@ class BLEManager : NSObject, CBCentralManagerDelegate, CBPeripheralDelegate
       print("didUpdateValueFor error: \(errorText)")
     }
     
-    print("didUpdateVelueFor value: \(descriptor.value)")
+    print("didUpdateVelueFor value: \(String(describing: descriptor.value))")
   }
 
   func peripheral(_ peripheral: CBPeripheral, didWriteValueFor descriptor: CBDescriptor, error: Error?)

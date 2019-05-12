@@ -16,16 +16,12 @@ class OptionsMenuView: NSView
   {
     super.init(coder: coder)!
     
-    var topLevelObjects = NSArray()
+    var topLevelObjects: NSArray? = nil
     var view: NSView? = nil
     let frameworkBundle = Bundle(for: classForCoder)
     if frameworkBundle.loadNibNamed("OptionsMenuView", owner: self, topLevelObjects: &topLevelObjects)
     {
-      let views = (topLevelObjects as Array).filter { $0 is NSView }
-      if views.count > 0
-      {
-        view = views[0] as? NSView
-      }
+      view = topLevelObjects!.first(where: { $0 is NSView }) as? NSView
     }
     
     if view != nil

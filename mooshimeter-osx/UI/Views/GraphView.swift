@@ -129,7 +129,7 @@ class GraphView: NSView
   
   func drawLine(from: CGPoint, to: CGPoint, color: NSColor)
   {
-    let context: CGContext = (NSGraphicsContext.current()?.cgContext)!
+    let context: CGContext = (NSGraphicsContext.current?.cgContext)!
     
     context.setShouldAntialias(true)
     context.setStrokeColor(color.cgColor)
@@ -188,7 +188,7 @@ class GraphView: NSView
     if deviceEvent != nil
     {
       let eventData = deviceEvent!.payload as! DeviceStateChangeEvent
-      let value = eventData.value as! Float
+      //let value = eventData.value as! Float
       
       self.curPosition = self.curPosition + sampleStep
       

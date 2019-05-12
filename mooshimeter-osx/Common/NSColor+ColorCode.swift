@@ -111,40 +111,40 @@ public extension NSColor {
     // create color from result
     switch detectedCodeType {
     case .hex:
-      let hex = Int(String(code.characters.dropFirst()), radix: 16) ?? 0
+      let hex = Int(String(code.dropFirst()), radix: 16) ?? 0
       self.init(hex: hex)
       
     case .shortHex:
-      let hex = Int(String(code.characters.dropFirst()), radix: 16) ?? 0
+      let hex = Int(String(code.dropFirst()), radix: 16) ?? 0
       let r = (hex & 0xF00) >> 8
       let g = (hex & 0x0F0) >> 4
       let b = (hex & 0x00F)
       self.init(calibratedRed: CGFloat(r) / 15, green: CGFloat(g) / 15, blue: CGFloat(b) / 15, alpha: 1.0)
       
     case .cssRGB:
-      let r = Double(code.substring(with: result.rangeAt(1))) ?? 0
-      let g = Double(code.substring(with: result.rangeAt(2))) ?? 0
-      let b = Double(code.substring(with: result.rangeAt(3))) ?? 0
+      let r = Double(code.substring(with: result.range(at: 1))) ?? 0
+      let g = Double(code.substring(with: result.range(at: 2))) ?? 0
+      let b = Double(code.substring(with: result.range(at: 3))) ?? 0
       self.init(calibratedRed: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: 1.0)
       
     case .cssRGBa:
-      let r = Double(code.substring(with: result.rangeAt(1))) ?? 0
-      let g = Double(code.substring(with: result.rangeAt(2))) ?? 0
-      let b = Double(code.substring(with: result.rangeAt(3))) ?? 0
-      let a = Double(code.substring(with: result.rangeAt(4))) ?? 1
+      let r = Double(code.substring(with: result.range(at: 1))) ?? 0
+      let g = Double(code.substring(with: result.range(at: 2))) ?? 0
+      let b = Double(code.substring(with: result.range(at: 3))) ?? 0
+      let a = Double(code.substring(with: result.range(at: 4))) ?? 1
       self.init(calibratedRed: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a))
       
     case .cssHSL:
-      let h = Double(code.substring(with: result.rangeAt(1))) ?? 0
-      let s = Double(code.substring(with: result.rangeAt(2))) ?? 0
-      let l = Double(code.substring(with: result.rangeAt(3))) ?? 0
+      let h = Double(code.substring(with: result.range(at: 1))) ?? 0
+      let s = Double(code.substring(with: result.range(at: 2))) ?? 0
+      let l = Double(code.substring(with: result.range(at: 3))) ?? 0
       self.init(calibratedHue: CGFloat(h) / 360, saturation: CGFloat(s) / 100, lightness: CGFloat(l) / 100, alpha: 1.0)
       
     case .cssHSLa:
-      let h = Double(code.substring(with: result.rangeAt(1))) ?? 0
-      let s = Double(code.substring(with: result.rangeAt(2))) ?? 0
-      let l = Double(code.substring(with: result.rangeAt(3))) ?? 0
-      let a = Double(code.substring(with: result.rangeAt(4))) ?? 1
+      let h = Double(code.substring(with: result.range(at: 1))) ?? 0
+      let s = Double(code.substring(with: result.range(at: 2))) ?? 0
+      let l = Double(code.substring(with: result.range(at: 3))) ?? 0
+      let a = Double(code.substring(with: result.range(at: 4))) ?? 1
       self.init(calibratedHue: CGFloat(h) / 360, saturation: CGFloat(s) / 100, lightness: CGFloat(l) / 100, alpha: CGFloat(a))
       
     case .cssKeyword:

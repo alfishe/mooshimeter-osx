@@ -258,7 +258,7 @@ public struct AsyncBlock<In, Out> {
    - returns: An `Async` struct which encapsulates the `@convention(block) () -> Swift.Void`
    */
   
-  private static func async<O>(after seconds: Double? = nil, block: @escaping (Void) -> O, queue: GCD) -> AsyncBlock<Void, O> {
+  private static func async<O>(after seconds: Double? = nil, block: @escaping () -> O, queue: GCD) -> AsyncBlock<Void, O> {
     let reference = Reference<O>()
     let block = DispatchWorkItem(block: {
       reference.value = block()

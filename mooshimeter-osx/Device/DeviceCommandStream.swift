@@ -280,7 +280,7 @@ class DeviceCommandStream
         missingPayload = false
         incompletePayload = true
       }
-      catch is Error
+      catch let Error
       {
         // Do nothing for now
       }
