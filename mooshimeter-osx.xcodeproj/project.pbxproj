@@ -22,13 +22,13 @@
 		18415C347FBA20D79C9D8504 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184150258C12D04E34C1230E /* Extensions.swift */; };
 		D72D84981ED65B610054459F /* LargeIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D72D84971ED65B610054459F /* LargeIndicatorView.swift */; };
 		D72D849A1ED65CD40054459F /* LargeIndicatorView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D72D84991ED65CD40054459F /* LargeIndicatorView.xib */; };
-		D771A2731E691B3F00DF0CC7 /* SwiftDataCompression.swift in Sources */ = {isa = PBXBuildFile; fileRef = D771A2721E691B3F00DF0CC7 /* SwiftDataCompression.swift */; };
 		D7988F9D1E062FDA002F7D38 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7988F9C1E062FDA002F7D38 /* NotificationCenter.framework */; };
 		D7988FA21E062FDA002F7D38 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7988FA11E062FDA002F7D38 /* TodayViewController.swift */; };
 		D7988FA51E062FDA002F7D38 /* TodayViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7988FA31E062FDA002F7D38 /* TodayViewController.xib */; };
 		D7988FA91E062FDA002F7D38 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D7988FA71E062FDA002F7D38 /* InfoPlist.strings */; };
 		D7988FAC1E062FDA002F7D38 /* today-extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D7988F9A1E062FDA002F7D38 /* today-extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D7988FB21E06443D002F7D38 /* fluke.png in Resources */ = {isa = PBXBuildFile; fileRef = D7988FB11E06443D002F7D38 /* fluke.png */; };
+		D79994A82352C92F0069B9BB /* DataCompression.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79994A72352C92F0069B9BB /* DataCompression.swift */; };
 		D7A310281E881EF400B46F19 /* DeviceContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A310271E881EF400B46F19 /* DeviceContext.swift */; };
 		D7A3102F1E88408300B46F19 /* DeviceDebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A3102E1E88408300B46F19 /* DeviceDebugViewController.swift */; };
 		D7A310311E88417800B46F19 /* DeviceCommandStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7A310301E88417800B46F19 /* DeviceCommandStatusView.swift */; };
@@ -123,7 +123,6 @@
 		18415E971ED3D56D67C58AF9 /* DisplayFormatHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DisplayFormatHelper.swift; path = Common/DisplayFormatHelper.swift; sourceTree = "<group>"; };
 		D72D84971ED65B610054459F /* LargeIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LargeIndicatorView.swift; path = UI/Views/LargeIndicatorView.swift; sourceTree = "<group>"; };
 		D72D84991ED65CD40054459F /* LargeIndicatorView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LargeIndicatorView.xib; path = Resources/LargeIndicatorView.xib; sourceTree = "<group>"; };
-		D771A2721E691B3F00DF0CC7 /* SwiftDataCompression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftDataCompression.swift; path = 3rdParty/SwiftDataCompression/SwiftDataCompression.swift; sourceTree = "<group>"; };
 		D7988F9A1E062FDA002F7D38 /* today-extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "today-extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7988F9C1E062FDA002F7D38 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		D7988FA01E062FDA002F7D38 /* today_extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = today_extension.entitlements; sourceTree = "<group>"; };
@@ -132,6 +131,7 @@
 		D7988FA61E062FDA002F7D38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D7988FA81E062FDA002F7D38 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D7988FB11E06443D002F7D38 /* fluke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fluke.png; sourceTree = "<group>"; };
+		D79994A72352C92F0069B9BB /* DataCompression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataCompression.swift; path = 3rdParty/DataCompression/DataCompression.swift; sourceTree = "<group>"; };
 		D7A310271E881EF400B46F19 /* DeviceContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceContext.swift; sourceTree = "<group>"; };
 		D7A3102E1E88408300B46F19 /* DeviceDebugViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceDebugViewController.swift; path = UI/ViewControllers/DeviceDebugViewController.swift; sourceTree = "<group>"; };
 		D7A310301E88417800B46F19 /* DeviceCommandStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeviceCommandStatusView.swift; path = UI/ViewControllers/DeviceCommandStatusView.swift; sourceTree = "<group>"; };
@@ -240,7 +240,7 @@
 		184156B74954B5CBF091DF4E /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
-				D771A2711E691B2D00DF0CC7 /* SwiftDataCompression */,
+				D79994A62352C90E0069B9BB /* DataCompression */,
 				D7B684761D73A6ED0096F296 /* Async */,
 				184158F84D6CD5D26CA68EBC /* Deflate */,
 				18415C2440D51BBC26383224 /* CRC32 */,
@@ -280,14 +280,6 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		D771A2711E691B2D00DF0CC7 /* SwiftDataCompression */ = {
-			isa = PBXGroup;
-			children = (
-				D771A2721E691B3F00DF0CC7 /* SwiftDataCompression.swift */,
-			);
-			name = SwiftDataCompression;
-			sourceTree = "<group>";
-		};
 		D7988F9B1E062FDA002F7D38 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -315,6 +307,14 @@
 				D7988FA01E062FDA002F7D38 /* today_extension.entitlements */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D79994A62352C90E0069B9BB /* DataCompression */ = {
+			isa = PBXGroup;
+			children = (
+				D79994A72352C92F0069B9BB /* DataCompression.swift */,
+			);
+			name = DataCompression;
 			sourceTree = "<group>";
 		};
 		D7A310291E883D2000B46F19 /* UI */ = {
@@ -598,7 +598,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1110;
 				ORGANIZATIONNAME = alfishe;
 				TargetAttributes = {
 					D7988F991E062FDA002F7D38 = {
@@ -703,6 +703,7 @@
 				D7A310371E88516300B46F19 /* DeviceDebugWindow.swift in Sources */,
 				D7B6843F1D72105C0096F296 /* AppDelegate.swift in Sources */,
 				D7B6846E1D721AC70096F296 /* Constants.swift in Sources */,
+				D79994A82352C92F0069B9BB /* DataCompression.swift in Sources */,
 				18415C347FBA20D79C9D8504 /* Extensions.swift in Sources */,
 				D7E8D9FF1E6BD34200C78454 /* DeviceEnumerations.swift in Sources */,
 				D7EA54741ED2406000E2A253 /* NSColor+HSL.swift in Sources */,
@@ -737,7 +738,6 @@
 				D7A3103D1E885E5B00B46F19 /* DeviceSelectionViewController.swift in Sources */,
 				D7DF26AB1ECC0AA000401042 /* StatisticsManager.swift in Sources */,
 				18415BAF73733CBD25D9674E /* DeviceProtocol.swift in Sources */,
-				D771A2731E691B3F00DF0CC7 /* SwiftDataCompression.swift in Sources */,
 				18415C272C09D5FC0E13ACBF /* ThreadHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -818,6 +818,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 728R6XS6K7;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "today-extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osx.today-extension";
@@ -837,6 +838,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 728R6XS6K7;
+				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "today-extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.alfishe.mooshimeter-osx.today-extension";
@@ -875,7 +877,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development: isharin@gmail.com (P8G88JVWLJ)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -930,7 +932,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development: isharin@gmail.com (P8G88JVWLJ)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -958,6 +960,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 728R6XS6K7;
+				ENABLE_HARDENED_RUNTIME = YES;
 				HEADER_SEARCH_PATHS = "${SRCROOT}/mooshimeter-osx/3rdParty/GzipSwift/zlib/**";
 				INFOPLIST_FILE = "mooshimeter-osx/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -976,6 +979,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 728R6XS6K7;
+				ENABLE_HARDENED_RUNTIME = YES;
 				HEADER_SEARCH_PATHS = "${SRCROOT}/mooshimeter-osx/3rdParty/GzipSwift/zlib/**";
 				INFOPLIST_FILE = "mooshimeter-osx/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
